@@ -24,6 +24,7 @@ namespace eXpressions
             if (expression != string.Empty)
             {
                 // Create a parser object with the inserted expression.
+                Parser p = new Parser(expression);
 
                 // Parse the expression into a tree data structure.
 
@@ -31,6 +32,7 @@ namespace eXpressions
 
                 // Show the tree as a picture.
 
+                expressionLb.Text = p.ExpressionTree.InorderTraversal();
             }
             else
             {

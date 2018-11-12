@@ -8,35 +8,24 @@ namespace eXpressions
 {
     class Tree
     {
-        // Actually a binarry two tree data structure.
-        // Internal nodes are operators and leaves 
-        // (external nodes) are operands.
-        private Node root;
+        private const string OPERATORS = "+*-/^";
+        // Actually a binarry tree.
+        // Internal nodes are operators and  
+        // leaves (external nodes) are operands.
+        public Node Root { get; }
 
         // String representation of the expression after traversal.
         private string expression;
 
-        public Tree()
+        public Tree(Node root)
         {
-            root = null;
-        }
-
-        public void InsertNode(string data)
-        {
-            if (root == null)
-            {
-                root = new Node(data);
-            }
-            else
-            {
-                root.Insert(data);
-            }
+            Root = root;
         }
 
         public string InorderTraversal()
         {
             expression = "";
-            InOrderHelper(root);
+            InOrderHelper(Root);
 
             return expression;
         }
@@ -45,12 +34,21 @@ namespace eXpressions
         {
             if (node != null)
             {
+                if (OPERATORS.Contains((char)node.Data))
+                {
+                    expression += "(";
+                }
                 // Inorder LNR (aka Left, Node, Right).
                 // Go as deep as possible left, before adding
                 // the data of the node to the expression.
                 InOrderHelper(node.LeftSuccessor);
                 expression += node.Data;
                 InOrderHelper(node.RightSuccessor);
+
+                if (OPERATORS.Contains((char)node.Data))
+                {
+                    expression += ")";
+                }
             }
         }
     }
