@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eXpressions", "eXpressions.csproj", "{CA65A919-C620-4990-A396-4B926309DF68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eXpressionParsing", "eXpressionParsing\eXpressionParsing.csproj", "{6F52D82C-58BE-4D7F-AF50-0AD6D54DE270}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CA65A919-C620-4990-A396-4B926309DF68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA65A919-C620-4990-A396-4B926309DF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA65A919-C620-4990-A396-4B926309DF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA65A919-C620-4990-A396-4B926309DF68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F52D82C-58BE-4D7F-AF50-0AD6D54DE270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F52D82C-58BE-4D7F-AF50-0AD6D54DE270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F52D82C-58BE-4D7F-AF50-0AD6D54DE270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F52D82C-58BE-4D7F-AF50-0AD6D54DE270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8AD84A55-12F4-40F6-9C1F-B5D7FCB0F65C}
+		SolutionGuid = {747F4EF4-14FD-4695-958A-BA8EBD7B8944}
 	EndGlobalSection
 EndGlobal

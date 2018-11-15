@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA65A919-C620-4990-A396-4B926309DF68}</ProjectGuid>
+    <ProjectGuid>{6F52D82C-58BE-4D7F-AF50-0AD6D54DE270}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>eXpressions</RootNamespace>
-    <AssemblyName>eXpressions</AssemblyName>
+    <RootNamespace>eXpressionParsing</RootNamespace>
+    <AssemblyName>eXpressionParsing</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,17 +46,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Addition.cs" />
+    <Compile Include="BinaryOperator.cs" />
+    <Compile Include="Cosine.cs" />
+    <Compile Include="DependentVariable.cs" />
+    <Compile Include="Division.cs" />
+    <Compile Include="Exp.cs" />
+    <Compile Include="Factorial.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Node.cs" />
+    <Compile Include="Multiplication.cs" />
+    <Compile Include="NaturalLog.cs" />
+    <Compile Include="Operand.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="PI.cs" />
+    <Compile Include="Power.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tree.cs" />
+    <Compile Include="Sine.cs" />
+    <Compile Include="SingleDigitNaturalNumber.cs" />
+    <Compile Include="Subtraction.cs" />
+    <Compile Include="UnaryOperator.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("eXpressions")]
+[assembly: AssemblyTitle("eXpressionParsing")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("eXpressions")]
+[assembly: AssemblyProduct("eXpressionParsing")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ca65a919-c620-4990-a396-4b926309df68")]
+[assembly: Guid("6f52d82c-58be-4d7f-af50-0ad6d54de270")]
 
 // Version information for an assembly consists of the following four values:
 //
