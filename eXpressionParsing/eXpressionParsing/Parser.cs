@@ -63,12 +63,14 @@ namespace eXpressionParsing
                     }
                     else
                     {
-                        operand = new Number(s[0] - 48);
+                        operand = new Integer(s[0] - 48);
                     }
                     operands.Add(operand);
                 }
                 else if (NUMBER_OPERATORS.Contains(s[0]))
                 {
+                    char numberOperator = s[0];
+
                     Operand operand;
                     string result = "";
                     // Strip string from the number operator
@@ -87,11 +89,20 @@ namespace eXpressionParsing
                     }
                     // Try to parse the resulting string (represents a number) 
                     // to prevent errors and add it to the stack of operands.
-                    double numericResult;
-                    double.TryParse(result, out numericResult);
-
-                    operand = new Number(numericResult);
+                    if (numberOperator == 'n')
+                    {
+                        int numericResult;
+                        int.TryParse(result, out numericResult);
+                        operand = new Integer(numericResult);
+                    }
+                    else
+                    {
+                        double numericResult;
+                        double.TryParse(result, out numericResult);
+                        operand = new RealNumber(numericResult);
+                    }
                     operands.Add(operand);
+                   
                 }
                 else if (s[0] == '(')
                 {

@@ -28,21 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.parseBtn = new System.Windows.Forms.Button();
             this.humanReadableLbl = new System.Windows.Forms.Label();
+            this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
             this.SuspendLayout();
             // 
             // expressionTbx
             // 
-            this.expressionTbx.Location = new System.Drawing.Point(12, 104);
+            this.expressionTbx.Location = new System.Drawing.Point(26, 85);
             this.expressionTbx.Name = "expressionTbx";
-            this.expressionTbx.Size = new System.Drawing.Size(1522, 31);
+            this.expressionTbx.Size = new System.Drawing.Size(671, 31);
             this.expressionTbx.TabIndex = 0;
             // 
             // parseBtn
             // 
-            this.parseBtn.Location = new System.Drawing.Point(1551, 97);
+            this.parseBtn.Location = new System.Drawing.Point(712, 78);
             this.parseBtn.Name = "parseBtn";
             this.parseBtn.Size = new System.Drawing.Size(194, 44);
             this.parseBtn.TabIndex = 1;
@@ -53,22 +57,44 @@
             // humanReadableLbl
             // 
             this.humanReadableLbl.AutoSize = true;
-            this.humanReadableLbl.Location = new System.Drawing.Point(12, 12);
+            this.humanReadableLbl.Location = new System.Drawing.Point(21, 35);
             this.humanReadableLbl.Name = "humanReadableLbl";
-            this.humanReadableLbl.Size = new System.Drawing.Size(70, 25);
+            this.humanReadableLbl.Size = new System.Drawing.Size(0, 25);
             this.humanReadableLbl.TabIndex = 2;
-            this.humanReadableLbl.Text = "label1";
+            // 
+            // expressionChart
+            // 
+            this.expressionChart.BackColor = System.Drawing.SystemColors.Window;
+            chartArea4.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea4);
+            this.expressionChart.Location = new System.Drawing.Point(26, 147);
+            this.expressionChart.Name = "expressionChart";
+            this.expressionChart.Size = new System.Drawing.Size(1268, 907);
+            this.expressionChart.TabIndex = 4;
+            this.expressionChart.Text = "Expression Chart";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(447, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 25);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "values: ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1757, 1060);
+            this.ClientSize = new System.Drawing.Size(1315, 1079);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.expressionChart);
             this.Controls.Add(this.humanReadableLbl);
             this.Controls.Add(this.parseBtn);
             this.Controls.Add(this.expressionTbx);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,6 +105,8 @@
         private System.Windows.Forms.TextBox expressionTbx;
         private System.Windows.Forms.Button parseBtn;
         private System.Windows.Forms.Label humanReadableLbl;
+        private System.Windows.Forms.DataVisualization.Charting.Chart expressionChart;
+        private System.Windows.Forms.Label label1;
     }
 }
 

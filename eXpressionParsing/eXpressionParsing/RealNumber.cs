@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace eXpressionParsing
 {
-    class Number : Operand
+    class RealNumber : Operand
     {
-        public Number(double data) : base(data)
+        public RealNumber(object data) : base(data)
         { }
 
         public override double Calculate(double x)

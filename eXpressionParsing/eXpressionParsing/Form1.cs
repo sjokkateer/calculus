@@ -30,22 +30,44 @@ namespace eXpressionParsing
             {
                 expressionParser = new Parser(expression);
                 expressionParser.Parse();
-                humanReadableLbl.Text = expressionParser.ToString();
+                humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
+
                 CrearteChart();
             }
         }
 
         private void CrearteChart()
         {
-            double xMin = -50;
-            double xMax = 50;
-            double yMin = -300;
-            double yMax = 300;
+            expressionChart.Series.Clear();
+            label1.Text = "values: ";
+
+            double xMin = -5;
+            double xMax = 5;
+
+            double yMin = -10;
+            double yMax = 10;
+
             double step = 0.01;
+            double result;
+
+            expressionChart.Series.Add("Expression");
+            expressionChart.Series["Expression"].ChartType = SeriesChartType.Line;
+            
+            expressionChart.Series["Expression"].ChartArea = "ChartArea1";
+
+            expressionChart.ChartAreas["ChartArea1"].AxisX.Minimum = xMin;
+            expressionChart.ChartAreas["ChartArea1"].AxisX.Maximum = xMax;
+
+            expressionChart.ChartAreas["ChartArea1"].AxisY.Minimum = yMin;
+            expressionChart.ChartAreas["ChartArea1"].AxisY.Maximum = yMax;
 
             for (double i = xMin; i <= xMax; i += step)
             {
-                expressionParser.CalculateForX(i);
+                result = expressionParser.CalculateForX(i);
+                if (!double.IsInfinity(result) || !double.IsNaN(result))
+                {
+                    expressionChart.Series["Expression"].Points.AddXY(i, result);
+                }
             }
         }
     }
