@@ -35,14 +35,14 @@
             // 
             // expressionTbx
             // 
-            this.expressionTbx.Location = new System.Drawing.Point(12, 12);
+            this.expressionTbx.Location = new System.Drawing.Point(12, 104);
             this.expressionTbx.Name = "expressionTbx";
             this.expressionTbx.Size = new System.Drawing.Size(1522, 31);
             this.expressionTbx.TabIndex = 0;
             // 
             // parseBtn
             // 
-            this.parseBtn.Location = new System.Drawing.Point(1540, 12);
+            this.parseBtn.Location = new System.Drawing.Point(1551, 97);
             this.parseBtn.Name = "parseBtn";
             this.parseBtn.Size = new System.Drawing.Size(194, 44);
             this.parseBtn.TabIndex = 1;
@@ -53,7 +53,7 @@
             // humanReadableLbl
             // 
             this.humanReadableLbl.AutoSize = true;
-            this.humanReadableLbl.Location = new System.Drawing.Point(26, 70);
+            this.humanReadableLbl.Location = new System.Drawing.Point(12, 12);
             this.humanReadableLbl.Name = "humanReadableLbl";
             this.humanReadableLbl.Size = new System.Drawing.Size(70, 25);
             this.humanReadableLbl.TabIndex = 2;
@@ -63,7 +63,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1746, 1060);
+            this.ClientSize = new System.Drawing.Size(1757, 1060);
             this.Controls.Add(this.humanReadableLbl);
             this.Controls.Add(this.parseBtn);
             this.Controls.Add(this.expressionTbx);

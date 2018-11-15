@@ -7,11 +7,17 @@ namespace eXpressionParsing
     {
         private Operand expressionRoot;
 
+        // Several string constants that will be used
+        // to detect what kind of object needs to be made
+        // , and what data to store in it while parsing.
         private const string OPERATORS = "+-*/^sc!el";
         private const string OPERANDS = "1234567890xp";
+        private const string NUMBER_OPERATORS = "rn";
 
+        // Holds the entered expression as its original form.
         private string expression;
 
+        // Two lists that will be used as stacks to process the expression.
         private List<char> operators;
         private List<Operand> operands;
 
@@ -23,13 +29,15 @@ namespace eXpressionParsing
             operands = new List<Operand>();
         }
 
+        // The main method that if called, processes the expression and stores 
+        // the root node of the expression.
         public void Parse()
         {
             // Parse the expression until
-            // The expression is an emxpty string.
+            // The expression is an empty string.
             ParseHelper(expression);
 
-            // Create tree of the final node (the root).
+            // Create tree of the final node (the root of the expression).
             expressionRoot = operands[0];
         }
 
@@ -37,6 +45,7 @@ namespace eXpressionParsing
         {
             if (s != string.Empty)
             {
+                // Convert the operator to an object, if it is a valid operator.
                 if (OPERATORS.Contains(s[0]))
                 {
                     operators.Add(s[0]);
@@ -54,8 +63,34 @@ namespace eXpressionParsing
                     }
                     else
                     {
-                        operand = new SingleDigitNaturalNumber(s[0]);
+                        operand = new Number(s[0] - 48);
                     }
+                    operands.Add(operand);
+                }
+                else if (NUMBER_OPERATORS.Contains(s[0]))
+                {
+                    Operand operand;
+                    string result = "";
+                    // Strip string from the number operator
+                    // as well as the open parenthesis.
+                    s = s.Substring(2);
+
+                    char currentChar = s[0];
+                    while (currentChar != ')')
+                    {
+                        // Append the digit to the string of characters.
+                        result += currentChar;
+
+                        // Move forward one character.
+                        s = s.Substring(1);
+                        currentChar = s[0];
+                    }
+                    // Try to parse the resulting string (represents a number) 
+                    // to prevent errors and add it to the stack of operands.
+                    double numericResult;
+                    double.TryParse(result, out numericResult);
+
+                    operand = new Number(numericResult);
                     operands.Add(operand);
                 }
                 else if (s[0] == '(')
@@ -82,6 +117,8 @@ namespace eXpressionParsing
             }
         }
 
+        // Method that will create an appropriate operator class
+        // from the obtained character.
         private void CreateNode(char operat0r)
         {
             Operand result = null;
@@ -131,7 +168,7 @@ namespace eXpressionParsing
             }
             else
             {
-                // Same story, add operand to operator.
+                // Same story, add operand to unary operator.
                 ((UnaryOperator)result).LeftSuccessor = operands[operands.Count - 1];
 
                 // Remove operand from stack.
