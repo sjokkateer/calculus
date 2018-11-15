@@ -39,7 +39,6 @@ namespace eXpressionParsing
         private void CrearteChart()
         {
             expressionChart.Series.Clear();
-            label1.Text = "values: ";
 
             double xMin = -5;
             double xMax = 5;
@@ -64,7 +63,7 @@ namespace eXpressionParsing
             for (double i = xMin; i <= xMax; i += step)
             {
                 result = expressionParser.CalculateForX(i);
-                if (!double.IsInfinity(result) || !double.IsNaN(result))
+                if (!double.IsInfinity(result) && !double.IsNaN(result))
                 {
                     expressionChart.Series["Expression"].Points.AddXY(i, result);
                 }
