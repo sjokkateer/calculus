@@ -22,7 +22,7 @@
         public override string NodeLabel()
         {
             string result = base.NodeLabel();
-            result += $"node{NodeNumber} -- node{RightSuccessor.NodeNumber}\n";
+            result += $"\tnode{NodeNumber} -- node{RightSuccessor.NodeNumber}\n";
             result += RightSuccessor.NodeLabel();
             return result;
         }

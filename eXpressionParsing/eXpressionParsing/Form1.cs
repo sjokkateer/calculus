@@ -112,7 +112,7 @@ namespace eXpressionParsing
                 if (sw != null)
                 {
                     sw.WriteLine("graph calculus {");
-                    sw.WriteLine("node [ fontname = \"Arial\" ]");
+                    sw.WriteLine("\tnode [ fontname = \"Arial\" ]");
                     // Make a call to the recursive method that returns the entirity
                     // of the content that makes up the .dot file.
                     sw.Write(expressionParser.DotFileGraph());

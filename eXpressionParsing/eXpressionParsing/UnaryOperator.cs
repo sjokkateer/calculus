@@ -30,7 +30,7 @@ namespace eXpressionParsing
         public override string NodeLabel()
         {
             string result = base.NodeLabel();
-            result += $"node{NodeNumber} -- node{LeftSuccessor.NodeNumber}\n";
+            result += $"\tnode{NodeNumber} -- node{LeftSuccessor.NodeNumber}\n";
             result += LeftSuccessor.NodeLabel();
             return result;
         }

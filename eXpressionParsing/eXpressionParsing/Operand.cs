@@ -23,7 +23,7 @@ namespace eXpressionParsing
 
         public virtual string NodeLabel()
         {
-            return $"node{NodeNumber} [ label = \"{Data}\" ]\n";
+            return $"\tnode{NodeNumber} [ label = \"{Data}\" ]\n";
         }
     }
 }
