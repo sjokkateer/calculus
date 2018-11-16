@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.parseBtn = new System.Windows.Forms.Button();
             this.humanReadableLbl = new System.Windows.Forms.Label();
@@ -40,14 +40,14 @@
             // 
             // expressionTbx
             // 
-            this.expressionTbx.Location = new System.Drawing.Point(62, 104);
+            this.expressionTbx.Location = new System.Drawing.Point(26, 96);
             this.expressionTbx.Name = "expressionTbx";
             this.expressionTbx.Size = new System.Drawing.Size(671, 31);
             this.expressionTbx.TabIndex = 0;
             // 
             // parseBtn
             // 
-            this.parseBtn.Location = new System.Drawing.Point(739, 98);
+            this.parseBtn.Location = new System.Drawing.Point(703, 93);
             this.parseBtn.Name = "parseBtn";
             this.parseBtn.Size = new System.Drawing.Size(194, 37);
             this.parseBtn.TabIndex = 1;
@@ -58,16 +58,15 @@
             // humanReadableLbl
             // 
             this.humanReadableLbl.AutoSize = true;
-            this.humanReadableLbl.Location = new System.Drawing.Point(57, 53);
+            this.humanReadableLbl.Location = new System.Drawing.Point(21, 48);
             this.humanReadableLbl.Name = "humanReadableLbl";
             this.humanReadableLbl.Size = new System.Drawing.Size(0, 25);
             this.humanReadableLbl.TabIndex = 2;
             // 
             // expressionChart
             // 
-            this.expressionChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea3);
+            chartArea5.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea5);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
@@ -76,9 +75,9 @@
             // 
             // graphPictureBox
             // 
-            this.graphPictureBox.Location = new System.Drawing.Point(1273, 175);
+            this.graphPictureBox.Location = new System.Drawing.Point(1300, 147);
             this.graphPictureBox.Name = "graphPictureBox";
-            this.graphPictureBox.Size = new System.Drawing.Size(955, 854);
+            this.graphPictureBox.Size = new System.Drawing.Size(955, 907);
             this.graphPictureBox.TabIndex = 5;
             this.graphPictureBox.TabStop = false;
             // 
