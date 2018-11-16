@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Diagnostics;
+using System.IO;
 
 namespace eXpressionParsing
 {
@@ -34,7 +35,9 @@ namespace eXpressionParsing
                 humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
 
                 CrearteChart();
-                CreateGraph();
+
+                // This could be extended to prompt for a file name.
+                CreateGraph("expression.dot");
             }
         }
 
@@ -45,8 +48,8 @@ namespace eXpressionParsing
             double xMin = -5;
             double xMax = 5;
 
-            double yMin = -2;
-            double yMax = 2;
+            double yMin = -10;
+            double yMax = 15;
 
             double step = 0.0001;
             double result;
@@ -72,14 +75,81 @@ namespace eXpressionParsing
                 }
             }
         }
-        private void CreateGraph()
+
+        /// <summary>
+        /// Method responsible for creating the image via the
+        /// graphViz program, that is based on the input of
+        /// a .dot file.
+        /// </summary>
+        /// <param name="dotFileName">A string, someFileName.dot
+        /// that is used to create a .dot file that represents
+        /// the expression in graph form.</param>
+        private void CreateGraph(string dotFileName)
         {
+            CreateDotFile(dotFileName);
+
             Process dot = new Process();
             dot.StartInfo.FileName = "dot.exe";
             dot.StartInfo.Arguments = "-Tpng -oexpression.png expression.dot";
             dot.Start();
             dot.WaitForExit();
             graphPictureBox.ImageLocation = "expression.png";
+        }
+
+        /// <summary>
+        /// Is the method that is responsible for the writing to the .dot file.
+        /// 
+        /// Writes the expression into the .dot file as a tree in the corresponding
+        /// format (the .dot file requires).
+        /// </summary>
+        private void CreateDotFile(string fileName)
+        {
+            FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+
+            try
+            {
+                // General fluff to be inserted into the document.
+                if (sw != null)
+                {
+                    sw.WriteLine("graph calculus {");
+                    sw.WriteLine("node [ fontname = \"Arial\" ]");
+                    // Apply a BFS traversal, store all the nodes while
+                    // Assigning their Node number.
+                    List<Operand> queue = expressionParser.Queue;
+
+                    // If all went well, all nodes have a number assigned to
+                    // them now.
+                    string relation;
+                    foreach (Operand operand in queue)
+                    {
+                        // Write the label of the operand.
+                        sw.Write(operand.NodeLabel());
+
+                        // Write the relation between operators and operands.
+                        relation = operand.Relation();
+                        // Basically if the operand is not an operand but operator
+                        // it has a relation with another operator or operand, thus
+                        // we want to write that into the .dot file.
+                        if (relation != string.Empty)
+                        {
+                            sw.Write(relation);
+                        }
+                    }
+
+                    // On traversing the queue, print their label and connect
+                    // the current node to its parent.
+                    sw.WriteLine("}");
+                    sw.Close();
+                }
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+            }
         }
     }
 }

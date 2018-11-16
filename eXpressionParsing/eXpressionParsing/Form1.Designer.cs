@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.parseBtn = new System.Windows.Forms.Button();
             this.humanReadableLbl = new System.Windows.Forms.Label();
@@ -40,16 +40,16 @@
             // 
             // expressionTbx
             // 
-            this.expressionTbx.Location = new System.Drawing.Point(26, 85);
+            this.expressionTbx.Location = new System.Drawing.Point(62, 104);
             this.expressionTbx.Name = "expressionTbx";
             this.expressionTbx.Size = new System.Drawing.Size(671, 31);
             this.expressionTbx.TabIndex = 0;
             // 
             // parseBtn
             // 
-            this.parseBtn.Location = new System.Drawing.Point(712, 78);
+            this.parseBtn.Location = new System.Drawing.Point(739, 98);
             this.parseBtn.Name = "parseBtn";
-            this.parseBtn.Size = new System.Drawing.Size(194, 44);
+            this.parseBtn.Size = new System.Drawing.Size(194, 37);
             this.parseBtn.TabIndex = 1;
             this.parseBtn.Text = "Parse Expression";
             this.parseBtn.UseVisualStyleBackColor = true;
@@ -58,7 +58,7 @@
             // humanReadableLbl
             // 
             this.humanReadableLbl.AutoSize = true;
-            this.humanReadableLbl.Location = new System.Drawing.Point(21, 35);
+            this.humanReadableLbl.Location = new System.Drawing.Point(57, 53);
             this.humanReadableLbl.Name = "humanReadableLbl";
             this.humanReadableLbl.Size = new System.Drawing.Size(0, 25);
             this.humanReadableLbl.TabIndex = 2;
@@ -66,8 +66,8 @@
             // expressionChart
             // 
             this.expressionChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea3);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);

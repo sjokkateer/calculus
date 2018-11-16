@@ -4,17 +4,12 @@ namespace eXpressionParsing
 {
     class PI : Operand
     {
-        public PI() : base('p')
+        public PI() : base("pi")
         { }
 
         public override double Calculate(double x)
         {
             return Math.PI;
-        }
-
-        public override string NodeLabel()
-        {
-            return $"[ label = \"{Data}i\" ]\n"; ;
         }
     }
 }

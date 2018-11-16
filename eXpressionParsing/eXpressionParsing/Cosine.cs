@@ -8,17 +8,12 @@ namespace eXpressionParsing
 {
     class Cosine : UnaryOperator
     {
-        public Cosine() : base('c')
+        public Cosine() : base("cos")
         { }
 
         public override double Calculate(double x)
         {
             return Math.Cos(LeftSuccessor.Calculate(x));
-        }
-
-        public override string NodeLabel()
-        {
-            return $"[ label = \"{Data}os\" ]\n"; ;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace eXpressionParsing
 {
     class NaturalLog : UnaryOperator
     {
-        public NaturalLog() : base('l')
+        public NaturalLog() : base("ln")
         { }
 
         public override double Calculate(double x)

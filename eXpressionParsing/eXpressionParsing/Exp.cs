@@ -8,7 +8,7 @@ namespace eXpressionParsing
 {
     class Exp : UnaryOperator
     {
-        public Exp() : base('e')
+        public Exp() : base("e^")
         { }
 
         public override double Calculate(double x)

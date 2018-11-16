@@ -21,7 +21,7 @@ namespace eXpressionParsing
             return Convert.ToString(Data);
         }
 
-        public virtual string NodeLabel()
+        public string NodeLabel()
         {
             return $"node{NodeNumber} [ label = \"{Data}\" ]\n";
         }

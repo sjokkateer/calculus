@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 
 namespace eXpressionParsing
 {
@@ -22,9 +21,8 @@ namespace eXpressionParsing
         private List<char> operators;
         private List<Operand> operands;
 
-        // Node number for the constructor to make it nicer to create a graph in
-        // a later stage.
-        private int nodeNumber;
+        // Holds the queue of operands result of BFS traversal.
+        public List<Operand> Queue { get; private set; }
 
         public Parser(string expression)
         {
@@ -32,8 +30,6 @@ namespace eXpressionParsing
 
             operators = new List<char>();
             operands = new List<Operand>();
-
-            nodeNumber = 1;
         }
 
         // The main method that if called, processes the expression and stores 
@@ -46,7 +42,11 @@ namespace eXpressionParsing
 
             // Create tree of the final node (the root of the expression).
             expressionRoot = operands[0];
-            CreateGraph();
+
+            // Numbers the nodes according to BFS traversal.
+            // the resulting queue is assigned to a queue variable
+            // that can be used to create a graph picture.
+            Queue = NumberOperands(expressionRoot);
         }
 
         private void ParseHelper(string s)
@@ -273,62 +273,6 @@ namespace eXpressionParsing
                 nodeCounter++;
             }
             return shadowQueue;
-        }
-
-        /// <summary>
-        /// Is the method that is responsible for the writing to the .dot file.
-        /// 
-        /// Writes the expression into the .dot file as a tree in the corresponding
-        /// format (the .dot file requires).
-        /// </summary>
-        private void CreateGraph()
-        {
-            FileStream fs = new FileStream("expression.dot", FileMode.Create, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-
-            try
-            {
-                // General fluff to be inserted into the document.
-                if (sw != null)
-                {
-                    sw.WriteLine("graph calculus {");
-                    sw.WriteLine("node [ fontname = \"Arial\" ]");
-                    // Apply a BFS traversal, store all the nodes while
-                    // Assigning their Node number.
-                    List<Operand> queue = NumberOperands(expressionRoot);
-
-                    // If all went well, all nodes have a number assigned to
-                    // them now.
-                    string relation;
-                    foreach (Operand operand in queue)
-                    {
-                        // Write the label of the operand.
-                        sw.Write(operand.NodeLabel());
-
-                        // Write the relation between operators and operands.
-                        relation = operand.Relation();
-                        // Basically if the operand is not an operand but operator
-                        // it has a relation with another operator or operand, thus
-                        // we want to write that into the .dot file.
-                        if (relation != string.Empty)
-                        {
-                            sw.Write(relation);
-                        }
-                    }
-
-                    // On traversing the queue, print their label and connect
-                    // the current node to its parent.
-                    sw.WriteLine("}");
-                    sw.Close();
-                }
-            }
-            finally
-            {
-                if (sw != null)
-                {
-                    sw.Close();
-                }
-            }
         }
     }
 }
