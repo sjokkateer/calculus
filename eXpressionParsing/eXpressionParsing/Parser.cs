@@ -21,9 +21,6 @@ namespace eXpressionParsing
         private List<char> operators;
         private List<Operand> operands;
 
-        // Holds the queue of operands result of BFS traversal.
-        public List<Operand> Queue { get; private set; }
-
         public Parser(string expression)
         {
             this.expression = expression;
@@ -44,9 +41,7 @@ namespace eXpressionParsing
             expressionRoot = operands[0];
 
             // Numbers the nodes according to BFS traversal.
-            // the resulting queue is assigned to a queue variable
-            // that can be used to create a graph picture.
-            Queue = NumberOperands(expressionRoot);
+            NumberOperands(expressionRoot);
         }
 
         private void ParseHelper(string s)
@@ -212,26 +207,18 @@ namespace eXpressionParsing
         }
 
         /// <summary>
-        /// Traverses the expression tree in a BFS manner, labeling
+        /// Traverses the expression tree in a BFS manner, numbering
         /// each individual operand it encounters.
-        /// 
-        /// Keeps a shadow queue with all the operands as encountered, which
-        /// will be returned such that the .dot file can be created with the
-        /// tree structure in mind.
         /// </summary>
         /// <param name="expressionRoot">Is the root operand of the expression.</param>
-        /// <returns>The queue of operand(s) and [operators]</returns>
-        private List<Operand> NumberOperands(Operand expressionRoot)
+        private void NumberOperands(Operand expressionRoot)
         {
             List<Operand> queue = new List<Operand>();
-            List<Operand> shadowQueue = new List<Operand>();
 
             Operand currentOperand = expressionRoot;
 
-            // Add the root to both queues as we need the queue for 
-            // writing our values and creating all the connections.
+            // Add the root as the first item in the queue.
             queue.Add(currentOperand);
-            shadowQueue.Add(currentOperand);
             
             // Label the root as the first node (node1) and add it to
             // the queue.
@@ -244,24 +231,17 @@ namespace eXpressionParsing
                 // Check what type of operator/operand to add its children to the queue.
                 if (currentOperand is BinaryOperator)
                 {
-                    // Obtain children and add them to queue if possible.
                     queue.Add(((BinaryOperator)currentOperand).LeftSuccessor);
                     queue.Add(((BinaryOperator)currentOperand).RightSuccessor);
-
-                    shadowQueue.Add(((BinaryOperator)currentOperand).LeftSuccessor);
-                    shadowQueue.Add(((BinaryOperator)currentOperand).RightSuccessor);
                 }
                 else if (currentOperand is UnaryOperator)
                 {
                     queue.Add(((UnaryOperator)currentOperand).LeftSuccessor);
-                    shadowQueue.Add(((UnaryOperator)currentOperand).LeftSuccessor);
                 }
-                
                 // Remove the recently processed operand from the queue and try to
                 // Obtain the next if there is one.
                 queue.RemoveAt(0);
-
-                // Check if it was not one character (operand).
+                // Check if it was not a single operand as input expression.
                 if (queue.Count > 0)
                 {
                     currentOperand = queue[0];
@@ -272,7 +252,18 @@ namespace eXpressionParsing
                 }
                 nodeCounter++;
             }
-            return shadowQueue;
+        }
+
+        /// <summary>
+        /// Recursive method that creates a string that is
+        /// used for the .dot file to create a picture of the
+        /// graph.
+        /// </summary>
+        /// <returns>A string formatted in such a way it's readable by graphviz 
+        /// in a .dot file</returns>
+        public string DotFileGraph()
+        {
+            return expressionRoot.NodeLabel();
         }
     }
 }

@@ -106,7 +106,6 @@ namespace eXpressionParsing
         {
             FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
-
             try
             {
                 // General fluff to be inserted into the document.
@@ -114,31 +113,9 @@ namespace eXpressionParsing
                 {
                     sw.WriteLine("graph calculus {");
                     sw.WriteLine("node [ fontname = \"Arial\" ]");
-                    // Apply a BFS traversal, store all the nodes while
-                    // Assigning their Node number.
-                    List<Operand> queue = expressionParser.Queue;
-
-                    // If all went well, all nodes have a number assigned to
-                    // them now.
-                    string relation;
-                    foreach (Operand operand in queue)
-                    {
-                        // Write the label of the operand.
-                        sw.Write(operand.NodeLabel());
-
-                        // Write the relation between operators and operands.
-                        relation = operand.Relation();
-                        // Basically if the operand is not an operand but operator
-                        // it has a relation with another operator or operand, thus
-                        // we want to write that into the .dot file.
-                        if (relation != string.Empty)
-                        {
-                            sw.Write(relation);
-                        }
-                    }
-
-                    // On traversing the queue, print their label and connect
-                    // the current node to its parent.
+                    // Make a call to the recursive method that returns the entirity
+                    // of the content that makes up the .dot file.
+                    sw.Write(expressionParser.DotFileGraph());
                     sw.WriteLine("}");
                     sw.Close();
                 }

@@ -19,10 +19,11 @@
             return result;
         }
 
-        public override string Relation()
+        public override string NodeLabel()
         {
-            string result = base.Relation();
+            string result = base.NodeLabel();
             result += $"node{NodeNumber} -- node{RightSuccessor.NodeNumber}\n";
+            result += RightSuccessor.NodeLabel();
             return result;
         }
     }
