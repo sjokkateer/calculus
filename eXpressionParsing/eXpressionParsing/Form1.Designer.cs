@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.parseBtn = new System.Windows.Forms.Button();
             this.humanReadableLbl = new System.Windows.Forms.Label();
             this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.graphPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // expressionTbx
@@ -63,20 +65,29 @@
             // 
             // expressionChart
             // 
-            this.expressionChart.BackColor = System.Drawing.SystemColors.Window;
-            chartArea5.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea5);
+            this.expressionChart.BackColor = System.Drawing.Color.Transparent;
+            chartArea1.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea1);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
             this.expressionChart.TabIndex = 4;
             this.expressionChart.Text = "Expression Chart";
             // 
+            // graphPictureBox
+            // 
+            this.graphPictureBox.Location = new System.Drawing.Point(1273, 175);
+            this.graphPictureBox.Name = "graphPictureBox";
+            this.graphPictureBox.Size = new System.Drawing.Size(955, 854);
+            this.graphPictureBox.TabIndex = 5;
+            this.graphPictureBox.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1315, 1079);
+            this.ClientSize = new System.Drawing.Size(2251, 1079);
+            this.Controls.Add(this.graphPictureBox);
             this.Controls.Add(this.expressionChart);
             this.Controls.Add(this.humanReadableLbl);
             this.Controls.Add(this.parseBtn);
@@ -84,6 +95,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -95,6 +107,7 @@
         private System.Windows.Forms.Button parseBtn;
         private System.Windows.Forms.Label humanReadableLbl;
         private System.Windows.Forms.DataVisualization.Charting.Chart expressionChart;
+        private System.Windows.Forms.PictureBox graphPictureBox;
     }
 }
 

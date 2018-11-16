@@ -18,5 +18,12 @@
             result += ")";
             return result;
         }
+
+        public override string Relation()
+        {
+            string result = base.Relation();
+            result += $"node{NodeNumber} -- node{RightSuccessor.NodeNumber}\n";
+            return result;
+        }
     }
 }

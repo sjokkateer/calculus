@@ -15,5 +15,10 @@ namespace eXpressionParsing
         {
             return Math.Sin(LeftSuccessor.Calculate(x));
         }
+
+        public override string NodeLabel()
+        {
+            return $"[ label = \"{Data}in\" ]\n"; ;
+        }
     }
 }

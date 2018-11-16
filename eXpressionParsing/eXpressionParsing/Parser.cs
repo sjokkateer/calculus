@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace eXpressionParsing
 {
@@ -21,12 +22,18 @@ namespace eXpressionParsing
         private List<char> operators;
         private List<Operand> operands;
 
+        // Node number for the constructor to make it nicer to create a graph in
+        // a later stage.
+        private int nodeNumber;
+
         public Parser(string expression)
         {
             this.expression = expression;
 
             operators = new List<char>();
             operands = new List<Operand>();
+
+            nodeNumber = 1;
         }
 
         // The main method that if called, processes the expression and stores 
@@ -39,6 +46,7 @@ namespace eXpressionParsing
 
             // Create tree of the final node (the root of the expression).
             expressionRoot = operands[0];
+            CreateGraph();
         }
 
         private void ParseHelper(string s)
@@ -197,9 +205,130 @@ namespace eXpressionParsing
             return expressionRoot.Calculate(x);
         }
 
+        // Returns a human readable format of the expression.
         public override string ToString()
         {
             return expressionRoot.ToString();
+        }
+
+        /// <summary>
+        /// Traverses the expression tree in a BFS manner, labeling
+        /// each individual operand it encounters.
+        /// 
+        /// Keeps a shadow queue with all the operands as encountered, which
+        /// will be returned such that the .dot file can be created with the
+        /// tree structure in mind.
+        /// </summary>
+        /// <param name="expressionRoot">Is the root operand of the expression.</param>
+        /// <returns>The queue of operand(s) and [operators]</returns>
+        private List<Operand> NumberOperands(Operand expressionRoot)
+        {
+            List<Operand> queue = new List<Operand>();
+            List<Operand> shadowQueue = new List<Operand>();
+
+            Operand currentOperand = expressionRoot;
+
+            // Add the root to both queues as we need the queue for 
+            // writing our values and creating all the connections.
+            queue.Add(currentOperand);
+            shadowQueue.Add(currentOperand);
+            
+            // Label the root as the first node (node1) and add it to
+            // the queue.
+            int nodeCounter = 1;
+            while (currentOperand != null)
+            {
+                // Process the first operand of the queue.
+                currentOperand.NodeNumber = nodeCounter;
+
+                // Check what type of operator/operand to add its children to the queue.
+                if (currentOperand is BinaryOperator)
+                {
+                    // Obtain children and add them to queue if possible.
+                    queue.Add(((BinaryOperator)currentOperand).LeftSuccessor);
+                    queue.Add(((BinaryOperator)currentOperand).RightSuccessor);
+
+                    shadowQueue.Add(((BinaryOperator)currentOperand).LeftSuccessor);
+                    shadowQueue.Add(((BinaryOperator)currentOperand).RightSuccessor);
+                }
+                else if (currentOperand is UnaryOperator)
+                {
+                    queue.Add(((UnaryOperator)currentOperand).LeftSuccessor);
+                    shadowQueue.Add(((UnaryOperator)currentOperand).LeftSuccessor);
+                }
+                
+                // Remove the recently processed operand from the queue and try to
+                // Obtain the next if there is one.
+                queue.RemoveAt(0);
+
+                // Check if it was not one character (operand).
+                if (queue.Count > 0)
+                {
+                    currentOperand = queue[0];
+                }
+                else
+                {
+                    currentOperand = null;
+                }
+                nodeCounter++;
+            }
+            return shadowQueue;
+        }
+
+        /// <summary>
+        /// Is the method that is responsible for the writing to the .dot file.
+        /// 
+        /// Writes the expression into the .dot file as a tree in the corresponding
+        /// format (the .dot file requires).
+        /// </summary>
+        private void CreateGraph()
+        {
+            FileStream fs = new FileStream("expression.dot", FileMode.Create, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+
+            try
+            {
+                // General fluff to be inserted into the document.
+                if (sw != null)
+                {
+                    sw.WriteLine("graph calculus {");
+                    sw.WriteLine("node [ fontname = \"Arial\" ]");
+                    // Apply a BFS traversal, store all the nodes while
+                    // Assigning their Node number.
+                    List<Operand> queue = NumberOperands(expressionRoot);
+
+                    // If all went well, all nodes have a number assigned to
+                    // them now.
+                    string relation;
+                    foreach (Operand operand in queue)
+                    {
+                        // Write the label of the operand.
+                        sw.Write(operand.NodeLabel());
+
+                        // Write the relation between operators and operands.
+                        relation = operand.Relation();
+                        // Basically if the operand is not an operand but operator
+                        // it has a relation with another operator or operand, thus
+                        // we want to write that into the .dot file.
+                        if (relation != string.Empty)
+                        {
+                            sw.Write(relation);
+                        }
+                    }
+
+                    // On traversing the queue, print their label and connect
+                    // the current node to its parent.
+                    sw.WriteLine("}");
+                    sw.Close();
+                }
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+            }
         }
     }
 }

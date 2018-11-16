@@ -11,5 +11,10 @@ namespace eXpressionParsing
         {
             return Math.PI;
         }
+
+        public override string NodeLabel()
+        {
+            return $"[ label = \"{Data}i\" ]\n"; ;
+        }
     }
 }

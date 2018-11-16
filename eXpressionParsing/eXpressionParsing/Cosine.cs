@@ -15,5 +15,10 @@ namespace eXpressionParsing
         {
             return Math.Cos(LeftSuccessor.Calculate(x));
         }
+
+        public override string NodeLabel()
+        {
+            return $"[ label = \"{Data}os\" ]\n"; ;
+        }
     }
 }

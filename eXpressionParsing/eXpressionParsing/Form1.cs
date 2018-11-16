@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Diagnostics;
 
 namespace eXpressionParsing
 {
@@ -33,6 +34,7 @@ namespace eXpressionParsing
                 humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
 
                 CrearteChart();
+                CreateGraph();
             }
         }
 
@@ -43,15 +45,16 @@ namespace eXpressionParsing
             double xMin = -5;
             double xMax = 5;
 
-            double yMin = -10;
-            double yMax = 10;
+            double yMin = -2;
+            double yMax = 2;
 
-            double step = 0.01;
+            double step = 0.0001;
             double result;
 
             expressionChart.Series.Add("Expression");
-            expressionChart.Series["Expression"].ChartType = SeriesChartType.Line;
-            
+            expressionChart.Series["Expression"].ChartType = SeriesChartType.Point;
+            expressionChart.Series["Expression"].MarkerSize = 2;
+
             expressionChart.Series["Expression"].ChartArea = "ChartArea1";
 
             expressionChart.ChartAreas["ChartArea1"].AxisX.Minimum = xMin;
@@ -68,6 +71,15 @@ namespace eXpressionParsing
                     expressionChart.Series["Expression"].Points.AddXY(i, result);
                 }
             }
+        }
+        private void CreateGraph()
+        {
+            Process dot = new Process();
+            dot.StartInfo.FileName = "dot.exe";
+            dot.StartInfo.Arguments = "-Tpng -oexpression.png expression.dot";
+            dot.Start();
+            dot.WaitForExit();
+            graphPictureBox.ImageLocation = "expression.png";
         }
     }
 }

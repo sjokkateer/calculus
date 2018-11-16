@@ -26,5 +26,10 @@ namespace eXpressionParsing
             }
             return result;
         }
+
+        public override string Relation()
+        {
+            return $"node{NodeNumber} -- node{LeftSuccessor.NodeNumber}\n";
+        }
     }
 }
