@@ -95,7 +95,6 @@ namespace eXpressionParsing
                 if (!double.IsInfinity(result) && !double.IsNaN(result))
                 {
                     expressionChart.Series["Expression"].Points.AddXY(i, result);
-                    debugLb.Text += $"({i}, {result}), ";
                 }
             }
         }
