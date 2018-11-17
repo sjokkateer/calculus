@@ -31,16 +31,39 @@ namespace eXpressionParsing
             else
             {
                 expressionParser = new Parser(expression);
-                expressionParser.Parse();
-                humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
+                try
+                {
+                    expressionParser.Parse();
+                    humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
 
-                CrearteChart();
+                    CrearteChart();
 
-                // This could be extended to prompt for a file name.
-                CreateGraph("expression.dot");
+                    // This could be extended to prompt for a file name.
+                    CreateGraph("expression.dot");
+
+                    // Placed deep in here such that there will still be
+                    // made a png picture representation of the entered
+                    // expression.
+                    if (expressionChart.Series["Expression"].Points.Count < 1)
+                    {
+                        throw new InvalidExpressionException($"{expressionParser.ToString()} is not a valid expression!");
+                    }
+                }
+                catch (InvalidExpressionException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (InvalidNumberException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
+        /// <summary>
+        /// Method that is responsible for creating the chart
+        /// and plot.
+        /// </summary>
         private void CrearteChart()
         {
             expressionChart.Series.Clear();
@@ -72,6 +95,7 @@ namespace eXpressionParsing
                 if (!double.IsInfinity(result) && !double.IsNaN(result))
                 {
                     expressionChart.Series["Expression"].Points.AddXY(i, result);
+                    debugLb.Text += $"({i}, {result}), ";
                 }
             }
         }

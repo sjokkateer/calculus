@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace eXpressionParsing
 {
@@ -95,13 +96,21 @@ namespace eXpressionParsing
                     if (numberOperator == 'n')
                     {
                         int numericResult;
-                        int.TryParse(result, out numericResult);
+                        bool isIntParsed = int.TryParse(result, out numericResult);
+                        if (!isIntParsed)
+                        {
+                            throw new InvalidNumberException($"Please enter a valid integer value.\nYou entered: {result}");
+                        }
                         operand = new Integer(numericResult);
                     }
                     else
                     {
                         double numericResult;
-                        double.TryParse(result, out numericResult);
+                        bool isDoubleParsed = double.TryParse(result, out numericResult);
+                        if (!isDoubleParsed)
+                        {
+                            throw new InvalidNumberException($"Please enter a valid real number.\nYou entered: {result}");
+                        }
                         operand = new RealNumber(numericResult);
                     }
                     operands.Add(operand);

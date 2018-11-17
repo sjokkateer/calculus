@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.parseBtn = new System.Windows.Forms.Button();
             this.humanReadableLbl = new System.Windows.Forms.Label();
             this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphPictureBox = new System.Windows.Forms.PictureBox();
+            this.debugLb = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -65,8 +66,8 @@
             // 
             // expressionChart
             // 
-            chartArea5.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea5);
+            chartArea1.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea1);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
@@ -81,11 +82,21 @@
             this.graphPictureBox.TabIndex = 5;
             this.graphPictureBox.TabStop = false;
             // 
+            // debugLb
+            // 
+            this.debugLb.AutoSize = true;
+            this.debugLb.Location = new System.Drawing.Point(1145, 64);
+            this.debugLb.Name = "debugLb";
+            this.debugLb.Size = new System.Drawing.Size(70, 25);
+            this.debugLb.TabIndex = 6;
+            this.debugLb.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2251, 1079);
+            this.Controls.Add(this.debugLb);
             this.Controls.Add(this.graphPictureBox);
             this.Controls.Add(this.expressionChart);
             this.Controls.Add(this.humanReadableLbl);
@@ -107,6 +118,7 @@
         private System.Windows.Forms.Label humanReadableLbl;
         private System.Windows.Forms.DataVisualization.Charting.Chart expressionChart;
         private System.Windows.Forms.PictureBox graphPictureBox;
+        private System.Windows.Forms.Label debugLb;
     }
 }
 
