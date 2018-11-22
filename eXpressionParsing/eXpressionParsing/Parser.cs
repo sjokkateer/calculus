@@ -6,9 +6,6 @@ namespace eXpressionParsing
 {
     class Parser
     {
-        private Operand expressionRoot;
-        private Operand derivativeRoot;
-
         // Several string constants that will be used
         // to detect what kind of object needs to be made
         // , and what data to store in it while parsing.
@@ -31,19 +28,19 @@ namespace eXpressionParsing
             operands = new List<Operand>();
         }
 
-        // The main method that if called, processes the expression and stores 
-        // the root node of the expression.
-        public void Parse()
+        /// <summary>
+        /// Will parse the entered expression (in pre-fix notation)
+        /// into an expression tree.
+        /// </summary>
+        /// <returns>The root node of the expression tree.</returns>
+        public Operand Parse()
         {
             // Parse the expression until
             // The expression is an empty string.
             ParseHelper(expression);
 
             // Create tree of the final node (the root of the expression).
-             expressionRoot = operands[0];
-
-            // Numbers the nodes according to BFS traversal.
-            NumberOperands(expressionRoot);
+            return operands[0];
         }
 
         private void ParseHelper(string s)
@@ -201,108 +198,6 @@ namespace eXpressionParsing
 
             // Add the sub tree on top of the operands stack.
             operands.Add(result);
-        }
-
-        // Calculates the f(x) of the expression 
-        // for the current value of x.
-        public double CalculateForX(double x)
-        {
-            return expressionRoot.Calculate(x);
-        }
-
-        // Calculates the f'(x) of the expression
-        // for the current value of x.
-        public double CalculateForXDerivative(double x)
-        {
-            return derivativeRoot.Calculate(x);
-        }
-
-        // Returns a human readable format of the expression.
-        public override string ToString()
-        {
-            return expressionRoot.ToString();
-        }
-
-        /// <summary>
-        /// Traverses the expression tree in a BFS manner, numbering
-        /// each individual operand it encounters.
-        /// </summary>
-        /// <param name="expressionRoot">Is the root operand of the expression.</param>
-        private void NumberOperands(Operand expressionRoot)
-        {
-            List<Operand> queue = new List<Operand>();
-
-            Operand currentOperand = expressionRoot;
-
-            // Add the root as the first item in the queue.
-            queue.Add(currentOperand);
-            
-            // Label the root as the first node (node1) and add it to
-            // the queue.
-            int nodeCounter = 1;
-            while (currentOperand != null)
-            {
-                // Process the first operand of the queue.
-                currentOperand.NodeNumber = nodeCounter;
-
-                // Check what type of operator/operand to add its children to the queue.
-                if (currentOperand is BinaryOperator)
-                {
-                    queue.Add(((BinaryOperator)currentOperand).LeftSuccessor);
-                    queue.Add(((BinaryOperator)currentOperand).RightSuccessor);
-                }
-                else if (currentOperand is UnaryOperator)
-                {
-                    queue.Add(((UnaryOperator)currentOperand).LeftSuccessor);
-                }
-                // Remove the recently processed operand from the queue and try to
-                // Obtain the next if there is one.
-                queue.RemoveAt(0);
-                // Check if it was not a single operand as input expression.
-                if (queue.Count > 0)
-                {
-                    currentOperand = queue[0];
-                }
-                else
-                {
-                    currentOperand = null;
-                }
-                nodeCounter++;
-            }
-        }
-
-        /// <summary>
-        /// Recursive method that creates a string that is
-        /// used for the .dot file to create a picture of the
-        /// graph.
-        /// </summary>
-        /// <returns>A string formatted in such a way it's readable by graphviz 
-        /// in a .dot file</returns>
-        public string DotFileGraph()
-        {
-            return expressionRoot.NodeLabel();
-        }
-
-        public string DotFileGraphDerivative()
-        {
-            // Return the NodeLabel result called
-            // on the root node of the derivative tree.
-            return derivativeRoot.NodeLabel();
-        }
-
-        /// <summary>
-        /// Will make a recursive call on the original expression's root.
-        /// 
-        /// Will assign the resulting tree to the derivative root operand.
-        /// </summary>
-        public void Differentiate()
-        {
-            // Create an expression tree for the derivative.
-            derivativeRoot = expressionRoot.Differentiate();
-
-            // Properly number the operands and operators
-            // Such that a graph can be made of the tree.
-            NumberOperands(derivativeRoot);
         }
     }
 }
