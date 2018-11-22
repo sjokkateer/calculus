@@ -31,6 +31,7 @@ namespace eXpressionParsing
             Text = "Complex Calculus And Much More. Application";
             WindowState = FormWindowState.Maximized;
         }
+
         private void Parse()
         {
             string expression = expressionTbx.Text;
@@ -49,16 +50,15 @@ namespace eXpressionParsing
                     // Assign the calculate for x to the delegate.
                     calculator = new CalculateForXHandler(expressionRoot.Calculate);
                     // Then plot the chart.
-                    CrearteChart();
 
-                    // First label the operands and operators before we create a graph of it.
-                    NumberOperands(expressionRoot);
-                    CreateGraph("expression", expressionRoot.NodeLabel());
+                    expressionChart.Series.Clear();
+                    string seriesName = "Expression";
+                    CrearteChart(seriesName);
 
                     // Placed deep in here such that there will still be
                     // made a png picture representation of the entered
                     // expression.
-                    if (expressionChart.Series["Expression"].Points.Count < 1)
+                    if (expressionChart.Series[seriesName].Points.Count < 1)
                     {
                         throw new InvalidExpressionException($"{expressionParser.ToString()} is not a valid expression!");
                     }
@@ -83,7 +83,7 @@ namespace eXpressionParsing
             else
             {
                 // Parse only if an expression is entered.
-                ParseExpression(expression);
+                Parse();
 
                 // Differentiate the expression.
                 derivativeExpressionRoot = expressionRoot.Differentiate();
@@ -93,15 +93,20 @@ namespace eXpressionParsing
 
                 // Assign the method to calculate the x'es for the derivative of the expression.
                 calculator = new CalculateForXHandler(derivativeExpressionRoot.Calculate);
-                // Plot the values.
-                CrearteChart();
+                CrearteChart("Analytical Derivative");
 
-                // Number the nodes in the derivative expression tree.
-                NumberOperands(derivativeExpressionRoot);
-
-                // Create a graph of the analytical derivative.
-                CreateGraph("derivative", derivativeExpressionRoot.NodeLabel());
+                // Plot Newton's difference quotient as well.
+                calculator = new CalculateForXHandler(DifferenceQuotient);
+                CrearteChart("Difference Quotient");
             }
+        }
+
+        private double DifferenceQuotient(double x)
+        {
+            double changeInX = 0.000001;
+
+            // f(x + changeInX) - f(x) / changeInX
+            return (expressionRoot.Calculate(x + changeInX) - expressionRoot.Calculate(x)) / changeInX;
         }
 
         /// <summary>
@@ -145,18 +150,13 @@ namespace eXpressionParsing
         /// Method that is responsible for creating the chart
         /// and plot.
         /// </summary>
-        private void CrearteChart()
+        private void CrearteChart(string seriesName)
         {
-            expressionChart.Series.Clear();
-
             double xMin = -5;
             double xMax = 5;
 
             double yMin = -10;
             double yMax = 15;
-
-            double step = 0.0001;
-            double result;
 
             expressionChart.ChartAreas["ChartArea1"].AxisX.Minimum = xMin;
             expressionChart.ChartAreas["ChartArea1"].AxisX.Maximum = xMax;
@@ -164,22 +164,29 @@ namespace eXpressionParsing
             expressionChart.ChartAreas["ChartArea1"].AxisY.Minimum = yMin;
             expressionChart.ChartAreas["ChartArea1"].AxisY.Maximum = yMax;
 
-            expressionChart.Series.Add("Expression");
-            expressionChart.Series["Expression"].ChartType = SeriesChartType.Point;
-            expressionChart.Series["Expression"].MarkerSize = 2;
+            CreateSeries(xMin, xMax, seriesName);
+        }
+        
+        private void CreateSeries(double xMin, double xMax, string seriesName)
+        {
+            expressionChart.Series.Add(seriesName);
+            expressionChart.Series[seriesName].ChartType = SeriesChartType.Point;
+            expressionChart.Series[seriesName].MarkerSize = 2;
 
-            expressionChart.Series["Expression"].ChartArea = "ChartArea1";
+            expressionChart.Series[seriesName].ChartArea = "ChartArea1";
 
+            double step = 0.0001;
+            double result;
             for (double i = xMin; i <= xMax; i += step)
             {
                 result = calculator(i);
                 if (!double.IsInfinity(result) && !double.IsNaN(result))
                 {
-                    expressionChart.Series["Expression"].Points.AddXY(i, result);
+                    expressionChart.Series[seriesName].Points.AddXY(i, result);
                 }
             }
         }
-        
+
         /// <summary>
         /// Method responsible for creating the image via the
         /// graphViz program, that is based on the input of
@@ -280,15 +287,34 @@ namespace eXpressionParsing
             }
         }
 
+        /// <summary>
+        /// Based on a radio button selection, the graph
+        /// of either the expression or the derivative will
+        /// be drawn.
+        /// 
+        /// Process will always parse the expression and plot it
+        /// for both the expression and derivative.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void processBtn_Click(object sender, EventArgs e)
         {
             if (parseRbtn.Checked)
             {
                 Parse();
+                
+                // Label the nodes and create its graph.
+                NumberOperands(expressionRoot);
+                CreateGraph("expression", expressionRoot.NodeLabel());
             }
             else if (differentiateRbtn.Checked)
             {
                 Differentiate();
+
+                // Number the nodes in the derivative expression tree.
+                NumberOperands(derivativeExpressionRoot);
+                // Create a graph of the analytical derivative.
+                CreateGraph("derivative", derivativeExpressionRoot.NodeLabel());
             }
         }
     }

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Addition.cs" />
     <Compile Include="BinaryOperator.cs" />
+    <Compile Include="ChartData.cs" />
     <Compile Include="Cosine.cs" />
     <Compile Include="DependentVariable.cs" />
     <Compile Include="Division.cs" />
