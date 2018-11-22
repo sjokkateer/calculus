@@ -8,8 +8,14 @@ using System.IO;
 
 namespace eXpressionParsing
 {
+    public delegate double CalculateForXHandler(double x);
+
     public partial class Form1 : Form
     {
+        // The delegate that will handle the calculations when asked to
+        // create a chart.
+        private CalculateForXHandler calculator;
+
         Parser expressionParser;
 
         // Two standard lists, that will function as storage,
@@ -30,7 +36,32 @@ namespace eXpressionParsing
             }
             else
             {
+                // Basic parsing method
                 ParseExpression(expression);
+
+                // Do all other additional stuff.
+                try
+                {
+                    // Assign the calculate for x to the delegate.
+                    calculator = new CalculateForXHandler(expressionParser.CalculateForX);
+                    // Then plot the chart.
+                    CrearteChart();
+
+                    // This could be extended to prompt for a file name.
+                    CreateGraph("expression", expressionParser.DotFileGraph());
+
+                    // Placed deep in here such that there will still be
+                    // made a png picture representation of the entered
+                    // expression.
+                    if (expressionChart.Series["Expression"].Points.Count < 1)
+                    {
+                        throw new InvalidExpressionException($"{expressionParser.ToString()} is not a valid expression!");
+                    }
+                }
+                catch (InvalidExpressionException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -45,25 +76,16 @@ namespace eXpressionParsing
             {
                 expressionParser.Parse();
                 humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
-
-                CrearteChart();
-
-                // This could be extended to prompt for a file name.
-                CreateGraph("expression.dot");
-
-                // Placed deep in here such that there will still be
-                // made a png picture representation of the entered
-                // expression.
-                if (expressionChart.Series["Expression"].Points.Count < 1)
-                {
-                    throw new InvalidExpressionException($"{expressionParser.ToString()} is not a valid expression!");
-                }
             }
-            catch (InvalidExpressionException ex)
+            catch (InvalidNumberException ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            catch (InvalidNumberException ex)
+            catch (InvalidArgumentTypeException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidFactorialArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -100,14 +122,14 @@ namespace eXpressionParsing
 
             for (double i = xMin; i <= xMax; i += step)
             {
-                result = expressionParser.CalculateForX(i);
+                result = calculator(i);
                 if (!double.IsInfinity(result) && !double.IsNaN(result))
                 {
                     expressionChart.Series["Expression"].Points.AddXY(i, result);
                 }
             }
         }
-
+        
         /// <summary>
         /// Method responsible for creating the image via the
         /// graphViz program, that is based on the input of
@@ -116,31 +138,17 @@ namespace eXpressionParsing
         /// <param name="dotFileName">A string, someFileName.dot
         /// that is used to create a .dot file that represents
         /// the expression in graph form.</param>
-        private void CreateGraph(string dotFileName)
+        private void CreateGraph(string dotFileName, string fileContent)
         {
-            CreateDotFile(dotFileName);
+            CreateDotFile(dotFileName, fileContent);
 
-            // Move this code into a new method that can be re-used later.
+            // Maybe move this code into a new method that can be re-used later.
             Process dot = new Process();
             dot.StartInfo.FileName = "dot.exe";
-            dot.StartInfo.Arguments = "-Tpng -oexpression.png expression.dot";
+            dot.StartInfo.Arguments = $"-Tpng -o{dotFileName}.png {dotFileName}.dot";
             dot.Start();
             dot.WaitForExit();
-            graphPictureBox.ImageLocation = "expression.png";
-        }
-
-        private void CreateDerivativeGraph(string dotFileName)
-        {
-            CreateDerivativeDotFile(dotFileName);
-
-            // Move this code into a new method that can be re-used later.
-            Process dot = new Process();
-            dot.StartInfo.FileName = "dot.exe";
-            dot.StartInfo.Arguments = "-Tpng -oderivative.png derivative.dot";
-            dot.Start();
-            dot.WaitForExit();
-            graphPictureBox.ImageLocation = "derivative.png";
-
+            graphPictureBox.ImageLocation = $"{dotFileName}.png";
         }
 
         /// <summary>
@@ -149,20 +157,17 @@ namespace eXpressionParsing
         /// Writes the expression into the .dot file as a tree in the corresponding
         /// format (the .dot file requires).
         /// </summary>
-        private void CreateDotFile(string fileName)
+        private void CreateDotFile(string fileName, string fileContent)
         {
-            FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+            FileStream fs = new FileStream($"{fileName}.dot", FileMode.Create, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
             try
             {
-                // General fluff to be inserted into the document.
                 if (sw != null)
                 {
                     sw.WriteLine("graph calculus {");
                     sw.WriteLine("\tnode [ fontname = \"Arial\" ]");
-                    // Make a call to the recursive method that returns the entirity
-                    // of the content that makes up the .dot file.
-                    sw.Write(expressionParser.DotFileGraph());
+                    sw.Write(fileContent);
                     sw.WriteLine("}");
                     sw.Close();
                 }
@@ -182,47 +187,30 @@ namespace eXpressionParsing
             // entered expression can be differentiated and displayed.
             string expression = expressionTbx.Text;
 
-            // Parse only if an expression is entered.
-            if (expression != string.Empty)
+            
+            if (expression == string.Empty)
             {
-                ParseExpression(expression);
+                MessageBox.Show("Please enter an expression to differentiate.");
+
             }
             else
             {
-                MessageBox.Show("Please enter an expression to differentiate.");
-            }
-            expressionParser.Differentiate();
-            CreateDerivativeGraph("derivative.dot");
-        }
+                // Parse only if an expression is entered.
+                ParseExpression(expression);
 
-        /// <summary>
-        /// Revise this method since it is a large repetition of code.
-        /// </summary>
-        /// <param name="fileName"></param>
-        private void CreateDerivativeDotFile(string fileName)
-        {
-            FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-            try
-            {
-                // General fluff to be inserted into the document.
-                if (sw != null)
-                {
-                    sw.WriteLine("graph calculus {");
-                    sw.WriteLine("\tnode [ fontname = \"Arial\" ]");
-                    // Make a call to the recursive method that returns the entirity
-                    // of the content that makes up the .dot file.
-                    sw.Write(expressionParser.DotFileGraphDerivative());
-                    sw.WriteLine("}");
-                    sw.Close();
-                }
-            }
-            finally
-            {
-                if (sw != null)
-                {
-                    sw.Close();
-                }
+                // Differentiate the expression.
+                expressionParser.Differentiate();
+
+                // Display the derivative in text.
+                derivativeLb.Text = $"Derivative: {}";
+
+                // Assign the method to calculate the x'es for the derivative of the expression.
+                calculator = new CalculateForXHandler(expressionParser.CalculateForXDerivative);
+                // Plot the values.
+                CrearteChart();
+
+                // Create a graph of the analytical derivative.
+                CreateGraph("derivative", expressionParser.DotFileGraphDerivative());
             }
         }
     }

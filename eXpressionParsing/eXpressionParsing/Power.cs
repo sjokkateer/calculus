@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eXpressionParsing
 {
@@ -15,13 +11,15 @@ namespace eXpressionParsing
             get { return exponent; }
             set
             {
+                // Validate that the input is an Integer object or if it just got constructed and has value null.
                 if (value is Integer || value == null)
                 {
                     exponent = value;
                 }
                 else
                 {
-                    throw new Exception("Please enter an integer power.");
+                    // Otherwise the input type according to the assignment is invalid.
+                    throw new InvalidArgumentTypeException("A power function requires the power to be of type integer.");
                 }
             }
         }

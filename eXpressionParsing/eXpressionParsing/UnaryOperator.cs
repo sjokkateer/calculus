@@ -4,7 +4,7 @@ namespace eXpressionParsing
 {
     abstract class UnaryOperator : Operand
     {
-        public Operand LeftSuccessor { get; set; }
+        public virtual Operand LeftSuccessor { get; set; }
 
         public UnaryOperator(object data) : base(data)
         {

@@ -40,7 +40,7 @@ namespace eXpressionParsing
             ParseHelper(expression);
 
             // Create tree of the final node (the root of the expression).
-            expressionRoot = operands[0];
+             expressionRoot = operands[0];
 
             // Numbers the nodes according to BFS traversal.
             NumberOperands(expressionRoot);
@@ -208,6 +208,13 @@ namespace eXpressionParsing
         public double CalculateForX(double x)
         {
             return expressionRoot.Calculate(x);
+        }
+
+        // Calculates the f'(x) of the expression
+        // for the current value of x.
+        public double CalculateForXDerivative(double x)
+        {
+            return derivativeRoot.Calculate(x);
         }
 
         // Returns a human readable format of the expression.

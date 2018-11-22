@@ -2,6 +2,35 @@
 {
     class Factorial : UnaryOperator
     {
+        private Operand naturalNumber;
+        public override Operand LeftSuccessor
+        {
+            get { return naturalNumber; }
+            set
+            {
+                // Validate that the input to factorial is an integer.
+                if (value is Integer)
+                {
+                    // Validate the value being >= 0 to be valid.
+                    if ((int)value.Data >= 0)
+                    {
+                        naturalNumber = value;
+                    }
+                    else
+                    {
+                        throw new InvalidFactorialArgumentException($"Factorial only takes values >= 0, not {value}.");
+                    }
+                }
+                else if (value == null) // Allow null to be assigned upon construction of the operator.
+                {
+                    naturalNumber = value;
+                }
+                else // Otherwise some invalid operation happened and we return an error.
+                {
+                    throw new InvalidArgumentTypeException("Factorial needs a natural number as input type.");
+                }
+            }
+        }
         public Factorial() : base('!')
         { }
 
