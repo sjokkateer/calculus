@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.parseBtn = new System.Windows.Forms.Button();
             this.humanReadableLbl = new System.Windows.Forms.Label();
             this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphPictureBox = new System.Windows.Forms.PictureBox();
+            this.differentiateBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -65,8 +66,8 @@
             // 
             // expressionChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea4);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
@@ -77,15 +78,26 @@
             // 
             this.graphPictureBox.Location = new System.Drawing.Point(1300, 147);
             this.graphPictureBox.Name = "graphPictureBox";
-            this.graphPictureBox.Size = new System.Drawing.Size(955, 907);
+            this.graphPictureBox.Size = new System.Drawing.Size(2500, 907);
             this.graphPictureBox.TabIndex = 5;
             this.graphPictureBox.TabStop = false;
+            // 
+            // differentiateBtn
+            // 
+            this.differentiateBtn.Location = new System.Drawing.Point(703, 42);
+            this.differentiateBtn.Name = "differentiateBtn";
+            this.differentiateBtn.Size = new System.Drawing.Size(265, 37);
+            this.differentiateBtn.TabIndex = 6;
+            this.differentiateBtn.Text = "Differentiate Expression";
+            this.differentiateBtn.UseVisualStyleBackColor = true;
+            this.differentiateBtn.Click += new System.EventHandler(this.differentiateBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2251, 1079);
+            this.Controls.Add(this.differentiateBtn);
             this.Controls.Add(this.graphPictureBox);
             this.Controls.Add(this.expressionChart);
             this.Controls.Add(this.humanReadableLbl);
@@ -107,6 +119,7 @@
         private System.Windows.Forms.Label humanReadableLbl;
         private System.Windows.Forms.DataVisualization.Charting.Chart expressionChart;
         private System.Windows.Forms.PictureBox graphPictureBox;
+        private System.Windows.Forms.Button differentiateBtn;
     }
 }
 

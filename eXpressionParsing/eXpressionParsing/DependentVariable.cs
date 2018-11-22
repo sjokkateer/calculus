@@ -15,5 +15,10 @@ namespace eXpressionParsing
         {
             return x;
         }
+
+        public override Operand Differentiate()
+        {
+            return new Integer(1);
+        }
     }
 }

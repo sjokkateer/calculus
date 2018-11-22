@@ -2,7 +2,7 @@
 
 namespace eXpressionParsing
 {
-    class PI : Operand
+    class PI : RealNumber
     {
         public PI() : base("pi")
         { }

@@ -15,5 +15,10 @@ namespace eXpressionParsing
         {
             return (double)Data;
         }
+
+        public override Operand Differentiate()
+        {
+            return new RealNumber(0);
+        }
     }
 }

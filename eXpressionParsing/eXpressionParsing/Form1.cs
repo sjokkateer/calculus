@@ -30,33 +30,42 @@ namespace eXpressionParsing
             }
             else
             {
-                expressionParser = new Parser(expression);
-                try
-                {
-                    expressionParser.Parse();
-                    humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
+                ParseExpression(expression);
+            }
+        }
 
-                    CrearteChart();
+        /// <summary>
+        /// Method that can be re-used to parse an entered expression.
+        /// </summary>
+        /// <param name="expression"></param>
+        private void ParseExpression(string expression)
+        {
+            expressionParser = new Parser(expression);
+            try
+            {
+                expressionParser.Parse();
+                humanReadableLbl.Text = $"Expression: {expressionParser.ToString()}";
 
-                    // This could be extended to prompt for a file name.
-                    CreateGraph("expression.dot");
+                CrearteChart();
 
-                    // Placed deep in here such that there will still be
-                    // made a png picture representation of the entered
-                    // expression.
-                    if (expressionChart.Series["Expression"].Points.Count < 1)
-                    {
-                        throw new InvalidExpressionException($"{expressionParser.ToString()} is not a valid expression!");
-                    }
-                }
-                catch (InvalidExpressionException ex)
+                // This could be extended to prompt for a file name.
+                CreateGraph("expression.dot");
+
+                // Placed deep in here such that there will still be
+                // made a png picture representation of the entered
+                // expression.
+                if (expressionChart.Series["Expression"].Points.Count < 1)
                 {
-                    MessageBox.Show(ex.Message);
+                    throw new InvalidExpressionException($"{expressionParser.ToString()} is not a valid expression!");
                 }
-                catch (InvalidNumberException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            catch (InvalidExpressionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidNumberException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -111,12 +120,27 @@ namespace eXpressionParsing
         {
             CreateDotFile(dotFileName);
 
+            // Move this code into a new method that can be re-used later.
             Process dot = new Process();
             dot.StartInfo.FileName = "dot.exe";
             dot.StartInfo.Arguments = "-Tpng -oexpression.png expression.dot";
             dot.Start();
             dot.WaitForExit();
             graphPictureBox.ImageLocation = "expression.png";
+        }
+
+        private void CreateDerivativeGraph(string dotFileName)
+        {
+            CreateDerivativeDotFile(dotFileName);
+
+            // Move this code into a new method that can be re-used later.
+            Process dot = new Process();
+            dot.StartInfo.FileName = "dot.exe";
+            dot.StartInfo.Arguments = "-Tpng -oderivative.png derivative.dot";
+            dot.Start();
+            dot.WaitForExit();
+            graphPictureBox.ImageLocation = "derivative.png";
+
         }
 
         /// <summary>
@@ -139,6 +163,57 @@ namespace eXpressionParsing
                     // Make a call to the recursive method that returns the entirity
                     // of the content that makes up the .dot file.
                     sw.Write(expressionParser.DotFileGraph());
+                    sw.WriteLine("}");
+                    sw.Close();
+                }
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+            }
+        }
+
+        private void differentiateBtn_Click(object sender, EventArgs e)
+        {
+            // Always parse the expression such that any newly
+            // entered expression can be differentiated and displayed.
+            string expression = expressionTbx.Text;
+
+            // Parse only if an expression is entered.
+            if (expression != string.Empty)
+            {
+                ParseExpression(expression);
+            }
+            else
+            {
+                MessageBox.Show("Please enter an expression to differentiate.");
+            }
+            expressionParser.Differentiate();
+            CreateDerivativeGraph("derivative.dot");
+        }
+
+
+        /// <summary>
+        /// Revise this method since it is a large repetition of code.
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void CreateDerivativeDotFile(string fileName)
+        {
+            FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+            try
+            {
+                // General fluff to be inserted into the document.
+                if (sw != null)
+                {
+                    sw.WriteLine("graph calculus {");
+                    sw.WriteLine("\tnode [ fontname = \"Arial\" ]");
+                    // Make a call to the recursive method that returns the entirity
+                    // of the content that makes up the .dot file.
+                    sw.Write(expressionParser.DotFileGraphDerivative());
                     sw.WriteLine("}");
                     sw.Close();
                 }

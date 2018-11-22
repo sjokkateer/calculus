@@ -15,5 +15,10 @@ namespace eXpressionParsing
         {
             return Math.Cos(LeftSuccessor.Calculate(x));
         }
+
+        public override Operand Differentiate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

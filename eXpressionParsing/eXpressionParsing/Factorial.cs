@@ -38,5 +38,10 @@
                 return n * recFactorial(n - 1);
             }
         }
+
+        public override Operand Differentiate()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace eXpressionParsing
     class Parser
     {
         private Operand expressionRoot;
+        private Operand derivativeRoot;
 
         // Several string constants that will be used
         // to detect what kind of object needs to be made
@@ -273,6 +274,39 @@ namespace eXpressionParsing
         public string DotFileGraph()
         {
             return expressionRoot.NodeLabel();
+        }
+
+        public string DotFileGraphDerivative()
+        {
+            // Return the NodeLabel result called
+            // on the root node of the derivative tree.
+            return derivativeRoot.NodeLabel();
+        }
+
+        /// <summary>
+        /// Will make a recursive call on the original expression's root.
+        /// 
+        /// Will assign the resulting tree to the derivative root operand.
+        /// </summary>
+        public void Differentiate()
+        {
+            // Create an expression tree for the derivative.
+            derivativeRoot = expressionRoot.Differentiate();
+
+            // Properly number the operands and operators
+            // Such that a graph can be made of the tree.
+            NumberOperands(derivativeRoot);
+        }
+
+        /// <summary>
+        /// Is a helper method for the form to either
+        /// parse the expression and then differentiate
+        /// or differentiate immediately.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsExpressionParsed()
+        {
+            return expressionRoot != null;
         }
     }
 }
