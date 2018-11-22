@@ -103,7 +103,7 @@ namespace eXpressionParsing
 
         private double DifferenceQuotient(double x)
         {
-            double changeInX = 0.000001;
+            double changeInX = 0.0001;
 
             // f(x + changeInX) - f(x) / changeInX
             return (expressionRoot.Calculate(x + changeInX) - expressionRoot.Calculate(x)) / changeInX;
@@ -152,11 +152,11 @@ namespace eXpressionParsing
         /// </summary>
         private void CrearteChart(string seriesName)
         {
-            double xMin = -5;
-            double xMax = 5;
+            double xMin = -10;
+            double xMax = 10;
 
-            double yMin = -10;
-            double yMax = 15;
+            double yMin = -50;
+            double yMax = 50;
 
             expressionChart.ChartAreas["ChartArea1"].AxisX.Minimum = xMin;
             expressionChart.ChartAreas["ChartArea1"].AxisX.Maximum = xMax;

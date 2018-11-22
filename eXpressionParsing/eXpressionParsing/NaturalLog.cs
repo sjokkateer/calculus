@@ -18,10 +18,19 @@ namespace eXpressionParsing
 
         public override Operand Differentiate()
         {
-            // ln(x) = 1 / x
-            // ln(a) = 0
-            // ln(s(x)) = (1 / s(x) ) * c(x)
-            throw new NotImplementedException("The derivative of ln(x) is not implemented yet.");
+            // (ln(u))' = 1 / u * u'
+            Division leftExpression = new Division();
+            leftExpression.LeftSuccessor = new Integer(1);
+            // 1 / u
+            leftExpression.RightSuccessor = LeftSuccessor;
+            // u'
+            Operand rightExpression = LeftSuccessor.Differentiate();
+
+            // 1 / u * u'
+            Multiplication derivative = new Multiplication();
+            derivative.LeftSuccessor = leftExpression;
+            derivative.RightSuccessor = rightExpression;
+            return derivative;
         }
     }
 }
