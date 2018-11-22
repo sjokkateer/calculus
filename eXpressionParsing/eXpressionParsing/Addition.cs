@@ -19,16 +19,15 @@ namespace eXpressionParsing
         /// <summary>
         /// (f + g)' = f' + g'
         /// Meaning we differentiate both the left and right sub tree first
-        /// and return a subtraction operator with the differentiated sub trees
+        /// and return an addition operator with the differentiated sub trees
         /// as it's successors
         /// </summary>
         /// <returns>
-        /// A subtraction operator object with both left 
+        /// An addition operator object with both left 
         /// and right successor differentiated.
         /// </returns>
         public override Operand Differentiate()
         {
-            // (f + g)' = f' + g'
             Operand leftDerivative = LeftSuccessor.Differentiate();
             Operand rightDerivative = RightSuccessor.Differentiate();
 

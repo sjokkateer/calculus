@@ -18,7 +18,10 @@ namespace eXpressionParsing
 
         public override Operand Differentiate()
         {
-            throw new NotImplementedException();
+            // ln(x) = 1 / x
+            // ln(a) = 0
+            // ln(s(x)) = (1 / s(x) ) * c(x)
+            throw new NotImplementedException("The derivative of ln(x) is not implemented yet.");
         }
     }
 }

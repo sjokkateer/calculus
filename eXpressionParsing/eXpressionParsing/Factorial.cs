@@ -41,7 +41,7 @@
 
         public override Operand Differentiate()
         {
-            throw new System.NotImplementedException();
+            return new Integer(0);
         }
     }
 }

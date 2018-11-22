@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.parseBtn = new System.Windows.Forms.Button();
             this.humanReadableLbl = new System.Windows.Forms.Label();
@@ -66,8 +66,8 @@
             // 
             // expressionChart
             // 
-            chartArea4.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea4);
+            chartArea5.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea5);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
@@ -78,7 +78,7 @@
             // 
             this.graphPictureBox.Location = new System.Drawing.Point(1300, 147);
             this.graphPictureBox.Name = "graphPictureBox";
-            this.graphPictureBox.Size = new System.Drawing.Size(2500, 907);
+            this.graphPictureBox.Size = new System.Drawing.Size(2500, 2000);
             this.graphPictureBox.TabIndex = 5;
             this.graphPictureBox.TabStop = false;
             // 

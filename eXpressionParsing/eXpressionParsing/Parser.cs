@@ -297,16 +297,5 @@ namespace eXpressionParsing
             // Such that a graph can be made of the tree.
             NumberOperands(derivativeRoot);
         }
-
-        /// <summary>
-        /// Is a helper method for the form to either
-        /// parse the expression and then differentiate
-        /// or differentiate immediately.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsExpressionParsed()
-        {
-            return expressionRoot != null;
-        }
     }
 }

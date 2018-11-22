@@ -16,9 +16,49 @@ namespace eXpressionParsing
             return LeftSuccessor.Calculate(x) / RightSuccessor.Calculate(x);
         }
 
+        /// <summary>
+        /// The quotient rule
+        /// 
+        /// (f / g)' = (gf' - g'f) / g^2
+        /// 
+        /// </summary>
+        /// <returns>A division operator object holding respective expressions.</returns>
         public override Operand Differentiate()
         {
-            throw new NotImplementedException();
+            // Do we need to take into account xes, functions and constants
+            // when differentiating.
+            Operand denominator = RightSuccessor;
+            Operand differentiatedNumerator = LeftSuccessor.Differentiate();
+
+            // gf'
+            Multiplication leftNumerator = new Multiplication();
+            leftNumerator.LeftSuccessor = denominator;
+            leftNumerator.RightSuccessor = differentiatedNumerator;
+
+            Operand numerator = LeftSuccessor;
+            Operand differentiatedDenominator = RightSuccessor.Differentiate();
+
+            // g'f
+            Multiplication rightNumerator = new Multiplication();
+            rightNumerator.LeftSuccessor = differentiatedDenominator;
+            rightNumerator.RightSuccessor = numerator;
+
+            // gf' - g'f
+            Subtraction derivativeNumerator = new Subtraction();
+            derivativeNumerator.LeftSuccessor = leftNumerator;
+            derivativeNumerator.RightSuccessor = rightNumerator;
+
+            // g^2
+            Power derivativeDenominator = new Power();
+            derivativeDenominator.LeftSuccessor = denominator;
+            derivativeDenominator.RightSuccessor = new Integer(2);
+
+            // (f / g)' = (gf' - g'f) / g^2
+            Division derivative = new Division();
+            derivative.LeftSuccessor = derivativeNumerator;
+            derivative.RightSuccessor = derivativeDenominator;
+
+            return derivative;
         }
     }
 }

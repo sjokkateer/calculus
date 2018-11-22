@@ -195,7 +195,6 @@ namespace eXpressionParsing
             CreateDerivativeGraph("derivative.dot");
         }
 
-
         /// <summary>
         /// Revise this method since it is a large repetition of code.
         /// </summary>

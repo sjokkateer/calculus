@@ -18,7 +18,19 @@ namespace eXpressionParsing
 
         public override Operand Differentiate()
         {
-            throw new NotImplementedException();
+            // Derivative of sin(u) = cos(u) * u'
+            // c(u)
+            Cosine outerDerivative = new Cosine();
+            outerDerivative.LeftSuccessor = LeftSuccessor;
+
+            // Now for u' we call it's differentiate method.
+            Operand innerDerivative = LeftSuccessor.Differentiate();
+
+            // c(u) * u'
+            Multiplication derivative = new Multiplication();
+            derivative.LeftSuccessor = outerDerivative;
+            derivative.RightSuccessor = innerDerivative;
+            return derivative;
         }
     }
 }

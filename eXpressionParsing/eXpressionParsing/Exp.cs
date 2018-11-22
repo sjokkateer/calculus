@@ -18,7 +18,18 @@ namespace eXpressionParsing
 
         public override Operand Differentiate()
         {
-            throw new NotImplementedException();
+            // (e^u)' = e^u * u'
+            // e^u
+            Exp outerFunction = this;
+            
+            // u'
+            Operand innerDerivative = LeftSuccessor.Differentiate();
+            
+            // e^u * u'
+            Multiplication derivative = new Multiplication();
+            derivative.LeftSuccessor = outerFunction;
+            derivative.RightSuccessor = innerDerivative;
+            return derivative;
         }
     }
 }

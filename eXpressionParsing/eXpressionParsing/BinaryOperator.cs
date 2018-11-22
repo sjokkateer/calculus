@@ -2,7 +2,7 @@
 {
     abstract class BinaryOperator : UnaryOperator
     {
-        public Operand RightSuccessor { get; set; }
+        public virtual Operand RightSuccessor { get; set; }
 
         public BinaryOperator(object data) : base(data)
         {
