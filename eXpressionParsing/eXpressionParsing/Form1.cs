@@ -158,17 +158,17 @@ namespace eXpressionParsing
             double step = 0.0001;
             double result;
 
-            expressionChart.Series.Add("Expression");
-            expressionChart.Series["Expression"].ChartType = SeriesChartType.Point;
-            expressionChart.Series["Expression"].MarkerSize = 2;
-
-            expressionChart.Series["Expression"].ChartArea = "ChartArea1";
-
             expressionChart.ChartAreas["ChartArea1"].AxisX.Minimum = xMin;
             expressionChart.ChartAreas["ChartArea1"].AxisX.Maximum = xMax;
 
             expressionChart.ChartAreas["ChartArea1"].AxisY.Minimum = yMin;
             expressionChart.ChartAreas["ChartArea1"].AxisY.Maximum = yMax;
+
+            expressionChart.Series.Add("Expression");
+            expressionChart.Series["Expression"].ChartType = SeriesChartType.Point;
+            expressionChart.Series["Expression"].MarkerSize = 2;
+
+            expressionChart.Series["Expression"].ChartArea = "ChartArea1";
 
             for (double i = xMin; i <= xMax; i += step)
             {

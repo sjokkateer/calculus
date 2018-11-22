@@ -18,7 +18,7 @@ namespace eXpressionParsing
 
         public override Operand Differentiate()
         {
-            return new RealNumber(0);
+            return new RealNumber(0.0);
         }
     }
 }

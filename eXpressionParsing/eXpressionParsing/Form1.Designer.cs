@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphPictureBox = new System.Windows.Forms.PictureBox();
             this.parseRbtn = new System.Windows.Forms.RadioButton();
@@ -38,7 +38,6 @@
             this.expressionLb = new System.Windows.Forms.Label();
             this.expressionTbx = new System.Windows.Forms.TextBox();
             this.expressionInputLb = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.processBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).BeginInit();
@@ -47,8 +46,8 @@
             // 
             // expressionChart
             // 
-            chartArea4.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea4);
+            chartArea1.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea1);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
@@ -144,6 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(2251, 1435);
             this.Controls.Add(this.processBtn);
             this.Controls.Add(this.textResultGrpBox);
@@ -174,7 +174,6 @@
         private System.Windows.Forms.Label expressionLb;
         private System.Windows.Forms.TextBox expressionTbx;
         private System.Windows.Forms.Label expressionInputLb;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button processBtn;
     }
 }
