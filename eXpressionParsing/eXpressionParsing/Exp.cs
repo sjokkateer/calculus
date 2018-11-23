@@ -10,6 +10,12 @@ namespace eXpressionParsing
     {
         public Exp() : base("e^")
         { }
+        public override Operand Simplify()
+        {
+            Exp simplifiedExpression = new Exp();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            return simplifiedExpression;
+        }
         public override Operand Copy()
         {
             Exp copy = new Exp();

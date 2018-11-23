@@ -10,7 +10,12 @@ namespace eXpressionParsing
     {
         public Sine() : base("sin")
         { }
-
+        public override Operand Simplify()
+        {
+            Sine simplifiedExpression = new Sine();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            return simplifiedExpression;
+        }
         public override Operand Copy()
         {
             Sine copy = new Sine();

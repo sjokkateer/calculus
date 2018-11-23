@@ -10,7 +10,12 @@ namespace eXpressionParsing
     {
         public Cosine() : base("cos")
         { }
-
+        public override Operand Simplify()
+        {
+            Cosine simplifiedExpression = new Cosine();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            return simplifiedExpression;
+        }
         public override double Calculate(double x)
         {
             return Math.Cos(LeftSuccessor.Calculate(x));

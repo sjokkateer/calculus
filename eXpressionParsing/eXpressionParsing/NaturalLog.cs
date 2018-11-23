@@ -10,6 +10,12 @@ namespace eXpressionParsing
     {
         public NaturalLog() : base("ln")
         { }
+        public override Operand Simplify()
+        {
+            NaturalLog simplifiedExpression = new NaturalLog();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            return simplifiedExpression;
+        }
         public override Operand Copy()
         {
             NaturalLog copy = new NaturalLog();

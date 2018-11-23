@@ -78,9 +78,6 @@ namespace eXpressionParsing
                 // Differentiate the expression.
                 derivativeExpressionRoot = expressionRoot.Differentiate();
 
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //  Keep or remove for original.
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 derivativeExpressionRoot = derivativeExpressionRoot.Simplify();
 
                 // Display the derivative in text.
@@ -151,7 +148,7 @@ namespace eXpressionParsing
         private void CreateSeries(double xMin, double xMax, double yMin, double yMax, string seriesName)
         {
             expressionChart.Series.Add(seriesName);
-            expressionChart.Series[seriesName].ChartType = SeriesChartType.Line;
+            expressionChart.Series[seriesName].ChartType = SeriesChartType.Point;
             expressionChart.Series[seriesName].MarkerSize = 2;
 
             expressionChart.Series[seriesName].ChartArea = "ChartArea1";
