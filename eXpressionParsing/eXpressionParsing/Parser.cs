@@ -65,7 +65,7 @@ namespace eXpressionParsing
                     }
                     else
                     {
-                        operand = new Integer(s[0] - 48);
+                        operand = new Integer((double)(s[0] - 48));
                     }
                     operands.Add(operand);
                 }
@@ -91,10 +91,11 @@ namespace eXpressionParsing
                     }
                     // Try to parse the resulting string (represents a number) 
                     // to prevent errors and add it to the stack of operands.
-                    if (numberOperator == 'n')
+                    if (numberOperator == 'n') 
                     {
-                        int numericResult;
-                        bool isIntParsed = int.TryParse(result, out numericResult);
+
+                        double numericResult;
+                        bool isIntParsed = double.TryParse(result, out numericResult);
                         if (!isIntParsed)
                         {
                             throw new InvalidNumberException($"Please enter a valid integer value.\nYou entered: {result}");

@@ -1,4 +1,6 @@
-﻿namespace eXpressionParsing
+﻿using System;
+
+namespace eXpressionParsing
 {
     class Factorial : UnaryOperator
     {
@@ -12,7 +14,7 @@
                 if (value is Integer)
                 {
                     // Validate the value being >= 0 to be valid.
-                    if ((int)value.Data >= 0)
+                    if (Convert.ToInt32(value.Data) >= 0)
                     {
                         naturalNumber = value;
                     }
@@ -41,7 +43,7 @@
         }
         public override double Calculate(double x)
         {
-            return recFactorial((int)LeftSuccessor.Calculate(x));
+            return recFactorial(Convert.ToInt32(LeftSuccessor.Calculate(x)));
         }
 
         public override string ToString()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eXpressionParsing
 {
-    class RealNumber : Operand
+    class RealNumber : Integer
     {
         public RealNumber(object data) : base(data)
         { }

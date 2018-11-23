@@ -16,18 +16,7 @@ namespace eXpressionParsing
             {
                 if (value is Integer)
                 {
-                    if ((int)value.Data == 0)
-                    {
-                        throw new DivideByZeroException("Can not divide by zero.");
-                    }
-                    else
-                    {
-                        denominator = value;
-                    }
-                }
-                else if (value is RealNumber)
-                {
-                    if ((double)value.Data == 0.0)
+                    if (Convert.ToDouble(value.Data) == 0.0)
                     {
                         throw new DivideByZeroException("Can not divide by zero.");
                     }
@@ -44,6 +33,33 @@ namespace eXpressionParsing
         }
         public Division() : base('/')
         { }
+
+        public override Operand Simplify()
+        {
+            // Try to simplify as much as possible.
+            Division simplifiedExpression = new Division();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
+            // When we divide by 1, we can just return
+            // the numerator of the division.
+            if (simplifiedExpression.RightSuccessor is Integer)
+            {
+                if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 1)
+                {
+                    return simplifiedExpression.LeftSuccessor.Simplify();
+                }
+            }
+            else if (simplifiedExpression.LeftSuccessor is Integer)
+            {
+                // Check if the numerator is 0
+                // if so we can return a 0 object.
+                if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0)
+                {
+                    return new Integer(0.0);
+                }
+            }
+            return simplifiedExpression;
+        }
 
         public override Operand Copy()
         {

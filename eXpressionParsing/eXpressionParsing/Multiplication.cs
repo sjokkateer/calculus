@@ -21,7 +21,34 @@ namespace eXpressionParsing
         {
             return LeftSuccessor.Calculate(x) * RightSuccessor.Calculate(x);
         }
-
+        public override Operand Simplify()
+        {
+            Multiplication simplifiedExpression = (Multiplication)Copy();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
+            // If either of the operands equals 0 or 1 then we want to simplify specifically.
+            if (simplifiedExpression.RightSuccessor is Integer)
+            {
+                switch (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data))
+                {
+                    case 0.0: // Multiply by zero means return 0.
+                        return new Integer(0.0);
+                    case 1.0: // Multiply by one means return the other part of the expression.
+                        return simplifiedExpression.LeftSuccessor.Simplify();
+                }
+            }
+            else if (simplifiedExpression.LeftSuccessor is Integer)
+            {
+                switch (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data))
+                {
+                    case 0.0:
+                        return new Integer(0.0);
+                    case 1.0:
+                        return simplifiedExpression.RightSuccessor.Simplify();
+                }
+            }
+            return simplifiedExpression;
+        }
         /// <summary>
         /// Applies the product rule to the sub trees.
         /// (f * g)' = f * g' + f' * g

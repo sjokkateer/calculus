@@ -12,6 +12,18 @@ namespace eXpressionParsing
             return Math.Pow(LeftSuccessor.Calculate(x), RightSuccessor.Calculate(x));
         }
 
+        public override Operand Simplify()
+        {
+            if (Convert.ToDouble(RightSuccessor.Data) == 1.0)
+            {
+                return LeftSuccessor.Simplify();
+            }
+            else
+            {
+                return Copy();
+            }
+        }
+
         public override Operand Copy()
         {
             Power copy = new Power();
@@ -30,7 +42,7 @@ namespace eXpressionParsing
             Operand power = RightSuccessor.Copy();
             
             // b - 1
-            Integer newPower = new Integer((int)power.Data - 1);
+            Integer newPower = new Integer((double)power.Data - 1);
             
             // f(x)^(b - 1)
             Power onePowerLess = new Power();

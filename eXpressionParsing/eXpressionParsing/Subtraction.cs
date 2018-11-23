@@ -11,6 +11,38 @@ namespace eXpressionParsing
         public Subtraction() : base('-')
         { }
 
+        public override Operand Simplify()
+        {
+            Subtraction simplifiedExpression = new Subtraction();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
+            if (simplifiedExpression.LeftSuccessor is Integer)
+            {
+                // In this scenario the right sub tree can be an expression still.
+                if (simplifiedExpression.RightSuccessor is Integer)
+                {
+                    double difference = Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) - Convert.ToDouble(simplifiedExpression.RightSuccessor.Data);
+                    return new RealNumber(difference);
+                }
+                // Or if the left is null and the right is not a a number,
+                // simplify the right subtree and return that.
+                else if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0)
+                {
+                    return simplifiedExpression.RightSuccessor.Simplify();
+                }
+            }
+            else if (simplifiedExpression.RightSuccessor is Integer)
+            {
+                // This case means that left is not a number. And we thus should be
+                // able to return the negative of the right expression.
+                if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 0.0)
+                {
+                    return simplifiedExpression.LeftSuccessor.Simplify();
+                }
+            }
+            return simplifiedExpression;
+        }
+
         public override Operand Copy()
         {
             Subtraction copy = new Subtraction();

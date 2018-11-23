@@ -19,6 +19,33 @@ namespace eXpressionParsing
             return copy;
         }
 
+        public override Operand Simplify()
+        {
+            Addition simplifiedExpression = new Addition();
+            simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
+            simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
+            if (LeftSuccessor is Integer)
+            {
+                if (simplifiedExpression.RightSuccessor is Integer)
+                {
+                    double addition = Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) + Convert.ToDouble(simplifiedExpression.RightSuccessor.Data);
+                    return new RealNumber(addition);
+                }
+                else if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0)
+                {
+                    return simplifiedExpression.RightSuccessor.Simplify();
+                }
+            }
+            else if (simplifiedExpression.RightSuccessor is Integer) // Same story, left is not an int so try to simplify left subtree if we have a 0.
+            {
+                if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 0)
+                {
+                    return simplifiedExpression.LeftSuccessor.Simplify();
+                }
+            }
+            return simplifiedExpression;
+        }
+
         public override double Calculate(double x)
         {
             return LeftSuccessor.Calculate(x) + RightSuccessor.Calculate(x);

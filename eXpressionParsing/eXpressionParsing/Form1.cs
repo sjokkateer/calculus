@@ -78,6 +78,11 @@ namespace eXpressionParsing
                 // Differentiate the expression.
                 derivativeExpressionRoot = expressionRoot.Differentiate();
 
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //  Keep or remove for original.
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                derivativeExpressionRoot = derivativeExpressionRoot.Simplify();
+
                 // Display the derivative in text.
                 derivativeLb.Text = $"Derivative: {derivativeExpressionRoot.ToString()}";
 
