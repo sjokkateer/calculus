@@ -33,7 +33,12 @@
         }
         public Factorial() : base('!')
         { }
-
+        public override Operand Copy()
+        {
+            Factorial copy = new Factorial();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            return copy;
+        }
         public override double Calculate(double x)
         {
             return recFactorial((int)LeftSuccessor.Calculate(x));

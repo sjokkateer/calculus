@@ -12,6 +12,14 @@ namespace eXpressionParsing
             return Math.Pow(LeftSuccessor.Calculate(x), RightSuccessor.Calculate(x));
         }
 
+        public override Operand Copy()
+        {
+            Power copy = new Power();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            copy.RightSuccessor = RightSuccessor.Copy();
+            return copy;
+        }
+
         public override Operand Differentiate()
         {
             // (f(x))^b where b is a natural number even.
@@ -19,14 +27,14 @@ namespace eXpressionParsing
             // chain rule. b * (f(x))^(b - 1) * f'(x)
             
             // b
-            Operand power = RightSuccessor;
+            Operand power = RightSuccessor.Copy();
             
             // b - 1
             Integer newPower = new Integer((int)power.Data - 1);
             
             // f(x)^(b - 1)
             Power onePowerLess = new Power();
-            onePowerLess.LeftSuccessor = LeftSuccessor;
+            onePowerLess.LeftSuccessor = LeftSuccessor.Copy();
             onePowerLess.RightSuccessor = newPower;
 
             // f'
@@ -41,6 +49,7 @@ namespace eXpressionParsing
             Multiplication derivative = new Multiplication();
             derivative.LeftSuccessor = intermediaryResult;
             derivative.RightSuccessor = derivativeOfF;
+
             return derivative;
         }
     }

@@ -11,6 +11,11 @@ namespace eXpressionParsing
         public DependentVariableX() : base('x')
         { }
 
+        public override Operand Copy()
+        {
+            return new DependentVariableX();
+        }
+
         public override double Calculate(double x)
         {
             return x;

@@ -10,7 +10,12 @@ namespace eXpressionParsing
     {
         public Exp() : base("e^")
         { }
-
+        public override Operand Copy()
+        {
+            Exp copy = new Exp();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            return copy;
+        }
         public override double Calculate(double x)
         {
             return Math.Exp(LeftSuccessor.Calculate(x));
@@ -20,7 +25,7 @@ namespace eXpressionParsing
         {
             // (e^u)' = e^u * u'
             // e^u
-            Exp outerFunction = this;
+            Exp outerFunction = (Exp)Copy();
             
             // u'
             Operand innerDerivative = LeftSuccessor.Differentiate();
@@ -29,6 +34,7 @@ namespace eXpressionParsing
             Multiplication derivative = new Multiplication();
             derivative.LeftSuccessor = outerFunction;
             derivative.RightSuccessor = innerDerivative;
+
             return derivative;
         }
     }

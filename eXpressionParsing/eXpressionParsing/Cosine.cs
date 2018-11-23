@@ -15,6 +15,12 @@ namespace eXpressionParsing
         {
             return Math.Cos(LeftSuccessor.Calculate(x));
         }
+        public override Operand Copy()
+        {
+            Cosine copy = new Cosine();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            return copy;
+        }
 
         public override Operand Differentiate()
         {
@@ -23,7 +29,7 @@ namespace eXpressionParsing
             Integer leftOuterDerivativeExpression = new Integer(-1);
             Sine rightOuterDerivativeExpression = new Sine();
             // s(u)
-            rightOuterDerivativeExpression.LeftSuccessor = LeftSuccessor;
+            rightOuterDerivativeExpression.LeftSuccessor = LeftSuccessor.Copy();
             // -1 * sin(u)
             Multiplication outerDerivative = new Multiplication();
             outerDerivative.LeftSuccessor = leftOuterDerivativeExpression;

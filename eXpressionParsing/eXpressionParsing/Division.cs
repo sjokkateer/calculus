@@ -45,6 +45,14 @@ namespace eXpressionParsing
         public Division() : base('/')
         { }
 
+        public override Operand Copy()
+        {
+            Division copy = new Division();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            copy.RightSuccessor = RightSuccessor.Copy();
+            return copy;
+        }
+
         public override double Calculate(double x)
         {
             return LeftSuccessor.Calculate(x) / RightSuccessor.Calculate(x);
@@ -61,7 +69,7 @@ namespace eXpressionParsing
         {
             // Do we need to take into account xes, functions and constants
             // when differentiating.
-            Operand denominator = RightSuccessor;
+            Operand denominator = RightSuccessor.Copy();
             Operand differentiatedNumerator = LeftSuccessor.Differentiate();
 
             // gf'
@@ -69,7 +77,7 @@ namespace eXpressionParsing
             leftNumerator.LeftSuccessor = denominator;
             leftNumerator.RightSuccessor = differentiatedNumerator;
 
-            Operand numerator = LeftSuccessor;
+            Operand numerator = LeftSuccessor.Copy();
             Operand differentiatedDenominator = RightSuccessor.Differentiate();
 
             // g'f

@@ -11,6 +11,13 @@ namespace eXpressionParsing
         public Sine() : base("sin")
         { }
 
+        public override Operand Copy()
+        {
+            Sine copy = new Sine();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            return copy;
+        }
+
         public override double Calculate(double x)
         {
             return Math.Sin(LeftSuccessor.Calculate(x));
@@ -21,7 +28,7 @@ namespace eXpressionParsing
             // Derivative of sin(u) = cos(u) * u'
             // c(u)
             Cosine outerDerivative = new Cosine();
-            outerDerivative.LeftSuccessor = LeftSuccessor;
+            outerDerivative.LeftSuccessor = LeftSuccessor.Copy();
 
             // Now for u' we call it's differentiate method.
             Operand innerDerivative = LeftSuccessor.Differentiate();
@@ -30,6 +37,7 @@ namespace eXpressionParsing
             Multiplication derivative = new Multiplication();
             derivative.LeftSuccessor = outerDerivative;
             derivative.RightSuccessor = innerDerivative;
+
             return derivative;
         }
     }

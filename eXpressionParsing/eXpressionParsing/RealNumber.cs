@@ -11,6 +11,11 @@ namespace eXpressionParsing
         public RealNumber(object data) : base(data)
         { }
 
+        public override Operand Copy()
+        {
+            return new RealNumber(Data);
+        }
+
         public override double Calculate(double x)
         {
             return (double)Data;

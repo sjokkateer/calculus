@@ -11,6 +11,14 @@ namespace eXpressionParsing
         public Addition() : base('+')
         { }
 
+        public override Operand Copy()
+        {
+            Addition copy = new Addition();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            copy.RightSuccessor = RightSuccessor.Copy();
+            return copy;
+        }
+
         public override double Calculate(double x)
         {
             return LeftSuccessor.Calculate(x) + RightSuccessor.Calculate(x);

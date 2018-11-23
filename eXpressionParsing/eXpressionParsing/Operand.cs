@@ -14,6 +14,7 @@ namespace eXpressionParsing
         }
         public abstract double Calculate(double x);
         public abstract Operand Differentiate();
+        public abstract Operand Copy();
 
         public override string ToString()
         {

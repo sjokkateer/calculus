@@ -10,7 +10,13 @@ namespace eXpressionParsing
     {
         public Multiplication() : base('*')
         { }
-
+        public override Operand Copy()
+        {
+            Multiplication copy = new Multiplication();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            copy.RightSuccessor = RightSuccessor.Copy();
+            return copy;
+        }
         public override double Calculate(double x)
         {
             return LeftSuccessor.Calculate(x) * RightSuccessor.Calculate(x);
@@ -30,7 +36,7 @@ namespace eXpressionParsing
         /// </returns>
         public override Operand Differentiate()
         {
-            Operand leftExpression = LeftSuccessor;
+            Operand leftExpression = LeftSuccessor.Copy();
             Operand rightDerivative = RightSuccessor.Differentiate();
 
             // fg'
@@ -39,7 +45,7 @@ namespace eXpressionParsing
             newLeftExpression.RightSuccessor = rightDerivative;
 
             Operand leftDerivative = LeftSuccessor.Differentiate();
-            Operand rightExpression = RightSuccessor;
+            Operand rightExpression = RightSuccessor.Copy();
 
             // f'g
             Multiplication newRightExpression = new Multiplication();

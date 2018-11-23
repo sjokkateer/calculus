@@ -10,7 +10,12 @@ namespace eXpressionParsing
     {
         public NaturalLog() : base("ln")
         { }
-
+        public override Operand Copy()
+        {
+            NaturalLog copy = new NaturalLog();
+            copy.LeftSuccessor = LeftSuccessor.Copy();
+            return copy;
+        }
         public override double Calculate(double x)
         {
             return Math.Log(LeftSuccessor.Calculate(x));
@@ -22,7 +27,7 @@ namespace eXpressionParsing
             Division leftExpression = new Division();
             leftExpression.LeftSuccessor = new Integer(1);
             // 1 / u
-            leftExpression.RightSuccessor = LeftSuccessor;
+            leftExpression.RightSuccessor = LeftSuccessor.Copy();
             // u'
             Operand rightExpression = LeftSuccessor.Differentiate();
 
@@ -30,6 +35,7 @@ namespace eXpressionParsing
             Multiplication derivative = new Multiplication();
             derivative.LeftSuccessor = leftExpression;
             derivative.RightSuccessor = rightExpression;
+
             return derivative;
         }
     }
