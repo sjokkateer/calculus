@@ -139,10 +139,10 @@ namespace eXpressionParsing
             expressionChart.ChartAreas["ChartArea1"].AxisY.Minimum = yMin;
             expressionChart.ChartAreas["ChartArea1"].AxisY.Maximum = yMax;
 
-            CreateSeries(xMin, xMax, seriesName);
+            CreateSeries(xMin, xMax, yMin, yMax, seriesName);
         }
         
-        private void CreateSeries(double xMin, double xMax, string seriesName)
+        private void CreateSeries(double xMin, double xMax, double yMin, double yMax, string seriesName)
         {
             expressionChart.Series.Add(seriesName);
             expressionChart.Series[seriesName].ChartType = SeriesChartType.Point;
@@ -155,9 +155,12 @@ namespace eXpressionParsing
             for (double i = xMin; i <= xMax; i += step)
             {
                 result = calculator(i);
-                if (!double.IsInfinity(result) && !double.IsNaN(result))
+                if (result >= yMin && result <= yMax)
                 {
-                    expressionChart.Series[seriesName].Points.AddXY(i, result);
+                    if (!double.IsInfinity(result) && !double.IsNaN(result))
+                    {
+                        expressionChart.Series[seriesName].Points.AddXY(i, result);
+                    }
                 }
             }
         }

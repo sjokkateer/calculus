@@ -8,12 +8,10 @@ namespace eXpressionParsing
         // for operands and print label + connections for operators.
         public int NodeNumber { get; set; }
         public object Data { get; }
-
         public Operand(object data)
         {
             Data = data;
         }
-
         public abstract double Calculate(double x);
         public abstract Operand Differentiate();
 
