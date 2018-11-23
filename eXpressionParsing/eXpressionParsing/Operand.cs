@@ -15,7 +15,10 @@ namespace eXpressionParsing
         public abstract double Calculate(double x);
         public abstract Operand Differentiate();
         public abstract Operand Copy();
-
+        public virtual Operand Simplify() // Wil simplify where possible and else return a copy of itself.
+        {
+            return Copy();
+        }
         public override string ToString()
         {
             return Convert.ToString(Data);
