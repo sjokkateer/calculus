@@ -31,7 +31,7 @@ namespace eXpressionParsing
                     double addition = Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) + Convert.ToDouble(simplifiedExpression.RightSuccessor.Data);
                     return new RealNumber(addition);
                 }
-                else if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0)
+                else if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0)
                 {
                     return simplifiedExpression.RightSuccessor.Simplify();
                 }

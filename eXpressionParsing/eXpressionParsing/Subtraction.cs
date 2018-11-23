@@ -24,12 +24,6 @@ namespace eXpressionParsing
                     double difference = Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) - Convert.ToDouble(simplifiedExpression.RightSuccessor.Data);
                     return new RealNumber(difference);
                 }
-                // Or if the left is null and the right is not a a number,
-                // simplify the right subtree and return that.
-                else if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0)
-                {
-                    return simplifiedExpression.RightSuccessor.Simplify();
-                }
             }
             else if (simplifiedExpression.RightSuccessor is Integer)
             {

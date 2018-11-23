@@ -44,6 +44,7 @@ namespace eXpressionParsing
             // the numerator of the division.
             if (simplifiedExpression.RightSuccessor is Integer)
             {
+                // The denominator = 1, thus we can return the numerator.
                 if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 1)
                 {
                     return simplifiedExpression.LeftSuccessor.Simplify();
@@ -52,10 +53,10 @@ namespace eXpressionParsing
             else if (simplifiedExpression.LeftSuccessor is Integer)
             {
                 // Check if the numerator is 0
-                // if so we can return a 0 object.
+                // if so we can return a number 0.
                 if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0)
                 {
-                    return new Integer(0.0);
+                    return new RealNumber(0.0);
                 }
             }
             return simplifiedExpression;

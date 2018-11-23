@@ -127,6 +127,7 @@ namespace eXpressionParsing
 
             // Parse and assign the returned expression root.
             expressionRoot = expressionParser.Parse();
+            expressionRoot = expressionRoot.Simplify();
             expressionLb.Text = $"Expression: {expressionRoot.ToString()}";
         }
 

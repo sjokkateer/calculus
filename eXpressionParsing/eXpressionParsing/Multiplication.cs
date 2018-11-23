@@ -29,6 +29,8 @@ namespace eXpressionParsing
             // If either of the operands equals 0 or 1 then we want to simplify specifically.
             if (simplifiedExpression.RightSuccessor is Integer)
             {
+                // If both are numbers we could multiply and return the result.
+                // But this might be iffy with double values and rounding errors?
                 switch (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data))
                 {
                     case 0.0: // Multiply by zero means return 0.
