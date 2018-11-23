@@ -36,23 +36,17 @@ namespace eXpressionParsing
         /// </returns>
         public override Operand Differentiate()
         {
-            Operand leftExpression = LeftSuccessor.Copy();
-            Operand rightDerivative = RightSuccessor.Differentiate();
-
-            // fg'
+            // Create and assign fg'
             Multiplication newLeftExpression = new Multiplication();
-            newLeftExpression.LeftSuccessor = leftExpression;
-            newLeftExpression.RightSuccessor = rightDerivative;
+            newLeftExpression.LeftSuccessor = LeftSuccessor.Copy();
+            newLeftExpression.RightSuccessor = RightSuccessor.Differentiate();
 
-            Operand leftDerivative = LeftSuccessor.Differentiate();
-            Operand rightExpression = RightSuccessor.Copy();
-
-            // f'g
+            // Create and assign f'g
             Multiplication newRightExpression = new Multiplication();
-            newRightExpression.LeftSuccessor = leftDerivative;
-            newRightExpression.RightSuccessor = rightExpression;
+            newRightExpression.LeftSuccessor = LeftSuccessor.Differentiate();
+            newRightExpression.RightSuccessor = RightSuccessor.Copy();
 
-            // fg' + f'g
+            // Create and assign fg' + f'g
             Addition derivative = new Addition();
             derivative.LeftSuccessor = newLeftExpression;
             derivative.RightSuccessor = newRightExpression;

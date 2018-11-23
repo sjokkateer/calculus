@@ -36,12 +36,9 @@ namespace eXpressionParsing
         /// </returns>
         public override Operand Differentiate()
         {
-            Operand leftDerivative = LeftSuccessor.Differentiate();
-            Operand rightDerivative = RightSuccessor.Differentiate();
-
             Addition derivative = new Addition();
-            derivative.LeftSuccessor = leftDerivative;
-            derivative.RightSuccessor = rightDerivative;
+            derivative.LeftSuccessor = LeftSuccessor.Differentiate();
+            derivative.RightSuccessor = RightSuccessor.Differentiate();
 
             return derivative;
         }

@@ -67,35 +67,27 @@ namespace eXpressionParsing
         /// <returns>A division operator object holding respective expressions.</returns>
         public override Operand Differentiate()
         {
-            // Do we need to take into account xes, functions and constants
-            // when differentiating.
-            Operand denominator = RightSuccessor.Copy();
-            Operand differentiatedNumerator = LeftSuccessor.Differentiate();
-
-            // gf'
+            // Create gf'
             Multiplication leftNumerator = new Multiplication();
-            leftNumerator.LeftSuccessor = denominator;
-            leftNumerator.RightSuccessor = differentiatedNumerator;
+            leftNumerator.LeftSuccessor = RightSuccessor.Copy();
+            leftNumerator.RightSuccessor = LeftSuccessor.Differentiate();
 
-            Operand numerator = LeftSuccessor.Copy();
-            Operand differentiatedDenominator = RightSuccessor.Differentiate();
-
-            // g'f
+            // Create g'f
             Multiplication rightNumerator = new Multiplication();
-            rightNumerator.LeftSuccessor = differentiatedDenominator;
-            rightNumerator.RightSuccessor = numerator;
+            rightNumerator.LeftSuccessor = RightSuccessor.Differentiate();
+            rightNumerator.RightSuccessor = LeftSuccessor.Copy();
 
-            // gf' - g'f
+            // Create the numrator of previous terms gf' - g'f
             Subtraction derivativeNumerator = new Subtraction();
             derivativeNumerator.LeftSuccessor = leftNumerator;
             derivativeNumerator.RightSuccessor = rightNumerator;
 
-            // g^2
+            // Create g^2 of a new copy of g.
             Power derivativeDenominator = new Power();
-            derivativeDenominator.LeftSuccessor = denominator;
+            derivativeDenominator.LeftSuccessor = RightSuccessor.Copy();
             derivativeDenominator.RightSuccessor = new Integer(2);
 
-            // (f / g)' = (gf' - g'f) / g^2
+            // Create the final result and assign. (f / g)' = (gf' - g'f) / g^2
             Division derivative = new Division();
             derivative.LeftSuccessor = derivativeNumerator;
             derivative.RightSuccessor = derivativeDenominator;

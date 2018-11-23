@@ -26,10 +26,8 @@ namespace eXpressionParsing
             // (e^u)' = e^u * u'
             // e^u
             Exp outerFunction = (Exp)Copy();
-            
             // u'
             Operand innerDerivative = LeftSuccessor.Differentiate();
-            
             // e^u * u'
             Multiplication derivative = new Multiplication();
             derivative.LeftSuccessor = outerFunction;

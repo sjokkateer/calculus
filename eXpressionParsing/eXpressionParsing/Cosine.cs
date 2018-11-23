@@ -26,13 +26,12 @@ namespace eXpressionParsing
         {
             // Apply the chain rule.
             // Derivative of cos(u) = -sin(u) * u'
-            Integer leftOuterDerivativeExpression = new Integer(-1);
             Sine rightOuterDerivativeExpression = new Sine();
             // s(u)
             rightOuterDerivativeExpression.LeftSuccessor = LeftSuccessor.Copy();
             // -1 * sin(u)
             Multiplication outerDerivative = new Multiplication();
-            outerDerivative.LeftSuccessor = leftOuterDerivativeExpression;
+            outerDerivative.LeftSuccessor = new Integer(-1);
             outerDerivative.RightSuccessor = rightOuterDerivativeExpression;
 
             // Now for u' we call it's differentiate method.
