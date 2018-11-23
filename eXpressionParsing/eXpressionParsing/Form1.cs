@@ -37,35 +37,27 @@ namespace eXpressionParsing
             string expression = expressionTbx.Text;
             if (expression == string.Empty)
             {
-                MessageBox.Show("Please enter an expression to parse.");
+                throw new NoExpressionEnteredException("Please enter an expression to parse.");
             }
             else
             {
                 // Basic parsing method
                 ParseExpression(expression);
 
-                // Do all other additional stuff.
-                try
-                {
-                    // Assign the calculate for x to the delegate.
-                    calculator = new CalculateForXHandler(expressionRoot.Calculate);
-                    // Then plot the chart.
+                // Assign the calculate for x to the delegate.
+                calculator = new CalculateForXHandler(expressionRoot.Calculate);
 
-                    expressionChart.Series.Clear();
-                    string seriesName = "Expression";
-                    CrearteChart(seriesName);
+                // Refresh the chart and plot the new expression.
+                expressionChart.Series.Clear();
+                string seriesName = "Expression";
+                CrearteChart(seriesName);
 
-                    // Placed deep in here such that there will still be
-                    // made a png picture representation of the entered
-                    // expression.
-                    if (expressionChart.Series[seriesName].Points.Count < 1)
-                    {
-                        throw new InvalidExpressionException($"{expressionParser.ToString()} is not a valid expression!");
-                    }
-                }
-                catch (InvalidExpressionException ex)
+                // Placed deep in here such that there will still be
+                // made a png picture representation of the entered
+                // expression.
+                if (expressionChart.Series[seriesName].Points.Count < 1)
                 {
-                    MessageBox.Show(ex.Message);
+                    throw new InvalidExpressionException($"{expressionRoot.ToString()} is not a valid expression!");
                 }
             }
         }
@@ -78,13 +70,11 @@ namespace eXpressionParsing
 
             if (expression == string.Empty)
             {
-                MessageBox.Show("Please enter an expression to differentiate.");
+                throw new NoExpressionEnteredException("Please enter an expression to differentiate.");
             }
             else
             {
-                // Parse only if an expression is entered.
                 Parse();
-
                 // Differentiate the expression.
                 derivativeExpressionRoot = expressionRoot.Differentiate();
 
@@ -101,11 +91,19 @@ namespace eXpressionParsing
             }
         }
 
+        /// <summary>
+        /// Simple method that represents Newton's difference quotient.
+        /// 
+        /// Will calculate (f(x + h) - f(x)) / h and return this value
+        /// </summary>
+        /// <param name="x">A double, representing the current 
+        /// value for x.</param>
+        /// <returns>(f(x + h) - f(x)) / h</returns>
         private double DifferenceQuotient(double x)
         {
-            double changeInX = 0.0001;
+            double changeInX = 0.000001;
 
-            // f(x + changeInX) - f(x) / changeInX
+            // (f(x + changeInX) - f(x)) / changeInX
             return (expressionRoot.Calculate(x + changeInX) - expressionRoot.Calculate(x)) / changeInX;
         }
 
@@ -120,36 +118,13 @@ namespace eXpressionParsing
         /// notation representing a valid expression.</param>
         private void ParseExpression(string expression)
         {
-            //
-            //
-            // !!! Could also just assign the expression to a live expression object. !!!
-            //
-            //
             expressionParser = new Parser(expression);
-            try
-            {
-                // Parse and assign the returned expression root.
-                expressionRoot = expressionParser.Parse();
-                expressionLb.Text = $"Expression: {expressionRoot.ToString()}";
-            }
-            catch (InvalidNumberException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (InvalidArgumentTypeException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (InvalidFactorialArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+
+            // Parse and assign the returned expression root.
+            expressionRoot = expressionParser.Parse();
+            expressionLb.Text = $"Expression: {expressionRoot.ToString()}";
         }
 
-        /// <summary>
-        /// Method that is responsible for creating the chart
-        /// and plot.
-        /// </summary>
         private void CrearteChart(string seriesName)
         {
             double xMin = -10;
@@ -208,12 +183,6 @@ namespace eXpressionParsing
             graphPictureBox.ImageLocation = $"{dotFileName}.png";
         }
 
-        /// <summary>
-        /// Is the method that is responsible for the writing to the .dot file.
-        /// 
-        /// Writes the expression into the .dot file as a tree in the corresponding
-        /// format (the .dot file requires).
-        /// </summary>
         private void CreateDotFile(string fileName, string fileContent)
         {
             FileStream fs = new FileStream($"{fileName}.dot", FileMode.Create, FileAccess.Write);
@@ -299,22 +268,56 @@ namespace eXpressionParsing
         /// <param name="e"></param>
         private void processBtn_Click(object sender, EventArgs e)
         {
-            if (parseRbtn.Checked)
+            try
             {
-                Parse();
-                
-                // Label the nodes and create its graph.
-                NumberOperands(expressionRoot);
-                CreateGraph("expression", expressionRoot.NodeLabel());
-            }
-            else if (differentiateRbtn.Checked)
-            {
-                Differentiate();
 
-                // Number the nodes in the derivative expression tree.
-                NumberOperands(derivativeExpressionRoot);
-                // Create a graph of the analytical derivative.
-                CreateGraph("derivative", derivativeExpressionRoot.NodeLabel());
+                if (parseRbtn.Checked)
+                {                
+                    // The expression always has to be parsed
+                    // but can throw an exception in case the
+                    // entered expression is invalid.
+                    Parse();
+                    // Label the nodes and create its graph.
+                    NumberOperands(expressionRoot);
+                    CreateGraph("expression", expressionRoot.NodeLabel());
+                }
+                else if (differentiateRbtn.Checked)
+                {
+                    Differentiate();
+
+                    // Number the nodes in the derivative expression tree.
+                    NumberOperands(derivativeExpressionRoot);
+                    // Create a graph of the analytical derivative.
+                    CreateGraph("derivative", derivativeExpressionRoot.NodeLabel());
+                }
+            }
+            catch (InvalidExpressionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidNumberException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidArgumentTypeException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidFactorialArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (NoExpressionEnteredException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (UndefinedExpressionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(DivideByZeroException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

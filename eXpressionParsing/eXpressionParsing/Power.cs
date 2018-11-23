@@ -4,25 +4,6 @@ namespace eXpressionParsing
 {
     class Power : BinaryOperator
     {
-        private Operand exponent;
-
-        public override Operand RightSuccessor
-        {
-            get { return exponent; }
-            set
-            {
-                // Validate that the input is an Integer object or if it just got constructed and has value null.
-                if (value is Integer || value == null)
-                {
-                    exponent = value;
-                }
-                else
-                {
-                    // Otherwise the input type according to the assignment is invalid.
-                    throw new InvalidArgumentTypeException("A power function requires the power to be of type integer.");
-                }
-            }
-        }
         public Power() : base('^')
         { }
 

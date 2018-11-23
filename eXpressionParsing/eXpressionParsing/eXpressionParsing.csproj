@@ -67,6 +67,7 @@
     <Compile Include="InvalidNumberException.cs" />
     <Compile Include="Multiplication.cs" />
     <Compile Include="NaturalLog.cs" />
+    <Compile Include="NoExpressionEnteredException.cs" />
     <Compile Include="Operand.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="PI.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Integer.cs" />
     <Compile Include="Subtraction.cs" />
     <Compile Include="UnaryOperator.cs" />
+    <Compile Include="UndefinedExpressionException.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

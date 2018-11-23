@@ -8,6 +8,40 @@ namespace eXpressionParsing
 {
     class Division : BinaryOperator
     {
+        private Operand denominator;
+        public override Operand RightSuccessor
+        {
+            get { return denominator; }
+            set
+            {
+                if (value is Integer)
+                {
+                    if ((int)value.Data == 0)
+                    {
+                        throw new DivideByZeroException("Can not divide by zero.");
+                    }
+                    else
+                    {
+                        denominator = value;
+                    }
+                }
+                else if (value is RealNumber)
+                {
+                    if ((double)value.Data == 0.0)
+                    {
+                        throw new DivideByZeroException("Can not divide by zero.");
+                    }
+                    else
+                    {
+                        denominator = value;
+                    }
+                }
+                else
+                {
+                    denominator = value;
+                }
+            }
+        }
         public Division() : base('/')
         { }
 
