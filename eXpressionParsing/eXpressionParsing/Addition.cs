@@ -24,7 +24,7 @@ namespace eXpressionParsing
             Addition simplifiedExpression = new Addition();
             simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
             simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
-            if (LeftSuccessor is Integer)
+            if (simplifiedExpression.LeftSuccessor is Integer)
             {
                 if (simplifiedExpression.RightSuccessor is Integer)
                 {

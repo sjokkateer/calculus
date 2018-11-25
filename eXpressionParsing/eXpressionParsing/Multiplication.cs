@@ -29,6 +29,13 @@ namespace eXpressionParsing
             // If either of the operands equals 0 or 1 then we want to simplify specifically.
             if (simplifiedExpression.RightSuccessor is Integer)
             {
+                // If Left is also an integer we can create a new real number operand for the result and return it up.
+                if (simplifiedExpression.LeftSuccessor is Integer)
+                {
+                    double result = Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) * Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data);
+                    return new RealNumber(result);
+                }
+
                 // If both are numbers we could multiply and return the result.
                 // But this might be iffy with double values and rounding errors?
                 switch (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data))
@@ -39,7 +46,7 @@ namespace eXpressionParsing
                         return simplifiedExpression.LeftSuccessor.Simplify();
                 }
             }
-            else if (simplifiedExpression.LeftSuccessor is Integer)
+            else if (simplifiedExpression.LeftSuccessor is Integer) // This means the simplified right expression was not a number.
             {
                 switch (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data))
                 {
