@@ -26,6 +26,8 @@ namespace eXpressionParsing
             simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
             if (simplifiedExpression.LeftSuccessor is Integer)
             {
+                // If the right is also a number, we can simplify the two by calculating the result.
+                // and return a new operand object holding the result as data up to the previous call.
                 if (simplifiedExpression.RightSuccessor is Integer)
                 {
                     double addition = Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) + Convert.ToDouble(simplifiedExpression.RightSuccessor.Data);
