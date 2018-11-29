@@ -16,17 +16,20 @@ namespace eXpressionParsing
             Subtraction simplifiedExpression = new Subtraction();
             simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
             simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
-            if (simplifiedExpression.LeftSuccessor is Integer)
+            if (simplifiedExpression.LeftSuccessor is Integer && !(simplifiedExpression.LeftSuccessor is PI)) // Left is not PI and a number.
             {
                 // In this scenario the right sub tree can be an expression still.
-                if (simplifiedExpression.RightSuccessor is Integer)
+                if (simplifiedExpression.RightSuccessor is Integer && !(simplifiedExpression.RightSuccessor is PI)) // Right not PI and a number.
                 {
+                    // We have 2 numbers so we can safely calculate.
                     double difference = Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) - Convert.ToDouble(simplifiedExpression.RightSuccessor.Data);
                     return new RealNumber(difference);
                 }
+                // Left can be 0 and that means the right is negative and we leave the expression tree as 0 - right expression
+                // to not have to worry about unary or binary operator of subtraction.
             }
-            else if (simplifiedExpression.RightSuccessor is Integer)
-            {
+            else if (simplifiedExpression.RightSuccessor is Integer && !(simplifiedExpression.RightSuccessor is PI)) // Left was either an expression or it is PI.
+            { // Thus we have to ensure that the Right is not PI or crash.
                 // This case means that left is not a number. And we thus should be
                 // able to return the negative of the right expression.
                 if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 0.0)

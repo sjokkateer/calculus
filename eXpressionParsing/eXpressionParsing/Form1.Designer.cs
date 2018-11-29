@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphPictureBox = new System.Windows.Forms.PictureBox();
             this.parseRbtn = new System.Windows.Forms.RadioButton();
@@ -67,8 +67,8 @@
             // 
             // expressionChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea3);
             this.expressionChart.Location = new System.Drawing.Point(26, 147);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
@@ -194,7 +194,7 @@
             this.integralInputPanel.Controls.Add(this.intervalALb);
             this.integralInputPanel.Controls.Add(this.intervalBTbx);
             this.integralInputPanel.Controls.Add(this.intervalATbx);
-            this.integralInputPanel.Location = new System.Drawing.Point(1553, 15);
+            this.integralInputPanel.Location = new System.Drawing.Point(1488, 15);
             this.integralInputPanel.Name = "integralInputPanel";
             this.integralInputPanel.Size = new System.Drawing.Size(581, 122);
             this.integralInputPanel.TabIndex = 15;
@@ -231,7 +231,7 @@
             // 
             this.intervalBTbx.Location = new System.Drawing.Point(52, 81);
             this.intervalBTbx.Name = "intervalBTbx";
-            this.intervalBTbx.Size = new System.Drawing.Size(276, 31);
+            this.intervalBTbx.Size = new System.Drawing.Size(205, 31);
             this.intervalBTbx.TabIndex = 17;
             this.intervalBTbx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.intervalBTbx_KeyPress);
             // 
@@ -239,13 +239,13 @@
             // 
             this.intervalATbx.Location = new System.Drawing.Point(52, 41);
             this.intervalATbx.Name = "intervalATbx";
-            this.intervalATbx.Size = new System.Drawing.Size(276, 31);
+            this.intervalATbx.Size = new System.Drawing.Size(205, 31);
             this.intervalATbx.TabIndex = 16;
             this.intervalATbx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.intervalATbx_KeyPress);
             // 
             // riemannIntervalTb
             // 
-            this.riemannIntervalTb.Location = new System.Drawing.Point(349, 41);
+            this.riemannIntervalTb.Location = new System.Drawing.Point(273, 39);
             this.riemannIntervalTb.Name = "riemannIntervalTb";
             this.riemannIntervalTb.Size = new System.Drawing.Size(205, 31);
             this.riemannIntervalTb.TabIndex = 20;
@@ -253,7 +253,7 @@
             // stepSizeLb
             // 
             this.stepSizeLb.AutoSize = true;
-            this.stepSizeLb.Location = new System.Drawing.Point(344, 9);
+            this.stepSizeLb.Location = new System.Drawing.Point(273, 7);
             this.stepSizeLb.Name = "stepSizeLb";
             this.stepSizeLb.Size = new System.Drawing.Size(210, 25);
             this.stepSizeLb.TabIndex = 21;
@@ -271,7 +271,7 @@
             this.axisPanel.Controls.Add(this.xMinLb);
             this.axisPanel.Location = new System.Drawing.Point(960, 15);
             this.axisPanel.Name = "axisPanel";
-            this.axisPanel.Size = new System.Drawing.Size(522, 120);
+            this.axisPanel.Size = new System.Drawing.Size(522, 122);
             this.axisPanel.TabIndex = 17;
             // 
             // xMinLb

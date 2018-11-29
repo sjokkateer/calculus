@@ -14,11 +14,15 @@ namespace eXpressionParsing
 
         public override Operand Simplify()
         {
-            if (Convert.ToDouble(RightSuccessor.Data) == 1.0)
+            if (!(RightSuccessor is PI)) // Ensure the power is not PI or it would crash.
             {
-                return LeftSuccessor.Simplify();
+                if (Convert.ToDouble(RightSuccessor.Data) == 1.0) // If it's 1 we return the simplified version of left.
+                {
+                    return LeftSuccessor.Simplify();
+                }
+                return Copy(); // Otherwise just the copy.
             }
-            else
+            else // All other cases, just return the copy.
             {
                 return Copy();
             }

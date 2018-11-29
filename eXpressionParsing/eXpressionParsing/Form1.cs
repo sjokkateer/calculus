@@ -125,6 +125,7 @@ namespace eXpressionParsing
 
             expressionChart.Series[seriesName].ChartArea = "ChartArea1";
 
+            //bool isValidExpression = true;
             double step = 0.0001;
             double result;
             for (double i = xMin; i <= xMax; i += step)
@@ -132,15 +133,18 @@ namespace eXpressionParsing
                 result = calculator(i);
                 if (result >= yMin && result <= yMax)
                 {
-                    if (!double.IsInfinity(result) && !double.IsNaN(result))
+                    if (!double.IsInfinity(result))
                     {
                         expressionChart.Series[seriesName].Points.AddXY(i, result);
                     }
                 }
-            }
-            if (expressionChart.Series[seriesName].Points.Count < 1)
-            {
-                throw new InvalidExpressionException($"{expressionRoot.ToString()} is not a valid expression!");
+                else
+                {
+                    if (double.IsNaN(result))
+                    {
+                        throw new InvalidExpressionException($"{expressionRoot.ToString()} is not a valid expression!");
+                    }
+                }
             }
         }
 
@@ -294,8 +298,6 @@ namespace eXpressionParsing
                 // Try to obtain min and max values for the axis.
                 ObtainAxisBoundaries();
 
-                Console.WriteLine($"X Min {xMin}, Max {xMax} || Y Min {yMin}, Max {yMax}");
-
                 // For now the entered expression must always be parsed first.
                 Parse(new NoExpressionEnteredException("Please enter an expression to parse."));
 
@@ -341,7 +343,7 @@ namespace eXpressionParsing
                         throw new InvalidArgumentTypeException("Please enter valid numbers for the range from a through b");
                     }
                     calculator = new CalculateForXHandler(expressionRoot.Calculate);
-                    expressionChart.Refresh();
+                    expressionChart.Refresh(); // Ensure that the pain event is triggrred.
                     areaLb.Text += $"{Math.Round(sum, 2)} square units.";
                 }
             }
@@ -420,88 +422,113 @@ namespace eXpressionParsing
             }
         }
 
+        // Paint event that is responsible for drawing the definite integral
+        // or Riemann sum for the entered expression.
+        // My method uses the midpoint rule to create it's rectangles.
         private void expressionChart_Paint(object sender, PaintEventArgs e)
         {
             if (calculator != null)
             {
                 if (integralRbtn.Checked)
                 {
-                    sum = 0;
-
-                    double step = (upper - lower) / Convert.ToDouble(riemannIntervalTb.Text);
-                    double result;
-
-                    float l;
-                    float r;
-                    float t;
-                    float b;
-
-                    for (double i = lower; i <= upper; i += step)
+                    try
                     {
-                        result = calculator(i + (step / 2));
+                        sum = 0;
 
-                        // If the sum is not already set to infinity.
-                        if (!double.IsInfinity(sum))
-                        {
-                            // We want to add result to the sum for the total surface area.
-                            if (!double.IsInfinity(result))
-                            {
-                                // Positive areas.
-                                if (result > 0)
-                                {
-                                    sum += result;
-                                }
-                                else
-                                {
-                                    sum += -1 * result;
-                                }
-                            }
-                            else if (double.IsInfinity(result))
-                            {
-                                if (result < 0)
-                                {
-                                    sum = double.NegativeInfinity;
-                                }
-                                else
-                                {
-                                    sum = double.PositiveInfinity;
-                                }
-                            }
-                        }
+                        double step = (upper - lower) / Convert.ToDouble(riemannIntervalTb.Text);
+                        double result;
 
-                        if (i >= xMin && i + step <= xMax)
+                        float l;
+                        float r;
+                        float t;
+                        float b;
+
+                        for (double i = lower; i <= upper; i += step)
                         {
-                            // Plot only the values that are between min and max that the double class allows.
-                            if (result >= double.MinValue && result <= double.MaxValue)
+                            result = calculator(i + (step / 2));
+
+                            // If the sum is not already set to infinity.
+                            if (!double.IsInfinity(sum))
                             {
-                                // First plot the negative area such that display matches.
-                                if (!double.IsInfinity(result) && !double.IsNaN(result))
+                                // We want to add result to the sum for the total surface area.
+                                if (!double.IsInfinity(result))
                                 {
-                                    // Also if the values are between the boundaries of the chart's axis
-                                    l = (float)expressionChart.ChartAreas[0].AxisX.ValueToPixelPosition(i);
-                                    r = (float)expressionChart.ChartAreas[0].AxisX.ValueToPixelPosition(i + step);
+                                    // Positive areas.
                                     if (result > 0)
                                     {
-                                        t = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(result);
-                                        b = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(0);
+                                        sum += result;
                                     }
                                     else
                                     {
-                                        t = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(0);
-                                        b = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(result);
+                                        sum += -1 * result;
                                     }
-                                    rect = RectangleF.FromLTRB(l, t, r, b);
-                                    using (SolidBrush br = new SolidBrush(Color.Green))
+                                }
+                                else if (double.IsInfinity(result))
+                                {
+                                    if (result < 0)
                                     {
-                                        e.Graphics.FillRectangle(br, rect.X, rect.Y, rect.Width, rect.Height);
+                                        sum = double.NegativeInfinity;
                                     }
-                                    e.Graphics.DrawRectangle(Pens.Green, rect.X, rect.Y, rect.Width, rect.Height);
+                                    else
+                                    {
+                                        sum = double.PositiveInfinity;
+                                    }
+                                }
+                            }
+
+                            // As long as our i is between the x axis min and max, we draw.
+                            // Otherwise we only calculate
+                            if (i >= xMin && i + step <= xMax)
+                            {
+                                // Plot only the values that are between min and max that the double class allows.
+                                if (result >= double.MinValue && result <= double.MaxValue)
+                                {
+                                    // First plot the negative area such that display matches.
+                                    if (!double.IsInfinity(result) && !double.IsNaN(result))
+                                    {
+                                        // Also if the values are between the boundaries of the chart's axis
+                                        l = (float)expressionChart.ChartAreas[0].AxisX.ValueToPixelPosition(i);
+                                        r = (float)expressionChart.ChartAreas[0].AxisX.ValueToPixelPosition(i + step);
+                                        if (result > 0)
+                                        {
+                                            // If the result is larger than the set max value for the y axis
+                                            // Assign the max y value to result and plot it such that the 
+                                            // painting does not go over the chart axis boundaries.
+                                            if (result > yMax)
+                                            {
+                                                result = yMax;
+                                            }
+                                            t = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(result);
+                                            b = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(0);
+                                        }
+                                        else
+                                        {
+                                            // Same as before, assign the y min to result and draw it.
+                                            if (result < yMin)
+                                            {
+                                                result = yMin;
+                                            }
+                                            // If the result is negative, we have the upper part of the rectangle to start at 0
+                                            // and the rectangle has to be drawn up and until the negative value.
+                                            t = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(0);
+                                            b = (float)expressionChart.ChartAreas[0].AxisY.ValueToPixelPosition(result);
+                                        }
+                                        rect = RectangleF.FromLTRB(l, t, r, b);
+                                        using (SolidBrush br = new SolidBrush(Color.Green))
+                                        {
+                                            e.Graphics.FillRectangle(br, rect.X, rect.Y, rect.Width, rect.Height);
+                                        }
+                                        e.Graphics.DrawRectangle(Pens.Green, rect.X, rect.Y, rect.Width, rect.Height);
+                                    }
                                 }
                             }
                         }
                     }
+                    catch (FormatException)
+                    { }
                 }
             }
         }
     }
 }
+

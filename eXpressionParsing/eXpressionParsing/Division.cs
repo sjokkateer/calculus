@@ -14,7 +14,7 @@ namespace eXpressionParsing
             get { return denominator; }
             set
             {
-                if (value is Integer)
+                if (value is Integer && !(value is PI))
                 {
                     if (Convert.ToDouble(value.Data) == 0.0)
                     {
@@ -42,16 +42,17 @@ namespace eXpressionParsing
             simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
             // When we divide by 1, we can just return
             // the numerator of the division.
-            if (simplifiedExpression.RightSuccessor is Integer)
+            if (simplifiedExpression.RightSuccessor is Integer && !(simplifiedExpression.RightSuccessor is PI)) // If a number but not PI.
             {
                 // The denominator = 1, thus we can return the numerator.
-                if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 1)
+                if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 1) // If the number is 1, we simplify it to just the simplification of the left branch.
                 {
                     return simplifiedExpression.LeftSuccessor.Simplify();
                 }
             }
-            else if (simplifiedExpression.LeftSuccessor is Integer)
-            {
+            else if (simplifiedExpression.LeftSuccessor is Integer && !(simplifiedExpression.LeftSuccessor is PI)) // The right was either not a number or PI.
+            { // We ensured that the left is not PI
+
                 // Check if the numerator is 0
                 // if so we can return a number 0.
                 if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0)

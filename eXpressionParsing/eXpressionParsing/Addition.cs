@@ -24,21 +24,22 @@ namespace eXpressionParsing
             Addition simplifiedExpression = new Addition();
             simplifiedExpression.LeftSuccessor = LeftSuccessor.Simplify();
             simplifiedExpression.RightSuccessor = RightSuccessor.Simplify();
-            if (simplifiedExpression.LeftSuccessor is Integer)
+            if (simplifiedExpression.LeftSuccessor is Integer && !(simplifiedExpression.LeftSuccessor is PI)) // Must not be PI or crash.
             {
                 // If the right is also a number, we can simplify the two by calculating the result.
                 // and return a new operand object holding the result as data up to the previous call.
-                if (simplifiedExpression.RightSuccessor is Integer)
+                if (simplifiedExpression.RightSuccessor is Integer && !(simplifiedExpression.RightSuccessor is PI)) // Must not be PI or crash, or loss of info if we simplify perhaps.
                 {
+                    // These will always be non PI numbers either int or real.
                     double addition = Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) + Convert.ToDouble(simplifiedExpression.RightSuccessor.Data);
                     return new RealNumber(addition);
                 }
-                else if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0)
+                else if (Convert.ToDouble(simplifiedExpression.LeftSuccessor.Data) == 0.0) // This left is never PI, if it is 0 we can simplify right safely.
                 {
                     return simplifiedExpression.RightSuccessor.Simplify();
                 }
             }
-            else if (simplifiedExpression.RightSuccessor is Integer) // Same story, left is not an int so try to simplify left subtree if we have a 0.
+            else if (simplifiedExpression.RightSuccessor is Integer && !(simplifiedExpression.RightSuccessor is PI)) // Right must not be PI or it'll crash.
             {
                 if (Convert.ToDouble(simplifiedExpression.RightSuccessor.Data) == 0)
                 {
