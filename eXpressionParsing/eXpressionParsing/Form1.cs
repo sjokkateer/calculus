@@ -125,9 +125,10 @@ namespace eXpressionParsing
 
             expressionChart.Series[seriesName].ChartArea = "ChartArea1";
 
-            //bool isValidExpression = true;
             double step = 0.0001;
             double result;
+            List<double> resultSet = new List<double>();
+
             for (double i = xMin; i <= xMax; i += step)
             {
                 result = calculator(i);
@@ -138,12 +139,21 @@ namespace eXpressionParsing
                         expressionChart.Series[seriesName].Points.AddXY(i, result);
                     }
                 }
-                else
+                // If there is a legit result value calculate
+                // even though it did not fit inside our y boundaries
+                // we want to include it in a different set such that 
+                // we can make sure the program will only call expressions
+                // invalid over a certain interval if it actually is true.
+                if (!double.IsNaN(result))
                 {
-                    if (double.IsNaN(result))
-                    {
-                        throw new InvalidExpressionException($"{expressionRoot.ToString()} is not a valid expression!");
-                    }
+                    resultSet.Add(result);
+                }
+            }
+            if (expressionChart.Series[seriesName].Points.Count == 0)
+            {
+                if (resultSet.Count == 0)
+                {
+                    throw new InvalidExpressionException($"{expressionRoot.ToString()} is not a valid expression over this interval!");
                 }
             }
         }
