@@ -18,7 +18,7 @@ namespace eXpressionParsing
 
         public override double Calculate(double x)
         {
-            return (double)Data;
+            return Convert.ToDouble(Data);
         }
 
         public override Operand Differentiate()

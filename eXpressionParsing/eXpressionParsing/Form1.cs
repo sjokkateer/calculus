@@ -21,6 +21,8 @@ namespace eXpressionParsing
 
         private Operand expressionRoot;
         private Operand derivativeExpressionRoot;
+        private Operand macLaurinRoot;
+        private int macLaurinCounter;
 
         private RectangleF rect;
         private double lower;
@@ -97,7 +99,7 @@ namespace eXpressionParsing
             expressionLb.Text = $"Expression: {expressionRoot.ToString()}";
         }
 
-        private void CrearteChart(string seriesName)
+        private void CreateChart(string seriesName)
         {
             expressionChart.ChartAreas[0].AxisX.Minimum = xMin;
             expressionChart.ChartAreas[0].AxisX.Maximum = xMax;
@@ -298,26 +300,31 @@ namespace eXpressionParsing
             }
         }
 
+        private void ParseAndPlotExpressions(string errorMessage)
+        {
+            // Reset
+            ResetAll();
+
+            // Try to obtain min and max values for the axis.
+            ObtainAxisBoundaries();
+
+            // For now the entered expression must always be parsed first.
+            Parse(new NoExpressionEnteredException(errorMessage));
+
+            // For now always make a plot of the entered expression
+            // as it is used for regular parsing, the derivative and for the integral.
+
+            // In the future we could sub an event and unsub this basic method
+            // for the taylor polynomials etc if we need to.
+            calculator = new CalculateForXHandler(expressionRoot.Calculate);
+            CreateChart("Expression");
+        }
+
         private void processBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                // Reset method
-                ResetAll();
-
-                // Try to obtain min and max values for the axis.
-                ObtainAxisBoundaries();
-
-                // For now the entered expression must always be parsed first.
-                Parse(new NoExpressionEnteredException("Please enter an expression to parse."));
-
-                // For now always make a plot of the entered expression
-                // as it is used for regular parsing, the derivative and for the integral.
-
-                // In the future we could sub an event and unsub this basic method
-                // for the taylor polynomials etc if we need to.
-                calculator = new CalculateForXHandler(expressionRoot.Calculate);
-                CrearteChart("Expression");
+                ParseAndPlotExpressions("Please enter an expression to parse.");
 
                 if (parseRbtn.Checked)
                 {
@@ -335,11 +342,11 @@ namespace eXpressionParsing
 
                     // Assign the method to calculate the x'es for the derivative of the expression.
                     calculator = new CalculateForXHandler(derivativeExpressionRoot.Calculate);
-                    CrearteChart("Analytical Derivative");
+                    CreateChart("Analytical Derivative");
 
                     // Plot Newton's difference quotient as well.
                     calculator = new CalculateForXHandler(DifferenceQuotient);
-                    CrearteChart("Difference Quotient");
+                    CreateChart("Difference Quotient");
 
                     CreateGraphOfFunction(derivativeExpressionRoot, "derivative");
                 }
@@ -389,25 +396,25 @@ namespace eXpressionParsing
 
         private void integralRbtn_CheckedChanged(object sender, EventArgs e)
         {
-            if (integralInputPanel.Visible == false)
+            if (intergralGroupBox.Visible == false)
             {
-                integralInputPanel.Visible = true;
+                intergralGroupBox.Visible = true;
             }
         }
 
         private void parseRbtn_CheckedChanged(object sender, EventArgs e)
         {
-            if (integralInputPanel.Visible == true)
+            if (intergralGroupBox.Visible == true)
             {
-                integralInputPanel.Visible = false;
+                intergralGroupBox.Visible = false;
             }
         }
 
         private void differentiateRbtn_CheckedChanged(object sender, EventArgs e)
         {
-            if (integralInputPanel.Visible == true)
+            if (intergralGroupBox.Visible == true)
             {
-                integralInputPanel.Visible = false;
+                intergralGroupBox.Visible = false;
             }
         }
 
@@ -538,6 +545,135 @@ namespace eXpressionParsing
                     { }
                 }
             }
+        }
+
+        private Addition CreateMaclaurinTerm(Operand expression, int i)
+        {
+            // The zero-th order MacLaurin Polynomial is (P0(x)) = 
+            // f(0) * (x^0)/0! which simplifies to a constant?
+            if (i == 0)
+            {
+                // We can return calculate and return the function value
+                // evaluated in x = 0.
+                double functionValue = expression.Calculate(0);
+                Addition test = new Addition();
+                test.LeftSuccessor = new RealNumber(functionValue);
+                test.RightSuccessor = new RealNumber(0.0);
+                return test;
+                // return new RealNumber(functionValue);
+            }
+            else
+            {
+                // Create a term by differentiating the input expression
+                // and create according to the input value of i the other
+                // terms/parts of the expression.
+
+                // For the returned expression I will set the left successor
+                // to always be the nth order derivative (slope value).
+
+                // The expression is differentiated if i != 0.
+                // Operand derivative = expression.Differentiate();
+                // Calculate the coefficient in a = 0.
+                double slope = expression.Calculate(0);
+                // If the slope is NaN we pretty much evaluated all possible
+                // derivatives (there is no more derivative possible)
+                // Thus return 0 such that we can simplify later on.
+                if (double.IsNaN(slope))
+                {
+                    slope = 0;
+                }
+                Operand resultSlope = new RealNumber(slope);
+
+                // TEST
+                Addition mac = new Addition();
+                mac.RightSuccessor = new RealNumber(0.0);
+                // TEST
+
+
+                Multiplication MacLaurinTerm = new Multiplication();
+                MacLaurinTerm.LeftSuccessor = resultSlope;
+                Division div = new Division();
+                MacLaurinTerm.RightSuccessor = div;
+                // Now create the right part of the multiplication (f'i(0) * (x - 0)^i / i!)
+                // Create the numerator (x - 0)^i
+                Power numerator = new Power();
+                numerator.LeftSuccessor = new DependentVariableX();
+                numerator.RightSuccessor = new Integer(i);
+                // Create the denominator (i)!.
+                Factorial denominator = new Factorial();
+                denominator.LeftSuccessor = new Integer(i);
+                // Add the numerator and denominator into the division Operator.
+                div.LeftSuccessor = numerator;
+                div.RightSuccessor = denominator;
+
+                // TEST
+                mac.LeftSuccessor = MacLaurinTerm;
+                // TEST
+
+                return mac;
+            }
+        }
+
+        private Operand CreateMacLaurinPolynomial(Operand expression, int i, int n)
+        {
+            if (i == n)
+            {
+                // return the nth term back up to the calling stack.
+                return CreateMaclaurinTerm(expression, i);
+            }
+            else
+            {
+                // else return the ith term of the maclaurin polynomial + the next one.
+                // first create and assign term i.
+                Addition TermI = CreateMaclaurinTerm(expression, i);
+                // create the right successor recursively.
+                TermI.RightSuccessor = CreateMacLaurinPolynomial(expression.Differentiate(), i + 1, n);
+                return TermI;
+            }
+        }
+
+        private void btnAnalyticalMcLaurin_Click(object sender, EventArgs e)
+        {
+            int n;
+            bool isNEntered = int.TryParse(nPolynomialTbx.Text, out n);
+            if (isNEntered)
+            {
+                // First parse the expression, if any is entered.
+                ParseAndPlotExpressions("Please enter an expression to use as basis for the MacLaurin Polynomial.");
+                // Recursively create the nth MacLaurin polynomial.
+                Operand MacLaurinPolynomial = CreateMacLaurinPolynomial(expressionRoot.Copy(), 0, n);
+
+                // Simplify and plot the final polynomial.
+                MacLaurinPolynomial = MacLaurinPolynomial.Simplify();
+                calculator = new CalculateForXHandler(MacLaurinPolynomial.Calculate);
+                // Plot the final polynomial
+                CreateChart($"MacLaurin {n}");
+
+                CreateGraphOfFunction(MacLaurinPolynomial, "macLaurin");
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid N for the nth order MacLaurin Polynomial.");
+            }
+        }
+
+        /// <summary>
+        /// Allows only digits to be input in the textbox and backspace characters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nPolynomialTbx_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+            if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)8)
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void btnQuotientMcLaurin_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
