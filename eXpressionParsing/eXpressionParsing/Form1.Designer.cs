@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphPictureBox = new System.Windows.Forms.PictureBox();
             this.parseRbtn = new System.Windows.Forms.RadioButton();
@@ -73,8 +73,8 @@
             // 
             // expressionChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea4);
             this.expressionChart.Location = new System.Drawing.Point(417, 360);
             this.expressionChart.Name = "expressionChart";
             this.expressionChart.Size = new System.Drawing.Size(1268, 907);
@@ -193,51 +193,54 @@
             // 
             // stepSizeLb
             // 
-            this.stepSizeLb.Location = new System.Drawing.Point(0, 0);
+            this.stepSizeLb.Location = new System.Drawing.Point(228, 27);
             this.stepSizeLb.Name = "stepSizeLb";
-            this.stepSizeLb.Size = new System.Drawing.Size(100, 23);
+            this.stepSizeLb.Size = new System.Drawing.Size(233, 42);
             this.stepSizeLb.TabIndex = 0;
+            this.stepSizeLb.Text = "Number of intervals:";
             // 
             // riemannIntervalTb
             // 
-            this.riemannIntervalTb.Location = new System.Drawing.Point(0, 0);
+            this.riemannIntervalTb.Location = new System.Drawing.Point(233, 58);
             this.riemannIntervalTb.Name = "riemannIntervalTb";
-            this.riemannIntervalTb.Size = new System.Drawing.Size(100, 31);
+            this.riemannIntervalTb.Size = new System.Drawing.Size(188, 31);
             this.riemannIntervalTb.TabIndex = 1;
             // 
             // intervalLb
             // 
-            this.intervalLb.Location = new System.Drawing.Point(0, 0);
+            this.intervalLb.Location = new System.Drawing.Point(6, 110);
             this.intervalLb.Name = "intervalLb";
-            this.intervalLb.Size = new System.Drawing.Size(100, 23);
+            this.intervalLb.Size = new System.Drawing.Size(65, 34);
             this.intervalLb.TabIndex = 3;
+            this.intervalLb.Text = "b:";
             // 
             // interalBLb
             // 
-            this.interalBLb.Location = new System.Drawing.Point(0, 0);
+            this.interalBLb.Location = new System.Drawing.Point(298, 133);
             this.interalBLb.Name = "interalBLb";
             this.interalBLb.Size = new System.Drawing.Size(100, 23);
             this.interalBLb.TabIndex = 5;
             // 
             // intervalALb
             // 
-            this.intervalALb.Location = new System.Drawing.Point(0, 0);
+            this.intervalALb.Location = new System.Drawing.Point(6, 58);
             this.intervalALb.Name = "intervalALb";
-            this.intervalALb.Size = new System.Drawing.Size(100, 23);
+            this.intervalALb.Size = new System.Drawing.Size(56, 31);
             this.intervalALb.TabIndex = 6;
+            this.intervalALb.Text = "a:";
             // 
             // intervalBTbx
             // 
-            this.intervalBTbx.Location = new System.Drawing.Point(0, 0);
+            this.intervalBTbx.Location = new System.Drawing.Point(45, 107);
             this.intervalBTbx.Name = "intervalBTbx";
-            this.intervalBTbx.Size = new System.Drawing.Size(100, 31);
+            this.intervalBTbx.Size = new System.Drawing.Size(152, 31);
             this.intervalBTbx.TabIndex = 4;
             // 
             // intervalATbx
             // 
-            this.intervalATbx.Location = new System.Drawing.Point(0, 0);
+            this.intervalATbx.Location = new System.Drawing.Point(45, 58);
             this.intervalATbx.Name = "intervalATbx";
-            this.intervalATbx.Size = new System.Drawing.Size(100, 31);
+            this.intervalATbx.Size = new System.Drawing.Size(152, 31);
             this.intervalATbx.TabIndex = 2;
             // 
             // mcLaurinGrpBox
@@ -246,9 +249,9 @@
             this.mcLaurinGrpBox.Controls.Add(this.nPolynomiallb);
             this.mcLaurinGrpBox.Controls.Add(this.btnQuotientMcLaurin);
             this.mcLaurinGrpBox.Controls.Add(this.btnAnalyticalMcLaurin);
-            this.mcLaurinGrpBox.Location = new System.Drawing.Point(26, 440);
+            this.mcLaurinGrpBox.Location = new System.Drawing.Point(26, 484);
             this.mcLaurinGrpBox.Name = "mcLaurinGrpBox";
-            this.mcLaurinGrpBox.Size = new System.Drawing.Size(374, 217);
+            this.mcLaurinGrpBox.Size = new System.Drawing.Size(374, 224);
             this.mcLaurinGrpBox.TabIndex = 18;
             this.mcLaurinGrpBox.TabStop = false;
             this.mcLaurinGrpBox.Text = "Maclaurin Polynomial";
@@ -257,7 +260,7 @@
             // 
             this.nPolynomialTbx.Location = new System.Drawing.Point(164, 43);
             this.nPolynomialTbx.Name = "nPolynomialTbx";
-            this.nPolynomialTbx.Size = new System.Drawing.Size(204, 31);
+            this.nPolynomialTbx.Size = new System.Drawing.Size(192, 31);
             this.nPolynomialTbx.TabIndex = 31;
             this.nPolynomialTbx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nPolynomialTbx_KeyPress);
             // 
@@ -272,9 +275,9 @@
             // 
             // btnQuotientMcLaurin
             // 
-            this.btnQuotientMcLaurin.Location = new System.Drawing.Point(6, 145);
+            this.btnQuotientMcLaurin.Location = new System.Drawing.Point(28, 156);
             this.btnQuotientMcLaurin.Name = "btnQuotientMcLaurin";
-            this.btnQuotientMcLaurin.Size = new System.Drawing.Size(362, 55);
+            this.btnQuotientMcLaurin.Size = new System.Drawing.Size(318, 49);
             this.btnQuotientMcLaurin.TabIndex = 21;
             this.btnQuotientMcLaurin.Text = "By Newton\'s Quotient";
             this.btnQuotientMcLaurin.UseVisualStyleBackColor = true;
@@ -282,9 +285,9 @@
             // 
             // btnAnalyticalMcLaurin
             // 
-            this.btnAnalyticalMcLaurin.Location = new System.Drawing.Point(6, 80);
+            this.btnAnalyticalMcLaurin.Location = new System.Drawing.Point(28, 91);
             this.btnAnalyticalMcLaurin.Name = "btnAnalyticalMcLaurin";
-            this.btnAnalyticalMcLaurin.Size = new System.Drawing.Size(362, 50);
+            this.btnAnalyticalMcLaurin.Size = new System.Drawing.Size(318, 49);
             this.btnAnalyticalMcLaurin.TabIndex = 19;
             this.btnAnalyticalMcLaurin.Text = "Analytical";
             this.btnAnalyticalMcLaurin.UseVisualStyleBackColor = true;
@@ -302,21 +305,21 @@
             this.intervalGrpBox.Controls.Add(this.xMinLb);
             this.intervalGrpBox.Location = new System.Drawing.Point(26, 161);
             this.intervalGrpBox.Name = "intervalGrpBox";
-            this.intervalGrpBox.Size = new System.Drawing.Size(374, 261);
+            this.intervalGrpBox.Size = new System.Drawing.Size(374, 308);
             this.intervalGrpBox.TabIndex = 22;
             this.intervalGrpBox.TabStop = false;
             this.intervalGrpBox.Text = "Interval";
             // 
             // yMaxTbx
             // 
-            this.yMaxTbx.Location = new System.Drawing.Point(98, 196);
+            this.yMaxTbx.Location = new System.Drawing.Point(98, 258);
             this.yMaxTbx.Name = "yMaxTbx";
             this.yMaxTbx.Size = new System.Drawing.Size(258, 31);
             this.yMaxTbx.TabIndex = 32;
             // 
             // yMinTbx
             // 
-            this.yMinTbx.Location = new System.Drawing.Point(98, 158);
+            this.yMinTbx.Location = new System.Drawing.Point(98, 208);
             this.yMinTbx.Name = "yMinTbx";
             this.yMinTbx.Size = new System.Drawing.Size(258, 31);
             this.yMinTbx.TabIndex = 31;
@@ -330,7 +333,7 @@
             // 
             // xMinTbx
             // 
-            this.xMinTbx.Location = new System.Drawing.Point(98, 52);
+            this.xMinTbx.Location = new System.Drawing.Point(98, 38);
             this.xMinTbx.Name = "xMinTbx";
             this.xMinTbx.Size = new System.Drawing.Size(258, 31);
             this.xMinTbx.TabIndex = 29;
@@ -338,7 +341,7 @@
             // yMaxLb
             // 
             this.yMaxLb.AutoSize = true;
-            this.yMaxLb.Location = new System.Drawing.Point(23, 199);
+            this.yMaxLb.Location = new System.Drawing.Point(23, 261);
             this.yMaxLb.Name = "yMaxLb";
             this.yMaxLb.Size = new System.Drawing.Size(75, 25);
             this.yMaxLb.TabIndex = 28;
@@ -347,7 +350,7 @@
             // yMinLb
             // 
             this.yMinLb.AutoSize = true;
-            this.yMinLb.Location = new System.Drawing.Point(23, 161);
+            this.yMinLb.Location = new System.Drawing.Point(23, 211);
             this.yMinLb.Name = "yMinLb";
             this.yMinLb.Size = new System.Drawing.Size(69, 25);
             this.yMinLb.TabIndex = 27;
@@ -365,7 +368,7 @@
             // xMinLb
             // 
             this.xMinLb.AutoSize = true;
-            this.xMinLb.Location = new System.Drawing.Point(17, 55);
+            this.xMinLb.Location = new System.Drawing.Point(17, 41);
             this.xMinLb.Name = "xMinLb";
             this.xMinLb.Size = new System.Drawing.Size(69, 25);
             this.xMinLb.TabIndex = 25;
@@ -373,16 +376,16 @@
             // 
             // intergralGroupBox
             // 
-            this.intergralGroupBox.Controls.Add(this.stepSizeLb);
             this.intergralGroupBox.Controls.Add(this.riemannIntervalTb);
             this.intergralGroupBox.Controls.Add(this.intervalATbx);
-            this.intergralGroupBox.Controls.Add(this.intervalLb);
             this.intergralGroupBox.Controls.Add(this.intervalBTbx);
             this.intergralGroupBox.Controls.Add(this.interalBLb);
             this.intergralGroupBox.Controls.Add(this.intervalALb);
+            this.intergralGroupBox.Controls.Add(this.intervalLb);
+            this.intergralGroupBox.Controls.Add(this.stepSizeLb);
             this.intergralGroupBox.Location = new System.Drawing.Point(417, 161);
             this.intergralGroupBox.Name = "intergralGroupBox";
-            this.intergralGroupBox.Size = new System.Drawing.Size(496, 186);
+            this.intergralGroupBox.Size = new System.Drawing.Size(449, 186);
             this.intergralGroupBox.TabIndex = 22;
             this.intergralGroupBox.TabStop = false;
             this.intergralGroupBox.Text = "Definite Integral";

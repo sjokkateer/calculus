@@ -21,8 +21,7 @@ namespace eXpressionParsing
 
         private Operand expressionRoot;
         private Operand derivativeExpressionRoot;
-        private Operand macLaurinRoot;
-        private int macLaurinCounter;
+        private bool macLaurinAnalytical;
 
         private RectangleF rect;
         private double lower;
@@ -48,6 +47,8 @@ namespace eXpressionParsing
             xMax = 10;
             yMin = -2;
             yMax = 2;
+
+            macLaurinAnalytical = false;
         }
 
         private void Parse(Exception error)
