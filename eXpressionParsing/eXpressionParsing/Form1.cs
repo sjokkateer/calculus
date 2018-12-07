@@ -547,7 +547,7 @@ namespace eXpressionParsing
             }
         }
 
-        private Addition CreateMaclaurinTerm(Operand expression, int i)
+        private Operand CreateMaclaurinTerm(Operand expression, int i)
         {
             // The zero-th order MacLaurin Polynomial is (P0(x)) = 
             // f(0) * (x^0)/0! which simplifies to a constant?
@@ -556,11 +556,11 @@ namespace eXpressionParsing
                 // We can return calculate and return the function value
                 // evaluated in x = 0.
                 double functionValue = expression.Calculate(0);
-                Addition test = new Addition();
-                test.LeftSuccessor = new RealNumber(functionValue);
-                test.RightSuccessor = new RealNumber(0.0);
-                return test;
-                // return new RealNumber(functionValue);
+                //Addition test = new Addition();
+                //test.LeftSuccessor = new RealNumber(functionValue);
+                //test.RightSuccessor = new RealNumber(0.0);
+                //return test;
+                return new RealNumber(functionValue);
             }
             else
             {
@@ -584,12 +584,6 @@ namespace eXpressionParsing
                 }
                 Operand resultSlope = new RealNumber(slope);
 
-                // TEST
-                Addition mac = new Addition();
-                mac.RightSuccessor = new RealNumber(0.0);
-                // TEST
-
-
                 Multiplication MacLaurinTerm = new Multiplication();
                 MacLaurinTerm.LeftSuccessor = resultSlope;
                 Division div = new Division();
@@ -606,29 +600,33 @@ namespace eXpressionParsing
                 div.LeftSuccessor = numerator;
                 div.RightSuccessor = denominator;
 
-                // TEST
-                mac.LeftSuccessor = MacLaurinTerm;
-                // TEST
-
-                return mac;
+                return MacLaurinTerm;
             }
         }
 
-        private Operand CreateMacLaurinPolynomial(Operand expression, int i, int n)
+        private Operand CreateMacLaurinPolynomial(Addition root, Addition currentTerm, Operand expression, int i, int n)
         {
             if (i == n)
             {
                 // return the nth term back up to the calling stack.
-                return CreateMaclaurinTerm(expression, i);
+                currentTerm.LeftSuccessor = CreateMaclaurinTerm(expression, i);
+                currentTerm.RightSuccessor = new RealNumber(0.0);
+                return root;
             }
             else
             {
                 // else return the ith term of the maclaurin polynomial + the next one.
                 // first create and assign term i.
-                Addition TermI = CreateMaclaurinTerm(expression, i);
-                // create the right successor recursively.
-                TermI.RightSuccessor = CreateMacLaurinPolynomial(expression.Differentiate(), i + 1, n);
-                return TermI;
+                currentTerm.LeftSuccessor = CreateMaclaurinTerm(expression, i);
+                // Assign a 0 value to the right sub expression such that calculations don't crash the program
+                // and also the expression as a whole is not changed.
+                currentTerm.RightSuccessor = new RealNumber(0.0);
+                calculator = new CalculateForXHandler(root.Calculate);
+                CreateChart($"MacLaurin {i}");
+                
+                expression = expression.Differentiate();
+                currentTerm.RightSuccessor = new Addition();
+                return CreateMacLaurinPolynomial(root, (Addition)currentTerm.RightSuccessor, expression, i + 1, n);
             }
         }
 
@@ -641,7 +639,8 @@ namespace eXpressionParsing
                 // First parse the expression, if any is entered.
                 ParseAndPlotExpressions("Please enter an expression to use as basis for the MacLaurin Polynomial.");
                 // Recursively create the nth MacLaurin polynomial.
-                Operand MacLaurinPolynomial = CreateMacLaurinPolynomial(expressionRoot.Copy(), 0, n);
+                Addition newRoot = new Addition();
+                Operand MacLaurinPolynomial = CreateMacLaurinPolynomial(newRoot, newRoot, expressionRoot.Copy(), 0, n);
 
                 // Simplify and plot the final polynomial.
                 MacLaurinPolynomial = MacLaurinPolynomial.Simplify();

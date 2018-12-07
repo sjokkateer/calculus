@@ -46,7 +46,7 @@ namespace eXpressionParsing
             Operand power = RightSuccessor.Copy();
             
             // b - 1
-            Integer newPower = new Integer((double)power.Data - 1);
+            Integer newPower = new Integer(Convert.ToDouble(power.Data) - 1);
             
             // f(x)^(b - 1)
             Power onePowerLess = new Power();
