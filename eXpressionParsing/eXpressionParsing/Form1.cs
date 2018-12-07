@@ -210,7 +210,7 @@ namespace eXpressionParsing
 
                 if (parseRbtn.Checked)
                 {
-                    CreateGraphOf(expressionRoot, "expression");
+                    CreateGraphOfExpression(expressionRoot, "expression");
                 }
                 else if (differentiateRbtn.Checked)
                 {
@@ -230,7 +230,7 @@ namespace eXpressionParsing
                     calculator = new CalculateForXHandler(DifferenceQuotient);
                     CreateChart("Difference Quotient");
 
-                    CreateGraphOf(derivativeExpressionRoot, "derivative");
+                    CreateGraphOfExpression(derivativeExpressionRoot, "derivative");
                 }
                 else if (integralRbtn.Checked)
                 {
@@ -429,7 +429,7 @@ namespace eXpressionParsing
             }
         }
 
-        private void CreateGraphOf(Operand expressionRoot, string dotFileName)
+        private void CreateGraphOfExpression(Operand expressionRoot, string dotFileName)
         {
             Grapher.CreateGraphOfFunction(expressionRoot, dotFileName);
             graphPictureBox.ImageLocation = $"{dotFileName}.png";
@@ -446,7 +446,7 @@ namespace eXpressionParsing
                 MacLaurinPolynomial macLaurinPolynomial = new MacLaurinPolynomial(expressionRoot.Copy(), n);
                 // Create a graph of the highest order MacLaurin polynomial.
                 Operand highestOrderPolynomial = macLaurinPolynomial.GetNthMacLaurinPolynomial(n);
-                CreateGraphOf(highestOrderPolynomial, "MacLaurin Polynomial");
+                CreateGraphOfExpression(highestOrderPolynomial, "MacLaurinPolynomialAnalytically");
 
                 // Plot all but the last which we do after the loop.
                 for (int i = 0; i < n; i++)
@@ -489,7 +489,26 @@ namespace eXpressionParsing
                 MacLaurinPolynomial macLaurinPolynomial = new MacLaurinPolynomial(expressionRoot.Copy(), n);
                 // Create a graph of the highest order MacLaurin polynomial.
                 Operand highestOrderPolynomial = macLaurinPolynomial.GetNthMacLaurinPolynomial(n);
-                CreateGraphOf(highestOrderPolynomial, "MacLaurin Polynomial");
+                CreateGraphOfExpression(highestOrderPolynomial, "MacLaurinPolynomialQuotient");
+
+                for (int i = 0; i <= n; i++)
+                {
+                    if (i == 0)
+                    {
+                        // Calculate the function value of the expression at 0.
+                        // Create a new Operand and assign that calculate to the
+                        // delegate.
+                        double functionValue = expressionRoot.Calculate(0);
+                        RealNumber functionValueOperand = new RealNumber(functionValue);
+                        calculator = new CalculateForXHandler(functionValueOperand.Calculate);
+                    }
+                    else
+                    {
+
+                    }
+                    // Plot the function values.
+                    CreateChart($"MacLaurin Polynomial {i}");
+                }
             }
             else
             {
