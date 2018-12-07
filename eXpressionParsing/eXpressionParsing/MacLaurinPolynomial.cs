@@ -10,38 +10,75 @@ namespace eXpressionParsing
     {
         private Operand expressionRoot;
         private int order;
-        private List<Operand> macLaurinTerms;
+        public List<Operand> MacLaurinPolynomials { get; private set; }
 
         public MacLaurinPolynomial(Operand expression, int n)
         {
             expressionRoot = expression;
             order = n;
-            macLaurinTerms = new List<Operand>();
+            MacLaurinPolynomials = new List<Operand>();
 
-            // Call the creation of self.
-            Create(expressionRoot.Copy(), 0);
+            CreatePolynomials(expressionRoot, 0);
         }
 
-        private void Create(Operand expression, int i)
+        /// <summary>
+        /// Is a recursive method that creates every i-th MacLaurin
+        /// Polynomial based on the previous Polynomial (if there is one)
+        /// and adds it into it's respective position in the list that holds
+        /// all non-simplified Polynomials.
+        /// </summary>
+        /// <param name="expression">
+        /// Is the original expression the user inserted into the program.
+        /// </param>
+        /// <param name="i">
+        /// Is a counter that represents the current degree Polynomial
+        /// </param>
+        private void CreatePolynomials(Operand derivative, int i)
         {
-            if (i == order)
+            if (i <= order)
             {
-                // Terminate the recursive method calls.
-                macLaurinTerms.Add(CreateMaclaurinTerm(expression, i));
-            }
-            else
-            {
-                // Create current term, add it to the list, and pass on the derivative to the next call.
-                macLaurinTerms.Add(CreateMaclaurinTerm(expression, i));
-                Create(expression.Differentiate(), i);
+                if (i == 0)
+                {
+                    // The 0 degree MacLaurin is always a constant if it exists.
+                    // Thus we directly create the term and add it to the list.
+                    MacLaurinPolynomials.Add(CreateMaclaurinTerm(derivative, i));
+                    CreatePolynomials(derivative.Differentiate(), i + 1);
+                }
+                else
+                {
+                    // In all other cases, the MacLaurin polynomial consists of the previous
+                    // MacLaurin polynomial plus the current term.
+                    MacLaurinPolynomials.Add(CreateMacLaurinPolynomial(derivative, i));
+                    
+                    // Make a recursive call to the next.
+                    CreatePolynomials(derivative.Differentiate(), i + 1);
+                }
             }
         }
 
         /// <summary>
-        /// Method's sole purpose is to create the ith MacLaurin polynomial term.
+        /// Method that is responsible for creating the combination of the
+        /// previous MacLaurin polynomial (i - 1) + the i-th term (constructing
+        /// the ith degree MacLaurin polynomial).
         /// </summary>
-        /// <param name="expression"></param>
+        /// <param name="derivative"></param>
         /// <param name="i"></param>
+        /// <returns></returns>
+        private Operand CreateMacLaurinPolynomial(Operand derivative, int i)
+        {
+            Addition ploynomialRoot = new Addition();
+            ploynomialRoot.LeftSuccessor = MacLaurinPolynomials[i - 1].Copy();
+            ploynomialRoot.RightSuccessor = CreateMaclaurinTerm(derivative, i);
+            return ploynomialRoot;
+        }
+
+        /// <summary>
+        /// Method's sole purpose is to create the i-th MacLaurin polynomial term.
+        /// </summary>
+        /// <param name="expression">
+        /// Requires an Operand, representing expression or a derrivative
+        /// </param>
+        /// <param name="i">An integer the i-th degree</param>
         /// <returns></returns>
         private Operand CreateMaclaurinTerm(Operand expression, int i)
         {
@@ -86,50 +123,6 @@ namespace eXpressionParsing
 
                 return MacLaurinTerm;
             }
-        }
-
-        /// <summary>
-        /// Returns the n-th MacLaurinPolynomial if it exists.
-        /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        public Operand GetMacLaurinPolynomial(int n)
-        {
-            if ((n >= 0) && (n <= order))
-            {
-                Operand macLaurinPolynomial = macLaurinTerms[0];
-                if (n == 0)
-                {
-                    return macLaurinPolynomial;
-                }
-                else
-                {
-                    // We have at least more than 1 term to take care 
-                    // of thus need the addition operator.
-                    Addition add = new Addition();
-                    Operand termI;
-                    for (int i = 0; i <= order; i++)
-                    {
-                        // Pick up the i-th term
-                        termI = macLaurinTerms[i];
-                        if (i == n)
-                        {
-                            // In case this is the last term we add that term to 
-                            // the right of the current addition object as a wrap up.
-                            add.RightSuccessor = termI;
-                        }
-                        else
-                        {
-                            // Otherwise this is not the last
-                            add.LeftSuccessor = termI;
-                            add.RightSuccessor = new Addition();
-                            add = (Addition)add.RightSuccessor;
-                        }
-                    }
-                }
-                return macLaurinPolynomial;
-            }
-            return null;
         }
     }
 }

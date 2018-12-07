@@ -556,18 +556,17 @@ namespace eXpressionParsing
             {
                 // First parse the expression, if any is entered.
                 ParseAndPlotExpressions("Please enter an expression to use as basis for the MacLaurin Polynomial.");
-                // Recursively create the nth MacLaurin polynomial.
-                Addition newRoot = new Addition();
-                Operand MacLaurinPolynomial = CreateMacLaurinPolynomial(newRoot, newRoot, expressionRoot.Copy(), 0, n);
 
-                // Simplify and plot the final polynomial.
-                MacLaurinPolynomial = MacLaurinPolynomial.Simplify();
-                
-                // Plot the final polynomial as that is not done by the recursive method.
-                calculator = new CalculateForXHandler(MacLaurinPolynomial.Calculate);
-                CreateChart($"MacLaurin {n}");
 
-                CreateGraphOfFunction(MacLaurinPolynomial, "macLaurin");
+                MacLaurinPolynomial macLaurinPolynomial = new MacLaurinPolynomial(expressionRoot.Copy(), n);
+                List<Operand> macLaurinPolynomials = macLaurinPolynomial.MacLaurinPolynomials;
+                for (int i = 0; i < macLaurinPolynomials.Count; i++)
+                {
+                    calculator = new CalculateForXHandler(macLaurinPolynomials[i].Simplify().Calculate);
+                    CreateChart($"MacLaurin Polynomial of degree {i}");
+                }
+                Operand highestOrderPolynomial = macLaurinPolynomials[macLaurinPolynomials.Count - 1];
+                CreateGraphOfFunction(highestOrderPolynomial.Simplify(), "MacLaurinPolynomial");
             }
             else
             {

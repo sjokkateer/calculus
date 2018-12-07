@@ -64,6 +64,7 @@
     <Compile Include="InvalidExpressionException.cs" />
     <Compile Include="InvalidFactorialArgumentException.cs" />
     <Compile Include="InvalidNumberException.cs" />
+    <Compile Include="MacLaurinPolynomial.cs" />
     <Compile Include="Multiplication.cs" />
     <Compile Include="NaturalLog.cs" />
     <Compile Include="NoExpressionEnteredException.cs" />
