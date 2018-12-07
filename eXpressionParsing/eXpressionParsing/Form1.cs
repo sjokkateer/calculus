@@ -548,89 +548,6 @@ namespace eXpressionParsing
             }
         }
 
-        private Operand CreateMaclaurinTerm(Operand expression, int i)
-        {
-            // The zero-th order MacLaurin Polynomial is (P0(x)) = 
-            // f(0) * (x^0)/0! which simplifies to a constant?
-            if (i == 0)
-            {
-                // We can return calculate and return the function value
-                // evaluated in x = 0.
-                double functionValue = expression.Calculate(0);
-                //Addition test = new Addition();
-                //test.LeftSuccessor = new RealNumber(functionValue);
-                //test.RightSuccessor = new RealNumber(0.0);
-                //return test;
-                return new RealNumber(functionValue);
-            }
-            else
-            {
-                // Create a term by differentiating the input expression
-                // and create according to the input value of i the other
-                // terms/parts of the expression.
-
-                // For the returned expression I will set the left successor
-                // to always be the nth order derivative (slope value).
-
-                // The expression is differentiated if i != 0.
-                // Operand derivative = expression.Differentiate();
-                // Calculate the coefficient in a = 0.
-                double slope = expression.Calculate(0);
-                // If the slope is NaN we pretty much evaluated all possible
-                // derivatives (there is no more derivative possible)
-                // Thus return 0 such that we can simplify later on.
-                if (double.IsNaN(slope))
-                {
-                    slope = 0;
-                }
-                Operand resultSlope = new RealNumber(slope);
-
-                Multiplication MacLaurinTerm = new Multiplication();
-                MacLaurinTerm.LeftSuccessor = resultSlope;
-                Division div = new Division();
-                MacLaurinTerm.RightSuccessor = div;
-                // Now create the right part of the multiplication (f'i(0) * (x - 0)^i / i!)
-                // Create the numerator (x - 0)^i
-                Power numerator = new Power();
-                numerator.LeftSuccessor = new DependentVariableX();
-                numerator.RightSuccessor = new Integer(i);
-                // Create the denominator (i)!.
-                Factorial denominator = new Factorial();
-                denominator.LeftSuccessor = new Integer(i);
-                // Add the numerator and denominator into the division Operator.
-                div.LeftSuccessor = numerator;
-                div.RightSuccessor = denominator;
-
-                return MacLaurinTerm;
-            }
-        }
-
-        private Operand CreateMacLaurinPolynomial(Addition root, Addition currentTerm, Operand expression, int i, int n)
-        {
-            if (i == n)
-            {
-                // return the nth term back up to the calling stack.
-                currentTerm.LeftSuccessor = CreateMaclaurinTerm(expression, i);
-                currentTerm.RightSuccessor = new RealNumber(0.0);
-                return root;
-            }
-            else
-            {
-                // else return the ith term of the maclaurin polynomial + the next one.
-                // first create and assign term i.
-                currentTerm.LeftSuccessor = CreateMaclaurinTerm(expression, i);
-                // Assign a 0 value to the right sub expression such that calculations don't crash the program
-                // and also the expression as a whole is not changed.
-                currentTerm.RightSuccessor = new RealNumber(0.0);
-                calculator = new CalculateForXHandler(root.Calculate);
-                CreateChart($"MacLaurin {i}");
-                
-                expression = expression.Differentiate();
-                currentTerm.RightSuccessor = new Addition();
-                return CreateMacLaurinPolynomial(root, (Addition)currentTerm.RightSuccessor, expression, i + 1, n);
-            }
-        }
-
         private void btnAnalyticalMcLaurin_Click(object sender, EventArgs e)
         {
             int n;
@@ -645,8 +562,9 @@ namespace eXpressionParsing
 
                 // Simplify and plot the final polynomial.
                 MacLaurinPolynomial = MacLaurinPolynomial.Simplify();
+                
+                // Plot the final polynomial as that is not done by the recursive method.
                 calculator = new CalculateForXHandler(MacLaurinPolynomial.Calculate);
-                // Plot the final polynomial
                 CreateChart($"MacLaurin {n}");
 
                 CreateGraphOfFunction(MacLaurinPolynomial, "macLaurin");
@@ -673,7 +591,8 @@ namespace eXpressionParsing
 
         private void btnQuotientMcLaurin_Click(object sender, EventArgs e)
         {
-
+            // Set the flag to false such that a plot is not created by the recursive method
+            // that is also responsible for the creation of the graph of the maclaurin.
         }
     }
 }
