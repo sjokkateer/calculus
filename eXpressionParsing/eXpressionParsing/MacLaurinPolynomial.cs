@@ -10,13 +10,13 @@ namespace eXpressionParsing
     {
         private Operand expressionRoot;
         private int order;
-        public List<Operand> MacLaurinPolynomials { get; private set; }
+        private List<Operand> macLaurinPolynomials;
 
         public MacLaurinPolynomial(Operand expression, int n)
         {
             expressionRoot = expression;
             order = n;
-            MacLaurinPolynomials = new List<Operand>();
+            macLaurinPolynomials = new List<Operand>();
 
             CreatePolynomials(expressionRoot, 0);
         }
@@ -41,14 +41,14 @@ namespace eXpressionParsing
                 {
                     // The 0 degree MacLaurin is always a constant if it exists.
                     // Thus we directly create the term and add it to the list.
-                    MacLaurinPolynomials.Add(CreateMaclaurinTerm(derivative, i));
+                    macLaurinPolynomials.Add(CreateMaclaurinTerm(derivative, i));
                     CreatePolynomials(derivative.Differentiate(), i + 1);
                 }
                 else
                 {
                     // In all other cases, the MacLaurin polynomial consists of the previous
                     // MacLaurin polynomial plus the current term.
-                    MacLaurinPolynomials.Add(CreateMacLaurinPolynomial(derivative, i));
+                    macLaurinPolynomials.Add(CreateMacLaurinPolynomial(derivative, i));
                     
                     // Make a recursive call to the next.
                     CreatePolynomials(derivative.Differentiate(), i + 1);
@@ -67,7 +67,7 @@ namespace eXpressionParsing
         private Operand CreateMacLaurinPolynomial(Operand derivative, int i)
         {
             Addition ploynomialRoot = new Addition();
-            ploynomialRoot.LeftSuccessor = MacLaurinPolynomials[i - 1].Copy();
+            ploynomialRoot.LeftSuccessor = macLaurinPolynomials[i - 1].Copy();
             ploynomialRoot.RightSuccessor = CreateMaclaurinTerm(derivative, i);
             return ploynomialRoot;
         }
@@ -123,6 +123,11 @@ namespace eXpressionParsing
 
                 return MacLaurinTerm;
             }
+        }
+
+        public Operand GetNthMacLaurinPolynomial(int n)
+        {
+            return macLaurinPolynomials[n].Simplify();
         }
     }
 }

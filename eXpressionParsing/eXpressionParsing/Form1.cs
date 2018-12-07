@@ -57,8 +57,12 @@ namespace eXpressionParsing
             }
             else
             {
-                // Basic parsing method
-                ParseExpression(expression);
+                expressionParser = new Parser(expression);
+
+                // Parse and assign the returned expression root.
+                expressionRoot = expressionParser.Parse();
+                expressionRoot = expressionRoot.Simplify();
+                expressionLb.Text = $"Expression: {expressionRoot.ToString()}";
             }
         }
 
@@ -76,25 +80,6 @@ namespace eXpressionParsing
 
             // (f(x + changeInX) - f(x)) / changeInX
             return (expressionRoot.Calculate(x + changeInX) - expressionRoot.Calculate(x)) / changeInX;
-        }
-
-        /// <summary>
-        /// Method that can be re-used to parse an entered expression.
-        /// 
-        /// Is split from the Parse method to allow Differentiate to be
-        /// run individually, thus first parsing the expression and then
-        /// differentiating it.
-        /// </summary>
-        /// <param name="expression">Takes in a string in Polish pre-fix 
-        /// notation representing a valid expression.</param>
-        private void ParseExpression(string expression)
-        {
-            expressionParser = new Parser(expression);
-
-            // Parse and assign the returned expression root.
-            expressionRoot = expressionParser.Parse();
-            expressionRoot = expressionRoot.Simplify();
-            expressionLb.Text = $"Expression: {expressionRoot.ToString()}";
         }
 
         private void CreateChart(string seriesName)
@@ -225,9 +210,7 @@ namespace eXpressionParsing
 
                 if (parseRbtn.Checked)
                 {
-                    string dotFileName = "expression";
-                    Grapher.CreateGraphOfFunction(expressionRoot, dotFileName);
-                    graphPictureBox.ImageLocation = $"{dotFileName}.png";
+                    CreateGraphOf(expressionRoot, "expression");
                 }
                 else if (differentiateRbtn.Checked)
                 {
@@ -247,9 +230,7 @@ namespace eXpressionParsing
                     calculator = new CalculateForXHandler(DifferenceQuotient);
                     CreateChart("Difference Quotient");
 
-                    string dotFileName = "derivative";
-                    Grapher.CreateGraphOfFunction(derivativeExpressionRoot, dotFileName);
-                    graphPictureBox.ImageLocation = $"{dotFileName}.png";
+                    CreateGraphOf(derivativeExpressionRoot, "derivative");
                 }
                 else if (integralRbtn.Checked)
                 {
@@ -448,6 +429,12 @@ namespace eXpressionParsing
             }
         }
 
+        private void CreateGraphOf(Operand expressionRoot, string dotFileName)
+        {
+            Grapher.CreateGraphOfFunction(expressionRoot, dotFileName);
+            graphPictureBox.ImageLocation = $"{dotFileName}.png";
+        }
+
         private void btnAnalyticalMcLaurin_Click(object sender, EventArgs e)
         {
             int n;
@@ -456,21 +443,20 @@ namespace eXpressionParsing
             {
                 // First parse the expression, if any is entered.
                 ParseAndPlotExpressions("Please enter an expression to use as basis for the MacLaurin Polynomial.");
-
-
                 MacLaurinPolynomial macLaurinPolynomial = new MacLaurinPolynomial(expressionRoot.Copy(), n);
-                List<Operand> macLaurinPolynomials = macLaurinPolynomial.MacLaurinPolynomials;
-                for (int i = 0; i < macLaurinPolynomials.Count; i++)
+                // Create a graph of the highest order MacLaurin polynomial.
+                Operand highestOrderPolynomial = macLaurinPolynomial.GetNthMacLaurinPolynomial(n);
+                CreateGraphOf(highestOrderPolynomial, "MacLaurin Polynomial");
+
+                // Plot all but the last which we do after the loop.
+                for (int i = 0; i < n; i++)
                 {
-                    calculator = new CalculateForXHandler(macLaurinPolynomials[i].Simplify().Calculate);
+                    calculator = new CalculateForXHandler(macLaurinPolynomial.GetNthMacLaurinPolynomial(i).Calculate);
                     CreateChart($"MacLaurin Polynomial of degree {i}");
                 }
-
-                // Create a graph of the highest order MacLaurin Plynomial.
-                Operand highestOrderPolynomial = macLaurinPolynomials[macLaurinPolynomials.Count - 1];
-                string dotFileName = "MacLaurinPolynomial";
-                Grapher.CreateGraphOfFunction(highestOrderPolynomial.Simplify(), dotFileName);
-                graphPictureBox.ImageLocation = $"{dotFileName}.png";
+                // Since we already used the simplified expression tree of the n-th order MacLaurin polynomial plot it after the loop.
+                calculator = new CalculateForXHandler(highestOrderPolynomial.Calculate);
+                CreateChart($"MacLaurin Polynomial of degree {n}");
             }
             else
             {
@@ -494,8 +480,21 @@ namespace eXpressionParsing
 
         private void btnQuotientMcLaurin_Click(object sender, EventArgs e)
         {
-            // Set the flag to false such that a plot is not created by the recursive method
-            // that is also responsible for the creation of the graph of the maclaurin.
+            int n;
+            bool isNEntered = int.TryParse(nPolynomialTbx.Text, out n);
+            if (isNEntered)
+            {
+                // First parse the expression, if any is entered.
+                ParseAndPlotExpressions("Please enter an expression to use as basis for the MacLaurin Polynomial.");
+                MacLaurinPolynomial macLaurinPolynomial = new MacLaurinPolynomial(expressionRoot.Copy(), n);
+                // Create a graph of the highest order MacLaurin polynomial.
+                Operand highestOrderPolynomial = macLaurinPolynomial.GetNthMacLaurinPolynomial(n);
+                CreateGraphOf(highestOrderPolynomial, "MacLaurin Polynomial");
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid N for the nth order MacLaurin Polynomial.");
+            }
         }
     }
 }
