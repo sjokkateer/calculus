@@ -21,7 +21,6 @@ namespace eXpressionParsing
 
         private Operand expressionRoot;
         private Operand derivativeExpressionRoot;
-        private bool macLaurinAnalytical;
 
         private RectangleF rect;
         private double lower;
@@ -47,8 +46,6 @@ namespace eXpressionParsing
             xMax = 10;
             yMin = -2;
             yMax = 2;
-
-            macLaurinAnalytical = false;
         }
 
         private void Parse(Exception error)
@@ -161,107 +158,6 @@ namespace eXpressionParsing
             }
         }
 
-        /// <summary>
-        /// Method responsible for creating the image via the
-        /// graphViz program, that is based on the input of
-        /// a .dot file.
-        /// </summary>
-        /// <param name="dotFileName">A string, someFileName.dot
-        /// that is used to create a .dot file that represents
-        /// the expression in graph form.</param>
-        private void CreateGraph(string dotFileName, string fileContent)
-        {
-            CreateDotFile(dotFileName, fileContent);
-
-            // Maybe move this code into a new method that can be re-used later.
-            Process dot = new Process();
-            dot.StartInfo.FileName = "dot.exe";
-            dot.StartInfo.Arguments = $"-Tpng -o{dotFileName}.png {dotFileName}.dot";
-            dot.Start();
-            dot.WaitForExit();
-            graphPictureBox.ImageLocation = $"{dotFileName}.png";
-        }
-
-        private void CreateDotFile(string fileName, string fileContent)
-        {
-            FileStream fs = new FileStream($"{fileName}.dot", FileMode.Create, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-            try
-            {
-                if (sw != null)
-                {
-                    sw.WriteLine("graph calculus {");
-                    sw.WriteLine("\tnode [ fontname = \"Arial\" ]");
-                    sw.Write(fileContent);
-                    sw.WriteLine("}");
-                    sw.Close();
-                }
-            }
-            finally
-            {
-                if (sw != null)
-                {
-                    sw.Close();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Labels all the nodes in the expression
-        /// in a BFS manner such that a graph can be
-        /// made for it.
-        /// </summary>
-        /// <param name="expressionRoot">Is the root of the expression to be numbered.</param>
-        private void NumberOperands(Operand expressionRoot)
-        {
-            List<Operand> queue = new List<Operand>();
-
-            Operand currentOperand = expressionRoot;
-
-            // Add the root as the first item in the queue.
-            queue.Add(currentOperand);
-
-            // Label the root as the first node (node1) and add it to
-            // the queue.
-            int nodeCounter = 1;
-            while (currentOperand != null)
-            {
-                // Process the first operand of the queue.
-                currentOperand.NodeNumber = nodeCounter;
-
-                // Check what type of operator/operand to add its children to the queue.
-                if (currentOperand is BinaryOperator)
-                {
-                    queue.Add(((BinaryOperator)currentOperand).LeftSuccessor);
-                    queue.Add(((BinaryOperator)currentOperand).RightSuccessor);
-                }
-                else if (currentOperand is UnaryOperator)
-                {
-                    queue.Add(((UnaryOperator)currentOperand).LeftSuccessor);
-                }
-                // Remove the recently processed operand from the queue and try to
-                // Obtain the next if there is one.
-                queue.RemoveAt(0);
-                // Check if it was not a single operand as input expression.
-                if (queue.Count > 0)
-                {
-                    currentOperand = queue[0];
-                }
-                else
-                {
-                    currentOperand = null;
-                }
-                nodeCounter++;
-            }
-        }
-
-        private void CreateGraphOfFunction(Operand expressionRoot, string fileName)
-        {
-            // Label the right expression tree and create the graph of it.
-            NumberOperands(expressionRoot);
-            CreateGraph(fileName, expressionRoot.NodeLabel());
-        }
-
         private void ResetAll()
         {
             // Reset all series from the chart as well.
@@ -329,7 +225,9 @@ namespace eXpressionParsing
 
                 if (parseRbtn.Checked)
                 {
-                    CreateGraphOfFunction(expressionRoot, "expression");
+                    string dotFileName = "expression";
+                    Grapher.CreateGraphOfFunction(expressionRoot, dotFileName);
+                    graphPictureBox.ImageLocation = $"{dotFileName}.png";
                 }
                 else if (differentiateRbtn.Checked)
                 {
@@ -349,7 +247,9 @@ namespace eXpressionParsing
                     calculator = new CalculateForXHandler(DifferenceQuotient);
                     CreateChart("Difference Quotient");
 
-                    CreateGraphOfFunction(derivativeExpressionRoot, "derivative");
+                    string dotFileName = "derivative";
+                    Grapher.CreateGraphOfFunction(derivativeExpressionRoot, dotFileName);
+                    graphPictureBox.ImageLocation = $"{dotFileName}.png";
                 }
                 else if (integralRbtn.Checked)
                 {
@@ -565,8 +465,12 @@ namespace eXpressionParsing
                     calculator = new CalculateForXHandler(macLaurinPolynomials[i].Simplify().Calculate);
                     CreateChart($"MacLaurin Polynomial of degree {i}");
                 }
+
+                // Create a graph of the highest order MacLaurin Plynomial.
                 Operand highestOrderPolynomial = macLaurinPolynomials[macLaurinPolynomials.Count - 1];
-                CreateGraphOfFunction(highestOrderPolynomial.Simplify(), "MacLaurinPolynomial");
+                string dotFileName = "MacLaurinPolynomial";
+                Grapher.CreateGraphOfFunction(highestOrderPolynomial.Simplify(), dotFileName);
+                graphPictureBox.ImageLocation = $"{dotFileName}.png";
             }
             else
             {
