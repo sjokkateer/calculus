@@ -124,6 +124,73 @@ namespace eXpressionParsing
                 return MacLaurinTerm;
             }
         }
+        
+        // Could also just return the values that belong to the term i of the i-th order maclaurin polynomial.
+        // That way we can use i + (i + 1) to return the values of the (i + 1)th degree maclaurin polynomial.
+        private List<double> CalculateValuesForTermI(List<double> xRange, int order)
+        {
+            List<double> results = new List<double>();
+
+            foreach (double x in xRange)
+            {
+                results.Add(CalculateMacLaurinPolynomial(x, order));
+            }
+            return results;
+        }
+
+        public List<List<double>> CalculateMaclaurinPolynomials(List<double> xRange, int order)
+        {
+            List<List<double>> resultList = new List<List<double>>();
+            for(int i = 0; i <= order; i++)
+            {
+                resultList.Add(CalculateValuesForTermI(xRange, i));
+            }
+            return resultList;
+        }
+
+        private double CalculateMacLaurinPolynomial(double x, int i)
+        {
+            // If some counter = 0, return the constant.
+            if (i == 0)
+            {
+                // return f(0) * x^0 / 0!
+                Factorial iFactorial = new Factorial();
+                iFactorial.LeftSuccessor = new Integer(i);
+                //Console.WriteLine(expressionRoot);
+                return expressionRoot.Calculate(0) * Math.Pow(x, i) / iFactorial.Calculate(x);
+            }
+            else
+            {
+                // calc the i-th term of the maclaurin polynomial + any lower polynomial.
+                Factorial iFactorial = new Factorial();
+                iFactorial.LeftSuccessor = new Integer(i);
+                return (HigherOrderDerivativeByDifferenceQuotient(x, i) * Math.Pow(x, i) / iFactorial.Calculate(x)) + CalculateMacLaurinPolynomial(x, i - 1); // ith term + (i - 1) term if the order/degree is > 0.
+            }
+        }
+
+        // Calculates the slope of the ith derivative evaluated in x.
+        private double HigherOrderDerivativeByDifferenceQuotient(double x, int i)
+        {
+            if (i == 1)
+            {
+                // Aka the first order derivative.
+                // which can just be evaluated at x.
+                return DifferenceQuotient(x);
+            }
+            else
+            {
+                // Obtain the value of the derivative of order (n - 1) evaluated at x.
+                return (HigherOrderDerivativeByDifferenceQuotient(x + 0.01, i - 1) - HigherOrderDerivativeByDifferenceQuotient(x, i - 1)) / 0.01;
+            }
+        }
+
+        private double DifferenceQuotient(double x)
+        {
+            double changeInX = 0.01;
+
+            // (f(x + changeInX) - f(x)) / changeInX
+            return (expressionRoot.Calculate(x + changeInX) - expressionRoot.Calculate(x)) / changeInX;
+        }
 
         public Operand GetNthMacLaurinPolynomial(int n)
         {

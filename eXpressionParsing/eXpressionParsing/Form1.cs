@@ -70,6 +70,7 @@ namespace eXpressionParsing
         /// Simple method that represents Newton's difference quotient.
         /// 
         /// Will calculate (f(x + h) - f(x)) / h and return this value
+        /// as a double.
         /// </summary>
         /// <param name="x">A double, representing the current 
         /// value for x.</param>
@@ -491,28 +492,49 @@ namespace eXpressionParsing
                 Operand highestOrderPolynomial = macLaurinPolynomial.GetNthMacLaurinPolynomial(n);
                 CreateGraphOfExpression(highestOrderPolynomial, "MacLaurinPolynomialQuotient");
 
-                for (int i = 0; i <= n; i++)
-                {
-                    if (i == 0)
-                    {
-                        // Calculate the function value of the expression at 0.
-                        // Create a new Operand and assign that calculate to the
-                        // delegate.
-                        double functionValue = expressionRoot.Calculate(0);
-                        RealNumber functionValueOperand = new RealNumber(functionValue);
-                        calculator = new CalculateForXHandler(functionValueOperand.Calculate);
-                    }
-                    else
-                    {
+                List<double> xRange = new List<double>();
+                double step = 0.0001;
 
-                    }
-                    // Plot the function values.
-                    CreateChart($"MacLaurin Polynomial {i}");
+                for (double i = xMin; i <= xMax; i += step)
+                {
+                    xRange.Add(i);
+                }
+
+                List<List<double>> macLaurinValues = macLaurinPolynomial.CalculateMaclaurinPolynomials(xRange, n);
+                for (int i = 0; i < macLaurinValues.Count; i++)
+                {
+                    CreateSeriesFromValues($"Polynomial {i}", xRange, macLaurinValues[i]);
                 }
             }
             else
             {
                 MessageBox.Show("Please enter a valid N for the nth order MacLaurin Polynomial.");
+            }
+        }
+        private void CreateSeriesFromValues(string seriesName, List<double> range, List<double> values, SeriesChartType chartType = SeriesChartType.Point)
+        {
+            int seriesIndex = expressionChart.Series.IndexOf(seriesName);
+            if (seriesIndex >= 0)
+            {
+                // Series name already exists so just redo 
+                // calculation on an empty set of points
+                expressionChart.Series.RemoveAt(seriesIndex);
+            }
+            // Create a new one series.
+            expressionChart.Series.Add(seriesName);
+
+            expressionChart.Series[seriesName].ChartType = chartType;
+            expressionChart.Series[seriesName].MarkerSize = 2;
+
+            expressionChart.Series[seriesName].ChartArea = "ChartArea1";
+
+            for (int i = 0; i < range.Count; i++)
+            {
+                if (!double.IsInfinity(values[i]))
+                {
+                    expressionChart.Series[seriesName].Points.AddXY(range[i], values[i]);
+                }
+
             }
         }
     }
