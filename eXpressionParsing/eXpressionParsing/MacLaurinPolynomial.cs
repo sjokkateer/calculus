@@ -133,7 +133,7 @@ namespace eXpressionParsing
 
             foreach (double x in xRange)
             {
-                results.Add(CalculateMacLaurinPolynomial(x, order));
+                results.Add(CalculateMacLaurinPolynomial(0, x, order));
             }
             return results;
         }
@@ -148,7 +148,7 @@ namespace eXpressionParsing
             return resultList;
         }
 
-        private double CalculateMacLaurinPolynomial(double x, int i)
+        private double CalculateMacLaurinPolynomial(double a, double x, int i)
         {
             // If some counter = 0, return the constant.
             if (i == 0)
@@ -164,23 +164,37 @@ namespace eXpressionParsing
                 // calc the i-th term of the maclaurin polynomial + any lower polynomial.
                 Factorial iFactorial = new Factorial();
                 iFactorial.LeftSuccessor = new Integer(i);
-                return (HigherOrderDerivativeByDifferenceQuotient(x, i) * Math.Pow(x, i) / iFactorial.Calculate(x)) + CalculateMacLaurinPolynomial(x, i - 1); // ith term + (i - 1) term if the order/degree is > 0.
+                return (HigherOrderDerivativeByDifferenceQuotient(a, i) * Math.Pow(x, i) / iFactorial.Calculate(x)) + CalculateMacLaurinPolynomial(a, x, i - 1); // ith term + (i - 1) term if the order/degree is > 0.
             }
         }
 
         // Calculates the slope of the ith derivative evaluated in x.
-        private double HigherOrderDerivativeByDifferenceQuotient(double x, int i)
+        //private double HigherOrderDerivativeByDifferenceQuotient(double x, int i)
+        //{
+        //    if (i == 1)
+        //    {
+        //        // Aka the first order derivative.
+        //        // which can just be evaluated at x.
+        //        return DifferenceQuotient(x);
+        //    }
+        //    else
+        //    {
+        //        // Obtain the value of the derivative of order (n - 1) evaluated at x.
+        //        return (HigherOrderDerivativeByDifferenceQuotient(x + 0.01, i - 1) - HigherOrderDerivativeByDifferenceQuotient(x, i - 1)) / 0.01;
+        //    }
+        //}
+        private double HigherOrderDerivativeByDifferenceQuotient(double a, int i)
         {
             if (i == 1)
             {
                 // Aka the first order derivative.
                 // which can just be evaluated at x.
-                return DifferenceQuotient(x);
+                return DifferenceQuotient(a);
             }
             else
             {
                 // Obtain the value of the derivative of order (n - 1) evaluated at x.
-                return (HigherOrderDerivativeByDifferenceQuotient(x + 0.01, i - 1) - HigherOrderDerivativeByDifferenceQuotient(x, i - 1)) / 0.01;
+                return (HigherOrderDerivativeByDifferenceQuotient(a + 0.01, i - 1) - HigherOrderDerivativeByDifferenceQuotient(a, i - 1)) / 0.01;
             }
         }
 
