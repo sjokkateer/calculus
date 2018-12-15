@@ -50,6 +50,7 @@
     <Compile Include="Addition.cs" />
     <Compile Include="BinaryOperator.cs" />
     <Compile Include="Chart.cs" />
+    <Compile Include="Coordinate.cs" />
     <Compile Include="Cosine.cs" />
     <Compile Include="DependentVariable.cs" />
     <Compile Include="Division.cs" />
@@ -66,6 +67,9 @@
     <Compile Include="InvalidExpressionException.cs" />
     <Compile Include="InvalidFactorialArgumentException.cs" />
     <Compile Include="InvalidNumberException.cs" />
+    <Compile Include="InvalidRowAddition.cs" />
+    <Compile Include="InvalidRowSwapException.cs" />
+    <Compile Include="InvalidScalarMultipleException.cs" />
     <Compile Include="MacLaurinPolynomial.cs" />
     <Compile Include="Multiplication.cs" />
     <Compile Include="NaturalLog.cs" />
@@ -80,6 +84,7 @@
     <Compile Include="Sine.cs" />
     <Compile Include="Integer.cs" />
     <Compile Include="Subtraction.cs" />
+    <Compile Include="SystemSolver.cs" />
     <Compile Include="UnaryOperator.cs" />
     <Compile Include="UndefinedExpressionException.cs" />
     <EmbeddedResource Include="Form1.resx">
