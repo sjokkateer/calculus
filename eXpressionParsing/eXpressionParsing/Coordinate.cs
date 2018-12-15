@@ -21,7 +21,7 @@ namespace eXpressionParsing
         }
         public override string ToString()
         {
-            return $"({X}, {Y})";
+            return $"({Math.Round(X, 2)}, {Math.Round(Y, 2)})";
         }
     }
 }

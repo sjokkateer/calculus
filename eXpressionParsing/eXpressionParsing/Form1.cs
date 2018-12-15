@@ -546,6 +546,7 @@ namespace eXpressionParsing
         {
             // Create a new solver based on the obtained coordinates.
             SystemSolver s = new SystemSolver(polynomialCoordinatesList);
+            Console.WriteLine(s);
             // Get the expression representation of the system.
             // And simplify it where possible.
             Operand poly = s.GetPolynomial().Simplify();
@@ -574,13 +575,15 @@ namespace eXpressionParsing
             if (PolynomialCoordinates)
             {
                 // Ensure the coordinates are between the x min/max and y, such that no point is taken outside the displayed grid.
-                double x = Math.Round(expressionChart.ChartAreas[0].AxisX.PixelPositionToValue(e.X), 2);
-                double y = Math.Round(expressionChart.ChartAreas[0].AxisY.PixelPositionToValue(e.Y), 2);
+                double x = expressionChart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                double y = expressionChart.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
 
                 // Create a coordinate and add it to the list for the polynomial.
                 Coordinate clickedCoordinate = new Coordinate(x, y);
                 polynomialCoordinatesList.Add(clickedCoordinate);
                 coordinatesListBox.Items.Add(clickedCoordinate);
+
+                expressionChart.Series["PlaceHolder"].Points.AddXY(x, y);
             }
         }
 
@@ -589,7 +592,13 @@ namespace eXpressionParsing
             // Refresh the list of coordinates.
             polynomialCoordinatesList = new List<Coordinate>();
             coordinatesListBox.Items.Clear();
+            expressionChart.Series["PlaceHolder"].Points.Clear();
 
+            for (int i = 0; i < expressionChart.Series.Count; i++)
+            {
+                expressionChart.Series[i].Points.Clear();
+            }
+            
             // Set flag to true, allowing clicked coordinates to be added to the list.
             PolynomialCoordinates = true;
         }

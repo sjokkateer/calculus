@@ -46,10 +46,10 @@ namespace eXpressionParsing
                     // In all other cases, insert the x value raised to its corresponding power.
                     // aka raised to n - index
                     int power = Degree - j;
-                    matrix[i, j] = Math.Round(Math.Pow(point.X, power), 2);
+                    matrix[i, j] = Math.Pow(point.X, power);
                 }
                 // Finally insert the y-value at the last column index.
-                matrix[i, lastColumn] = Math.Round(point.Y, 2);
+                matrix[i, lastColumn] = point.Y;
             }
             // The method responsible for inplace solving.
             // This causes side effects
@@ -267,7 +267,7 @@ namespace eXpressionParsing
         private Operand CreatePolynomialTerm(double coefficient, int degree)
         {
             Multiplication term = new Multiplication();
-            term.LeftSuccessor = new RealNumber(Math.Round(coefficient, 2));
+            term.LeftSuccessor = new RealNumber(coefficient);
 
             // Create a power of x for the right side.
             Power xRaisedToDegree = new Power();
