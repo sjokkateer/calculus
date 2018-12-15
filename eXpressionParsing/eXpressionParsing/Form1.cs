@@ -32,7 +32,7 @@ namespace eXpressionParsing
         private double yMin;
         private double yMax;
 
-        private bool PolynomialCoordinates;
+        private bool polynomialCoordinates;
         private List<Coordinate> polynomialCoordinatesList;
         // Two standard lists, that will function as storage,
         // in case an expression was parsed but the person,
@@ -49,7 +49,7 @@ namespace eXpressionParsing
             yMin = -5;
             yMax = 5;
 
-            PolynomialCoordinates = false;
+            polynomialCoordinates = false;
         }
 
         private void Parse(Exception error)
@@ -544,21 +544,27 @@ namespace eXpressionParsing
 
         private void plotPolynomialBtn_Click(object sender, EventArgs e)
         {
-            // Create a new solver based on the obtained coordinates.
-            SystemSolver s = new SystemSolver(polynomialCoordinatesList);
-            Console.WriteLine(s);
-            // Get the expression representation of the system.
-            // And simplify it where possible.
-            Operand poly = s.GetPolynomial().Simplify();
-            // Put the expression string in the respective label.
-            expressionLb.Text = poly.ToString();
-            // Create a graph of the polynomial.
-            CreateGraphOfExpression(poly, "n-polynomial");
-            // Plot the polynomial.
-            calculator = new CalculateForXHandler(poly.Calculate);
-            CreateChart("n-polynomial");
-            // Set flag back to false not allowing any more extra coordinates.
-            PolynomialCoordinates = false;
+            if (polynomialCoordinatesList != null)
+            {// Create a new solver based on the obtained coordinates.
+                SystemSolver s = new SystemSolver(polynomialCoordinatesList);
+                Console.WriteLine(s);
+                // Get the expression representation of the system.
+                // And simplify it where possible.
+                Operand poly = s.GetPolynomial().Simplify();
+                // Put the expression string in the respective label.
+                expressionLb.Text = poly.ToString();
+                // Create a graph of the polynomial.
+                CreateGraphOfExpression(poly, "n-polynomial");
+                // Plot the polynomial.
+                calculator = new CalculateForXHandler(poly.Calculate);
+                CreateChart("n-polynomial");
+                // Set flag back to false not allowing any more extra coordinates.
+                polynomialCoordinates = false;
+            }
+            else
+            {
+                MessageBox.Show("Please enter coordinates first.");
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -572,7 +578,7 @@ namespace eXpressionParsing
 
         private void expressionChart_MouseClick(object sender, MouseEventArgs e)
         {
-            if (PolynomialCoordinates)
+            if (polynomialCoordinates)
             {
                 // Ensure the coordinates are between the x min/max and y, such that no point is taken outside the displayed grid.
                 double x = expressionChart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
@@ -594,13 +600,13 @@ namespace eXpressionParsing
             coordinatesListBox.Items.Clear();
             expressionChart.Series["PlaceHolder"].Points.Clear();
 
-            for (int i = 0; i < expressionChart.Series.Count; i++)
-            {
-                expressionChart.Series[i].Points.Clear();
-            }
+            //for (int i = 0; i < expressionChart.Series.Count; i++)
+            //{
+            //    expressionChart.Series[i].Points.Clear();
+            //}
             
             // Set flag to true, allowing clicked coordinates to be added to the list.
-            PolynomialCoordinates = true;
+            polynomialCoordinates = true;
         }
     }
 }
