@@ -32,6 +32,8 @@ namespace eXpressionParsing
         private double yMin;
         private double yMax;
 
+        private bool PolynomialCoordinates;
+        private List<Coordinate> polynomialCoordinatesList;
         // Two standard lists, that will function as storage,
         // in case an expression was parsed but the person,
         // wants to zoom around the plot.
@@ -46,6 +48,8 @@ namespace eXpressionParsing
             xMax = 10;
             yMin = -5;
             yMax = 5;
+
+            PolynomialCoordinates = false;
         }
 
         private void Parse(Exception error)
@@ -540,11 +544,8 @@ namespace eXpressionParsing
 
         private void plotPolynomialBtn_Click(object sender, EventArgs e)
         {
-            List<Coordinate> coordinates = new List<Coordinate>() {
-                new Coordinate(0, 1),
-                new Coordinate(1, 3) };
             // Create a new solver based on the obtained coordinates.
-            SystemSolver s = new SystemSolver(coordinates);
+            SystemSolver s = new SystemSolver(polynomialCoordinatesList);
             // Get the expression representation of the system.
             // And simplify it where possible.
             Operand poly = s.GetPolynomial().Simplify();
@@ -553,6 +554,10 @@ namespace eXpressionParsing
             // Create a graph of the polynomial.
             CreateGraphOfExpression(poly, "n-polynomial");
             // Plot the polynomial.
+            calculator = new CalculateForXHandler(poly.Calculate);
+            CreateChart("n-polynomial");
+            // Set flag back to false not allowing any more extra coordinates.
+            PolynomialCoordinates = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -562,7 +567,31 @@ namespace eXpressionParsing
 
             expressionChart.ChartAreas[0].AxisY.Maximum = yMax;
             expressionChart.ChartAreas[0].AxisY.Minimum = yMin;
+        }
 
+        private void expressionChart_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (PolynomialCoordinates)
+            {
+                // Ensure the coordinates are between the x min/max and y, such that no point is taken outside the displayed grid.
+                double x = Math.Round(expressionChart.ChartAreas[0].AxisX.PixelPositionToValue(e.X), 2);
+                double y = Math.Round(expressionChart.ChartAreas[0].AxisY.PixelPositionToValue(e.Y), 2);
+
+                // Create a coordinate and add it to the list for the polynomial.
+                Coordinate clickedCoordinate = new Coordinate(x, y);
+                polynomialCoordinatesList.Add(clickedCoordinate);
+                coordinatesListBox.Items.Add(clickedCoordinate);
+            }
+        }
+
+        private void coordinatesBtn_Click(object sender, EventArgs e)
+        {
+            // Refresh the list of coordinates.
+            polynomialCoordinatesList = new List<Coordinate>();
+            coordinatesListBox.Items.Clear();
+
+            // Set flag to true, allowing clicked coordinates to be added to the list.
+            PolynomialCoordinates = true;
         }
     }
 }

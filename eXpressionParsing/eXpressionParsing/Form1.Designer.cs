@@ -68,7 +68,8 @@
             this.coordinatesTbx = new System.Windows.Forms.TextBox();
             this.coordinatesLb = new System.Windows.Forms.Label();
             this.plotPolynomialBtn = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.coordinatesBtn = new System.Windows.Forms.Button();
+            this.coordinatesListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).BeginInit();
             this.textResultGrpBox.SuspendLayout();
@@ -88,8 +89,8 @@
             chartArea1.AxisY.Minimum = -5D;
             chartArea1.Name = "ChartArea1";
             this.expressionChart.ChartAreas.Add(chartArea1);
-            this.expressionChart.Location = new System.Drawing.Point(208, 158);
-            this.expressionChart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.expressionChart.Location = new System.Drawing.Point(416, 304);
+            this.expressionChart.Margin = new System.Windows.Forms.Padding(4);
             this.expressionChart.Name = "expressionChart";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
@@ -97,17 +98,18 @@
             dataPoint1.IsEmpty = true;
             series1.Points.Add(dataPoint1);
             this.expressionChart.Series.Add(series1);
-            this.expressionChart.Size = new System.Drawing.Size(634, 472);
+            this.expressionChart.Size = new System.Drawing.Size(1268, 908);
             this.expressionChart.TabIndex = 4;
             this.expressionChart.Text = "Expression Chart";
             this.expressionChart.Paint += new System.Windows.Forms.PaintEventHandler(this.expressionChart_Paint);
+            this.expressionChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.expressionChart_MouseClick);
             // 
             // graphPictureBox
             // 
-            this.graphPictureBox.Location = new System.Drawing.Point(846, 158);
-            this.graphPictureBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.graphPictureBox.Location = new System.Drawing.Point(1692, 304);
+            this.graphPictureBox.Margin = new System.Windows.Forms.Padding(4);
             this.graphPictureBox.Name = "graphPictureBox";
-            this.graphPictureBox.Size = new System.Drawing.Size(1250, 1040);
+            this.graphPictureBox.Size = new System.Drawing.Size(2500, 2000);
             this.graphPictureBox.TabIndex = 5;
             this.graphPictureBox.TabStop = false;
             // 
@@ -115,10 +117,10 @@
             // 
             this.parseRbtn.AutoSize = true;
             this.parseRbtn.Checked = true;
-            this.parseRbtn.Location = new System.Drawing.Point(13, 8);
-            this.parseRbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.parseRbtn.Location = new System.Drawing.Point(26, 15);
+            this.parseRbtn.Margin = new System.Windows.Forms.Padding(4);
             this.parseRbtn.Name = "parseRbtn";
-            this.parseRbtn.Size = new System.Drawing.Size(52, 17);
+            this.parseRbtn.Size = new System.Drawing.Size(99, 29);
             this.parseRbtn.TabIndex = 8;
             this.parseRbtn.TabStop = true;
             this.parseRbtn.Text = "Parse";
@@ -128,10 +130,10 @@
             // differentiateRbtn
             // 
             this.differentiateRbtn.AutoSize = true;
-            this.differentiateRbtn.Location = new System.Drawing.Point(13, 28);
-            this.differentiateRbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.differentiateRbtn.Location = new System.Drawing.Point(26, 54);
+            this.differentiateRbtn.Margin = new System.Windows.Forms.Padding(4);
             this.differentiateRbtn.Name = "differentiateRbtn";
-            this.differentiateRbtn.Size = new System.Drawing.Size(82, 17);
+            this.differentiateRbtn.Size = new System.Drawing.Size(159, 29);
             this.differentiateRbtn.TabIndex = 9;
             this.differentiateRbtn.Text = "Differentiate";
             this.differentiateRbtn.UseVisualStyleBackColor = true;
@@ -142,11 +144,11 @@
             this.textResultGrpBox.Controls.Add(this.areaLb);
             this.textResultGrpBox.Controls.Add(this.derivativeLb);
             this.textResultGrpBox.Controls.Add(this.expressionLb);
-            this.textResultGrpBox.Location = new System.Drawing.Point(208, 632);
-            this.textResultGrpBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textResultGrpBox.Location = new System.Drawing.Point(416, 1215);
+            this.textResultGrpBox.Margin = new System.Windows.Forms.Padding(4);
             this.textResultGrpBox.Name = "textResultGrpBox";
-            this.textResultGrpBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textResultGrpBox.Size = new System.Drawing.Size(634, 163);
+            this.textResultGrpBox.Padding = new System.Windows.Forms.Padding(4);
+            this.textResultGrpBox.Size = new System.Drawing.Size(1268, 313);
             this.textResultGrpBox.TabIndex = 12;
             this.textResultGrpBox.TabStop = false;
             this.textResultGrpBox.Text = "Text results";
@@ -154,57 +156,57 @@
             // areaLb
             // 
             this.areaLb.AutoSize = true;
-            this.areaLb.Location = new System.Drawing.Point(14, 69);
-            this.areaLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.areaLb.Location = new System.Drawing.Point(28, 133);
+            this.areaLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.areaLb.Name = "areaLb";
-            this.areaLb.Size = new System.Drawing.Size(83, 13);
+            this.areaLb.Size = new System.Drawing.Size(168, 25);
             this.areaLb.TabIndex = 21;
             this.areaLb.Text = "Estimated area: ";
             // 
             // derivativeLb
             // 
             this.derivativeLb.AutoSize = true;
-            this.derivativeLb.Location = new System.Drawing.Point(12, 47);
-            this.derivativeLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.derivativeLb.Location = new System.Drawing.Point(24, 90);
+            this.derivativeLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.derivativeLb.Name = "derivativeLb";
-            this.derivativeLb.Size = new System.Drawing.Size(61, 13);
+            this.derivativeLb.Size = new System.Drawing.Size(120, 25);
             this.derivativeLb.TabIndex = 1;
             this.derivativeLb.Text = "Derivative: ";
             // 
             // expressionLb
             // 
             this.expressionLb.AutoSize = true;
-            this.expressionLb.Location = new System.Drawing.Point(12, 24);
-            this.expressionLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.expressionLb.Location = new System.Drawing.Point(24, 46);
+            this.expressionLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.expressionLb.Name = "expressionLb";
-            this.expressionLb.Size = new System.Drawing.Size(64, 13);
+            this.expressionLb.Size = new System.Drawing.Size(131, 25);
             this.expressionLb.TabIndex = 0;
             this.expressionLb.Text = "Expression: ";
             // 
             // expressionTbx
             // 
-            this.expressionTbx.Location = new System.Drawing.Point(114, 22);
-            this.expressionTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.expressionTbx.Location = new System.Drawing.Point(228, 42);
+            this.expressionTbx.Margin = new System.Windows.Forms.Padding(4);
             this.expressionTbx.Name = "expressionTbx";
-            this.expressionTbx.Size = new System.Drawing.Size(360, 20);
+            this.expressionTbx.Size = new System.Drawing.Size(716, 31);
             this.expressionTbx.TabIndex = 0;
             // 
             // expressionInputLb
             // 
             this.expressionInputLb.AutoSize = true;
-            this.expressionInputLb.Location = new System.Drawing.Point(112, 5);
-            this.expressionInputLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.expressionInputLb.Location = new System.Drawing.Point(224, 10);
+            this.expressionInputLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.expressionInputLb.Name = "expressionInputLb";
-            this.expressionInputLb.Size = new System.Drawing.Size(87, 13);
+            this.expressionInputLb.Size = new System.Drawing.Size(176, 25);
             this.expressionInputLb.TabIndex = 10;
             this.expressionInputLb.Text = "Input expression:";
             // 
             // processBtn
             // 
-            this.processBtn.Location = new System.Drawing.Point(112, 43);
-            this.processBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.processBtn.Location = new System.Drawing.Point(224, 83);
+            this.processBtn.Margin = new System.Windows.Forms.Padding(4);
             this.processBtn.Name = "processBtn";
-            this.processBtn.Size = new System.Drawing.Size(360, 25);
+            this.processBtn.Size = new System.Drawing.Size(720, 48);
             this.processBtn.TabIndex = 13;
             this.processBtn.Text = "Process Expression";
             this.processBtn.UseVisualStyleBackColor = true;
@@ -213,10 +215,10 @@
             // integralRbtn
             // 
             this.integralRbtn.AutoSize = true;
-            this.integralRbtn.Location = new System.Drawing.Point(13, 48);
-            this.integralRbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.integralRbtn.Location = new System.Drawing.Point(26, 92);
+            this.integralRbtn.Margin = new System.Windows.Forms.Padding(4);
             this.integralRbtn.Name = "integralRbtn";
-            this.integralRbtn.Size = new System.Drawing.Size(98, 17);
+            this.integralRbtn.Size = new System.Drawing.Size(193, 29);
             this.integralRbtn.TabIndex = 14;
             this.integralRbtn.TabStop = true;
             this.integralRbtn.Text = "Definite integral";
@@ -225,53 +227,53 @@
             // 
             // stepSizeLb
             // 
-            this.stepSizeLb.Location = new System.Drawing.Point(112, 29);
-            this.stepSizeLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.stepSizeLb.Location = new System.Drawing.Point(224, 56);
+            this.stepSizeLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.stepSizeLb.Name = "stepSizeLb";
-            this.stepSizeLb.Size = new System.Drawing.Size(116, 22);
+            this.stepSizeLb.Size = new System.Drawing.Size(232, 42);
             this.stepSizeLb.TabIndex = 0;
             this.stepSizeLb.Text = "Number of intervals:";
             // 
             // riemannIntervalTb
             // 
-            this.riemannIntervalTb.Location = new System.Drawing.Point(114, 45);
-            this.riemannIntervalTb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.riemannIntervalTb.Location = new System.Drawing.Point(228, 87);
+            this.riemannIntervalTb.Margin = new System.Windows.Forms.Padding(4);
             this.riemannIntervalTb.Name = "riemannIntervalTb";
-            this.riemannIntervalTb.Size = new System.Drawing.Size(96, 20);
+            this.riemannIntervalTb.Size = new System.Drawing.Size(188, 31);
             this.riemannIntervalTb.TabIndex = 1;
             // 
             // intervalLb
             // 
-            this.intervalLb.Location = new System.Drawing.Point(3, 48);
-            this.intervalLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.intervalLb.Location = new System.Drawing.Point(6, 92);
+            this.intervalLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.intervalLb.Name = "intervalLb";
-            this.intervalLb.Size = new System.Drawing.Size(32, 18);
+            this.intervalLb.Size = new System.Drawing.Size(64, 35);
             this.intervalLb.TabIndex = 3;
             this.intervalLb.Text = "b:";
             // 
             // intervalALb
             // 
-            this.intervalALb.Location = new System.Drawing.Point(3, 21);
-            this.intervalALb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.intervalALb.Location = new System.Drawing.Point(6, 40);
+            this.intervalALb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.intervalALb.Name = "intervalALb";
-            this.intervalALb.Size = new System.Drawing.Size(28, 16);
+            this.intervalALb.Size = new System.Drawing.Size(56, 31);
             this.intervalALb.TabIndex = 6;
             this.intervalALb.Text = "a:";
             // 
             // intervalBTbx
             // 
-            this.intervalBTbx.Location = new System.Drawing.Point(22, 46);
-            this.intervalBTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.intervalBTbx.Location = new System.Drawing.Point(44, 88);
+            this.intervalBTbx.Margin = new System.Windows.Forms.Padding(4);
             this.intervalBTbx.Name = "intervalBTbx";
-            this.intervalBTbx.Size = new System.Drawing.Size(78, 20);
+            this.intervalBTbx.Size = new System.Drawing.Size(152, 31);
             this.intervalBTbx.TabIndex = 4;
             // 
             // intervalATbx
             // 
-            this.intervalATbx.Location = new System.Drawing.Point(22, 21);
-            this.intervalATbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.intervalATbx.Location = new System.Drawing.Point(44, 40);
+            this.intervalATbx.Margin = new System.Windows.Forms.Padding(4);
             this.intervalATbx.Name = "intervalATbx";
-            this.intervalATbx.Size = new System.Drawing.Size(78, 20);
+            this.intervalATbx.Size = new System.Drawing.Size(152, 31);
             this.intervalATbx.TabIndex = 2;
             // 
             // mcLaurinGrpBox
@@ -280,40 +282,40 @@
             this.mcLaurinGrpBox.Controls.Add(this.nPolynomiallb);
             this.mcLaurinGrpBox.Controls.Add(this.btnQuotientMcLaurin);
             this.mcLaurinGrpBox.Controls.Add(this.btnAnalyticalMcLaurin);
-            this.mcLaurinGrpBox.Location = new System.Drawing.Point(13, 252);
-            this.mcLaurinGrpBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.mcLaurinGrpBox.Location = new System.Drawing.Point(26, 485);
+            this.mcLaurinGrpBox.Margin = new System.Windows.Forms.Padding(4);
             this.mcLaurinGrpBox.Name = "mcLaurinGrpBox";
-            this.mcLaurinGrpBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.mcLaurinGrpBox.Size = new System.Drawing.Size(187, 116);
+            this.mcLaurinGrpBox.Padding = new System.Windows.Forms.Padding(4);
+            this.mcLaurinGrpBox.Size = new System.Drawing.Size(374, 223);
             this.mcLaurinGrpBox.TabIndex = 18;
             this.mcLaurinGrpBox.TabStop = false;
             this.mcLaurinGrpBox.Text = "Maclaurin Polynomial";
             // 
             // nPolynomialTbx
             // 
-            this.nPolynomialTbx.Location = new System.Drawing.Point(82, 22);
-            this.nPolynomialTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nPolynomialTbx.Location = new System.Drawing.Point(164, 42);
+            this.nPolynomialTbx.Margin = new System.Windows.Forms.Padding(4);
             this.nPolynomialTbx.Name = "nPolynomialTbx";
-            this.nPolynomialTbx.Size = new System.Drawing.Size(98, 20);
+            this.nPolynomialTbx.Size = new System.Drawing.Size(192, 31);
             this.nPolynomialTbx.TabIndex = 31;
             this.nPolynomialTbx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nPolynomialTbx_KeyPress);
             // 
             // nPolynomiallb
             // 
             this.nPolynomiallb.AutoSize = true;
-            this.nPolynomiallb.Location = new System.Drawing.Point(8, 24);
-            this.nPolynomiallb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.nPolynomiallb.Location = new System.Drawing.Point(16, 46);
+            this.nPolynomiallb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.nPolynomiallb.Name = "nPolynomiallb";
-            this.nPolynomiallb.Size = new System.Drawing.Size(69, 13);
+            this.nPolynomiallb.Size = new System.Drawing.Size(141, 25);
             this.nPolynomiallb.TabIndex = 30;
             this.nPolynomiallb.Text = "n Polynomial:";
             // 
             // btnQuotientMcLaurin
             // 
-            this.btnQuotientMcLaurin.Location = new System.Drawing.Point(14, 81);
-            this.btnQuotientMcLaurin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnQuotientMcLaurin.Location = new System.Drawing.Point(28, 156);
+            this.btnQuotientMcLaurin.Margin = new System.Windows.Forms.Padding(4);
             this.btnQuotientMcLaurin.Name = "btnQuotientMcLaurin";
-            this.btnQuotientMcLaurin.Size = new System.Drawing.Size(159, 25);
+            this.btnQuotientMcLaurin.Size = new System.Drawing.Size(318, 48);
             this.btnQuotientMcLaurin.TabIndex = 21;
             this.btnQuotientMcLaurin.Text = "By Newton\'s Quotient";
             this.btnQuotientMcLaurin.UseVisualStyleBackColor = true;
@@ -321,10 +323,10 @@
             // 
             // btnAnalyticalMcLaurin
             // 
-            this.btnAnalyticalMcLaurin.Location = new System.Drawing.Point(14, 47);
-            this.btnAnalyticalMcLaurin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAnalyticalMcLaurin.Location = new System.Drawing.Point(28, 90);
+            this.btnAnalyticalMcLaurin.Margin = new System.Windows.Forms.Padding(4);
             this.btnAnalyticalMcLaurin.Name = "btnAnalyticalMcLaurin";
-            this.btnAnalyticalMcLaurin.Size = new System.Drawing.Size(159, 25);
+            this.btnAnalyticalMcLaurin.Size = new System.Drawing.Size(318, 48);
             this.btnAnalyticalMcLaurin.TabIndex = 19;
             this.btnAnalyticalMcLaurin.Text = "Analytical";
             this.btnAnalyticalMcLaurin.UseVisualStyleBackColor = true;
@@ -340,84 +342,84 @@
             this.intervalGrpBox.Controls.Add(this.yMinLb);
             this.intervalGrpBox.Controls.Add(this.xMaxLb);
             this.intervalGrpBox.Controls.Add(this.xMinLb);
-            this.intervalGrpBox.Location = new System.Drawing.Point(13, 84);
-            this.intervalGrpBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.intervalGrpBox.Location = new System.Drawing.Point(26, 162);
+            this.intervalGrpBox.Margin = new System.Windows.Forms.Padding(4);
             this.intervalGrpBox.Name = "intervalGrpBox";
-            this.intervalGrpBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.intervalGrpBox.Size = new System.Drawing.Size(187, 160);
+            this.intervalGrpBox.Padding = new System.Windows.Forms.Padding(4);
+            this.intervalGrpBox.Size = new System.Drawing.Size(374, 308);
             this.intervalGrpBox.TabIndex = 22;
             this.intervalGrpBox.TabStop = false;
             this.intervalGrpBox.Text = "Interval";
             // 
             // yMaxTbx
             // 
-            this.yMaxTbx.Location = new System.Drawing.Point(49, 134);
-            this.yMaxTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.yMaxTbx.Location = new System.Drawing.Point(98, 258);
+            this.yMaxTbx.Margin = new System.Windows.Forms.Padding(4);
             this.yMaxTbx.Name = "yMaxTbx";
-            this.yMaxTbx.Size = new System.Drawing.Size(131, 20);
+            this.yMaxTbx.Size = new System.Drawing.Size(258, 31);
             this.yMaxTbx.TabIndex = 32;
             // 
             // yMinTbx
             // 
-            this.yMinTbx.Location = new System.Drawing.Point(49, 108);
-            this.yMinTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.yMinTbx.Location = new System.Drawing.Point(98, 208);
+            this.yMinTbx.Margin = new System.Windows.Forms.Padding(4);
             this.yMinTbx.Name = "yMinTbx";
-            this.yMinTbx.Size = new System.Drawing.Size(131, 20);
+            this.yMinTbx.Size = new System.Drawing.Size(258, 31);
             this.yMinTbx.TabIndex = 31;
             // 
             // xMaxTbx
             // 
-            this.xMaxTbx.Location = new System.Drawing.Point(49, 46);
-            this.xMaxTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xMaxTbx.Location = new System.Drawing.Point(98, 88);
+            this.xMaxTbx.Margin = new System.Windows.Forms.Padding(4);
             this.xMaxTbx.Name = "xMaxTbx";
-            this.xMaxTbx.Size = new System.Drawing.Size(131, 20);
+            this.xMaxTbx.Size = new System.Drawing.Size(258, 31);
             this.xMaxTbx.TabIndex = 30;
             // 
             // xMinTbx
             // 
-            this.xMinTbx.Location = new System.Drawing.Point(49, 20);
-            this.xMinTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xMinTbx.Location = new System.Drawing.Point(98, 38);
+            this.xMinTbx.Margin = new System.Windows.Forms.Padding(4);
             this.xMinTbx.Name = "xMinTbx";
-            this.xMinTbx.Size = new System.Drawing.Size(131, 20);
+            this.xMinTbx.Size = new System.Drawing.Size(258, 31);
             this.xMinTbx.TabIndex = 29;
             // 
             // yMaxLb
             // 
             this.yMaxLb.AutoSize = true;
-            this.yMaxLb.Location = new System.Drawing.Point(12, 136);
-            this.yMaxLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.yMaxLb.Location = new System.Drawing.Point(24, 262);
+            this.yMaxLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.yMaxLb.Name = "yMaxLb";
-            this.yMaxLb.Size = new System.Drawing.Size(37, 13);
+            this.yMaxLb.Size = new System.Drawing.Size(75, 25);
             this.yMaxLb.TabIndex = 28;
             this.yMaxLb.Text = "y max:";
             // 
             // yMinLb
             // 
             this.yMinLb.AutoSize = true;
-            this.yMinLb.Location = new System.Drawing.Point(12, 110);
-            this.yMinLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.yMinLb.Location = new System.Drawing.Point(24, 212);
+            this.yMinLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.yMinLb.Name = "yMinLb";
-            this.yMinLb.Size = new System.Drawing.Size(34, 13);
+            this.yMinLb.Size = new System.Drawing.Size(69, 25);
             this.yMinLb.TabIndex = 27;
             this.yMinLb.Text = "y min:";
             // 
             // xMaxLb
             // 
             this.xMaxLb.AutoSize = true;
-            this.xMaxLb.Location = new System.Drawing.Point(8, 48);
-            this.xMaxLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.xMaxLb.Location = new System.Drawing.Point(16, 92);
+            this.xMaxLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.xMaxLb.Name = "xMaxLb";
-            this.xMaxLb.Size = new System.Drawing.Size(37, 13);
+            this.xMaxLb.Size = new System.Drawing.Size(75, 25);
             this.xMaxLb.TabIndex = 26;
             this.xMaxLb.Text = "x max:";
             // 
             // xMinLb
             // 
             this.xMinLb.AutoSize = true;
-            this.xMinLb.Location = new System.Drawing.Point(8, 21);
-            this.xMinLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.xMinLb.Location = new System.Drawing.Point(16, 40);
+            this.xMinLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.xMinLb.Name = "xMinLb";
-            this.xMinLb.Size = new System.Drawing.Size(34, 13);
+            this.xMinLb.Size = new System.Drawing.Size(69, 25);
             this.xMinLb.TabIndex = 25;
             this.xMinLb.Text = "x min:";
             // 
@@ -429,11 +431,11 @@
             this.intergralGroupBox.Controls.Add(this.intervalALb);
             this.intergralGroupBox.Controls.Add(this.intervalLb);
             this.intergralGroupBox.Controls.Add(this.stepSizeLb);
-            this.intergralGroupBox.Location = new System.Drawing.Point(208, 84);
-            this.intergralGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.intergralGroupBox.Location = new System.Drawing.Point(416, 162);
+            this.intergralGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.intergralGroupBox.Name = "intergralGroupBox";
-            this.intergralGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.intergralGroupBox.Size = new System.Drawing.Size(224, 71);
+            this.intergralGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            this.intergralGroupBox.Size = new System.Drawing.Size(448, 137);
             this.intergralGroupBox.TabIndex = 22;
             this.intergralGroupBox.TabStop = false;
             this.intergralGroupBox.Text = "Definite Integral";
@@ -441,64 +443,75 @@
             // 
             // nPolynomialGroupBox
             // 
+            this.nPolynomialGroupBox.Controls.Add(this.coordinatesListBox);
             this.nPolynomialGroupBox.Controls.Add(this.coordinatesTbx);
             this.nPolynomialGroupBox.Controls.Add(this.coordinatesLb);
             this.nPolynomialGroupBox.Controls.Add(this.plotPolynomialBtn);
-            this.nPolynomialGroupBox.Controls.Add(this.button2);
-            this.nPolynomialGroupBox.Location = new System.Drawing.Point(13, 372);
-            this.nPolynomialGroupBox.Margin = new System.Windows.Forms.Padding(2);
+            this.nPolynomialGroupBox.Controls.Add(this.coordinatesBtn);
+            this.nPolynomialGroupBox.Location = new System.Drawing.Point(26, 715);
+            this.nPolynomialGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.nPolynomialGroupBox.Name = "nPolynomialGroupBox";
-            this.nPolynomialGroupBox.Padding = new System.Windows.Forms.Padding(2);
-            this.nPolynomialGroupBox.Size = new System.Drawing.Size(187, 116);
+            this.nPolynomialGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            this.nPolynomialGroupBox.Size = new System.Drawing.Size(374, 497);
             this.nPolynomialGroupBox.TabIndex = 23;
             this.nPolynomialGroupBox.TabStop = false;
             this.nPolynomialGroupBox.Text = "Polynomial Construction";
             // 
             // coordinatesTbx
             // 
-            this.coordinatesTbx.Location = new System.Drawing.Point(82, 22);
-            this.coordinatesTbx.Margin = new System.Windows.Forms.Padding(2);
+            this.coordinatesTbx.Location = new System.Drawing.Point(164, 42);
+            this.coordinatesTbx.Margin = new System.Windows.Forms.Padding(4);
             this.coordinatesTbx.Name = "coordinatesTbx";
-            this.coordinatesTbx.Size = new System.Drawing.Size(98, 20);
+            this.coordinatesTbx.Size = new System.Drawing.Size(192, 31);
             this.coordinatesTbx.TabIndex = 31;
             // 
             // coordinatesLb
             // 
             this.coordinatesLb.AutoSize = true;
-            this.coordinatesLb.Location = new System.Drawing.Point(8, 24);
-            this.coordinatesLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.coordinatesLb.Location = new System.Drawing.Point(16, 46);
+            this.coordinatesLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.coordinatesLb.Name = "coordinatesLb";
-            this.coordinatesLb.Size = new System.Drawing.Size(69, 13);
+            this.coordinatesLb.Size = new System.Drawing.Size(140, 25);
             this.coordinatesLb.TabIndex = 30;
             this.coordinatesLb.Text = "Coordinates: ";
             // 
             // plotPolynomialBtn
             // 
-            this.plotPolynomialBtn.Location = new System.Drawing.Point(14, 81);
-            this.plotPolynomialBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.plotPolynomialBtn.Location = new System.Drawing.Point(28, 156);
+            this.plotPolynomialBtn.Margin = new System.Windows.Forms.Padding(4);
             this.plotPolynomialBtn.Name = "plotPolynomialBtn";
-            this.plotPolynomialBtn.Size = new System.Drawing.Size(159, 25);
+            this.plotPolynomialBtn.Size = new System.Drawing.Size(318, 48);
             this.plotPolynomialBtn.TabIndex = 21;
-            this.plotPolynomialBtn.Text = "Plot Polynomial";
+            this.plotPolynomialBtn.Text = "Interpolate Polynomial";
             this.plotPolynomialBtn.UseVisualStyleBackColor = true;
             this.plotPolynomialBtn.Click += new System.EventHandler(this.plotPolynomialBtn_Click);
             // 
-            // button2
+            // coordinatesBtn
             // 
-            this.button2.Location = new System.Drawing.Point(14, 47);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(159, 25);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "--";
-            this.button2.UseVisualStyleBackColor = true;
+            this.coordinatesBtn.Location = new System.Drawing.Point(28, 90);
+            this.coordinatesBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.coordinatesBtn.Name = "coordinatesBtn";
+            this.coordinatesBtn.Size = new System.Drawing.Size(318, 48);
+            this.coordinatesBtn.TabIndex = 19;
+            this.coordinatesBtn.Text = "Place Points";
+            this.coordinatesBtn.UseVisualStyleBackColor = true;
+            this.coordinatesBtn.Click += new System.EventHandler(this.coordinatesBtn_Click);
+            // 
+            // coordinatesListBox
+            // 
+            this.coordinatesListBox.FormattingEnabled = true;
+            this.coordinatesListBox.ItemHeight = 25;
+            this.coordinatesListBox.Location = new System.Drawing.Point(21, 220);
+            this.coordinatesListBox.Name = "coordinatesListBox";
+            this.coordinatesListBox.Size = new System.Drawing.Size(335, 254);
+            this.coordinatesListBox.TabIndex = 32;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1126, 552);
+            this.ClientSize = new System.Drawing.Size(2286, 1096);
             this.Controls.Add(this.nPolynomialGroupBox);
             this.Controls.Add(this.intergralGroupBox);
             this.Controls.Add(this.intervalGrpBox);
@@ -512,7 +525,7 @@
             this.Controls.Add(this.graphPictureBox);
             this.Controls.Add(this.expressionChart);
             this.Controls.Add(this.expressionTbx);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -571,7 +584,8 @@
         private System.Windows.Forms.TextBox coordinatesTbx;
         private System.Windows.Forms.Label coordinatesLb;
         private System.Windows.Forms.Button plotPolynomialBtn;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button coordinatesBtn;
+        private System.Windows.Forms.ListBox coordinatesListBox;
     }
 }
 
