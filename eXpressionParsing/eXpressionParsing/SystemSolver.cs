@@ -9,12 +9,11 @@ namespace eXpressionParsing
 {
     class SystemSolver
     {
-        // The system solver takes in a 2D (square) array of doubles? 
-        // [(x, y) ordered pairs -> input into the array upon construction].
         private double[,] matrix;
         public int Degree { get; }
         public double[,] Matrix
         {
+            // Returns a copy of the solved matrix.
             get { return matrix.Clone() as double[,]; }
         }
 
@@ -52,33 +51,19 @@ namespace eXpressionParsing
                 // Finally insert the y-value at the last column index.
                 matrix[i, lastColumn] = Math.Round(point.Y, 2);
             }
+            // The method responsible for inplace solving.
+            // This causes side effects
             SolveMatrix();
-            // Multiply a row by scalar mult.
-            //Console.WriteLine($"Current matrix: {this}");
-            //Console.WriteLine("Multiplying row 1 by -2.333: ");
-            //RowMultiple(0, -2.3333);
-            //Console.WriteLine($"Current matrix: {this}");
-            //Console.WriteLine("Multiplying row 1 by -1/2.3333: ");
-            //RowMultiple(0, (-1 / 2.3333));
-            //Console.WriteLine($"Current matrix: {this}");
-
-            // Add scalar mult to another row.
-
-            //Console.WriteLine($"Current matrix: {this}");
-            //Console.WriteLine("Adding row 0 by -2 to 1: ");
-            //AddRowMultiple(1, 0, -2);
-            //Console.WriteLine($"Current matrix: {this}");
-            //Console.WriteLine("Multiplying by 0: ");
-            //AddRowMultiple(1, 0, 0);
-            //Console.WriteLine($"Current matrix: {this}");
-            //AddRowMultiple(1, 0, 2);
-            //Console.WriteLine($"Current matrix: {this}");
         }
 
-        // Create a method that will return the row number for a given column if there exists some
-        // entry with a coefficient of 1 (this will always return the first occurence).
-
-        // The to string overwrite should return the solved matrix.
+        /// <summary>
+        /// Will return the matrix as a two dimensional matrix:
+        ///     [
+        ///         [a, b, c],
+        ///         [d, e, f],
+        ///     ]
+        /// </summary>
+        /// <returns>A string representation of the solved matrix.</returns>
         public override string ToString()
         {
             string result = "[\n";
@@ -101,7 +86,13 @@ namespace eXpressionParsing
         }
 
         // 3 Methods (operations according to the wiki).
-        // Swap 2 rows in the matrix.
+        /// <summary>
+        /// Method that swaps row having rownumber 1 with row having rownumber 2.
+        /// 
+        /// If both row numbers are the same, the method will throw an exception, not allowing such operation.
+        /// </summary>
+        /// <param name="rowNumber1">An integer representing the row's index, starting at 0.</param>
+        /// <param name="rowNumber2">An integer representing the row's index, starting at 0.</param>
         private void SwapRows(int rowNumber1, int rowNumber2)
         {
             if (rowNumber1 == rowNumber2)
@@ -123,7 +114,11 @@ namespace eXpressionParsing
             }
         }
 
-        // Multiply a row by a non-zero scalar.
+        /// <summary>
+        /// Multiply a row by a non-zero scalar.
+        /// </summary>
+        /// <param name="rowNumber">An integer representing the row's index, starting at 0</param>
+        /// <param name="scalar">A double, representing the value that is used to multiply the row's values by.</param>
         private void RowMultiple(int rowNumber, double scalar)
         {
             if (scalar == 0)
@@ -223,6 +218,64 @@ namespace eXpressionParsing
                 scalar = 1 / (matrix[i, i]); // equivalent to a/a = 1
                 RowMultiple(i, scalar);
             }
+        }
+
+        /// <summary>
+        /// Is a wrapper method that will initiate the recursive calls
+        /// to obtain the polynomial such that the user does not have
+        /// to insert the degree every time.
+        /// </summary>
+        /// <returns>The expression root for the polynomial that is constructed based on the solution of the system of equations.</returns>
+        public Operand GetPolynomial()
+        {
+            return MatrixToExpression(Degree);
+        }
+
+        /// <summary>
+        /// Recursive implementation of creating the polynomial.
+        /// 
+        /// Will make a call at the highest degree (which will be at the front of the expression)
+        /// and move to lower terms until it reaches the 0th term, aka the cosntant and returns
+        /// back up the stack.
+        /// </summary>
+        /// <param name="degree">An integer, the dynamic degree that is decremented by one each recursive call.</param>
+        /// <returns>The expression root for the polynomial that is constructed based on the solution of the system of equations.</returns>
+        private Operand MatrixToExpression(int degree)
+        {
+            if (degree == 0)
+            {
+                return CreatePolynomialTerm(matrix[Degree - degree, Degree + 1], degree);
+            }
+            else
+            {
+                // Degree is higher than 0, thus we always have an addition of terms.
+                // thus we create the current term and recursively obtain the other terms.
+                Addition termsAdded = new Addition();
+                termsAdded.LeftSuccessor = CreatePolynomialTerm(matrix[Degree - degree, Degree + 1], degree);
+                termsAdded.RightSuccessor = MatrixToExpression(degree - 1);
+                return termsAdded;
+            }
+        }
+
+        /// <summary>
+        /// Method solely responsible for creating the i-th term
+        /// of the polynomial that the system represented.
+        /// </summary>
+        /// <param name="coefficient">A double, representing the coefficient of the i-th term.</param>
+        /// <param name="degree">An integer, representing the order (x^degree) term.</param>
+        /// <returns></returns>
+        private Operand CreatePolynomialTerm(double coefficient, int degree)
+        {
+            Multiplication term = new Multiplication();
+            term.LeftSuccessor = new RealNumber(Math.Round(coefficient, 2));
+
+            // Create a power of x for the right side.
+            Power xRaisedToDegree = new Power();
+            xRaisedToDegree.LeftSuccessor = new DependentVariableX();
+            xRaisedToDegree.RightSuccessor = new Integer(degree);
+            term.RightSuccessor = xRaisedToDegree;
+
+            return term;
         }
     }
 }

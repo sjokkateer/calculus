@@ -44,8 +44,8 @@ namespace eXpressionParsing
 
             xMin = -10;
             xMax = 10;
-            yMin = -2;
-            yMax = 2;
+            yMin = -5;
+            yMax = 5;
         }
 
         private void Parse(Exception error)
@@ -109,7 +109,7 @@ namespace eXpressionParsing
             expressionChart.Series[seriesName].ChartType = chartType;
             expressionChart.Series[seriesName].MarkerSize = 2;
 
-            expressionChart.Series[seriesName].ChartArea = "ChartArea1";
+            //expressionChart.Series[seriesName].ChartArea = "ChartArea1";
 
             double step = 0.0001;
             double result;
@@ -536,6 +536,33 @@ namespace eXpressionParsing
                 }
 
             }
+        }
+
+        private void plotPolynomialBtn_Click(object sender, EventArgs e)
+        {
+            List<Coordinate> coordinates = new List<Coordinate>() {
+                new Coordinate(0, 1),
+                new Coordinate(1, 3) };
+            // Create a new solver based on the obtained coordinates.
+            SystemSolver s = new SystemSolver(coordinates);
+            // Get the expression representation of the system.
+            // And simplify it where possible.
+            Operand poly = s.GetPolynomial().Simplify();
+            // Put the expression string in the respective label.
+            expressionLb.Text = poly.ToString();
+            // Create a graph of the polynomial.
+            CreateGraphOfExpression(poly, "n-polynomial");
+            // Plot the polynomial.
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            expressionChart.ChartAreas[0].AxisX.Maximum = xMax;
+            expressionChart.ChartAreas[0].AxisX.Minimum = xMin;
+
+            expressionChart.ChartAreas[0].AxisY.Maximum = yMax;
+            expressionChart.ChartAreas[0].AxisY.Minimum = yMin;
+
         }
     }
 }
