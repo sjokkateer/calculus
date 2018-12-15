@@ -169,20 +169,6 @@ namespace eXpressionParsing
         }
 
         // Calculates the slope of the ith derivative evaluated in x.
-        //private double HigherOrderDerivativeByDifferenceQuotient(double x, int i)
-        //{
-        //    if (i == 1)
-        //    {
-        //        // Aka the first order derivative.
-        //        // which can just be evaluated at x.
-        //        return DifferenceQuotient(x);
-        //    }
-        //    else
-        //    {
-        //        // Obtain the value of the derivative of order (n - 1) evaluated at x.
-        //        return (HigherOrderDerivativeByDifferenceQuotient(x + 0.01, i - 1) - HigherOrderDerivativeByDifferenceQuotient(x, i - 1)) / 0.01;
-        //    }
-        //}
         private double HigherOrderDerivativeByDifferenceQuotient(double a, int i)
         {
             if (i == 1)

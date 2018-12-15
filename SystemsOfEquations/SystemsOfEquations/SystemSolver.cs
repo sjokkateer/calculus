@@ -12,6 +12,7 @@ namespace SystemsOfEquations
         // The system solver takes in a 2D (square) array of doubles? 
         // [(x, y) ordered pairs -> input into the array upon construction].
         private double[,] matrix;
+        public int Degree { get; }
 
         // For n points, the polynomial will be of degree/order n - 1.
         // Need a constructor that takes a list of coordinates.
@@ -20,7 +21,7 @@ namespace SystemsOfEquations
             // For now we assume that the input will result in a proper
             // entry that results in a n - 1 order polynomial and that the number
             // of coordinates entered is >= 2.
-            int degree = coordinates.Count - 1;
+            Degree = coordinates.Count - 1;
 
             // The number of columns is always n + 1 (+ 1 for y): x^n-1, x^n-2, ..., x^n-(n-1), x^0 = y
             // Where x^0 is some unknown constant that will be solved and always holds coefficient of 1.
@@ -41,12 +42,14 @@ namespace SystemsOfEquations
                 {
                     // In all other cases, insert the x value raised to its corresponding power.
                     // aka raised to n - index
-                    int power = degree - j;
-                    matrix[i, j] = Math.Pow(point.X, power);
+                    int power = Degree - j;
+                    matrix[i, j] = Math.Round(Math.Pow(point.X, power), 2);
                 }
                 // Finally insert the y-value at the last column index.
-                matrix[i, lastColumn] = point.Y;
+                matrix[i, lastColumn] = Math.Round(point.Y, 2);
             }
+            Console.WriteLine($"Original system: {this}");
+            SolveMatrix();
             // Multiply a row by scalar mult.
             //Console.WriteLine($"Current matrix: {this}");
             //Console.WriteLine("Multiplying row 1 by -2.333: ");
@@ -149,6 +152,79 @@ namespace SystemsOfEquations
             {
                 matrix[rowNumber1, i] += matrix[rowNumber2, i] * scalar;
             }
+        }
+
+        /// <summary>
+        /// Purpose is to reduce the matrix into reduced row echelon form.
+        /// 
+        /// Will immediately be called inside the constructor of the solver class.
+        /// </summary>
+        private void SolveMatrix()
+        {
+            // Use operation (3) to add to one row a scalar mult of another
+            // to reduce all other column entries to 0.
+            // Use operation (2) multiply the row by scalar mult to get the
+            // leading co-efficient to be 1.
+
+            // To achieve this we can iterate over all rows
+            // And for every row we can iterate over all columns
+            // The leading coefficient always residing in the cell where row# == column#
+
+            // We can simply obtain the scalar multiple by dividing the coefficient of the
+            // other non leading coefficient by the leading. thus if we start with
+            // matrix[0, 0], then -(matrix[1, 0] / matrix[0, 0]) is the scalar multiple to
+            // cancel out that row.
+
+            // Square matrix, where i should be used for the columns
+            double scalar;
+            int counter;
+            for (int i = 0; i <= Degree; i++)
+            {
+                // Counter should always start at a row lower than i, since row i could
+                // already be solved or in it's echelon form.
+                counter = i + 1;
+                // If the current value in matrix[i, i] = 0, we have to swap it
+                // with a row that does have a value != 0 in [j, i]
+                while (matrix[i, i] == 0 && counter <= Degree)
+                {
+                    // Swap rows i with counter as long as counter <= degree
+                    SwapRows(i, counter);
+                    counter++;
+                }
+
+                // If we exhausted all we should move to the next row/column actually.
+                // Since this would indicate that all values in column i were 0.
+                if (matrix[i, i] == 0)
+                {
+                    break;
+                }
+
+                // And j should be used for the rows
+                for (int j = 0; j <= Degree; j++)
+                {
+                    // Reduce all values above and below i == j to have a coefficient of 0.
+                    if (j != i)
+                    {
+                        // Add to row j a scalar multiple of row i
+                        scalar = -(matrix[j, i] / matrix[i, i]);
+                        Console.WriteLine($"Current value of scalar: {scalar}");
+                        Console.WriteLine($"Applying in place manipulation to reduce to 0: {matrix[j, i]}");
+                        AddRowMultiple(j, i, scalar);
+                        Console.WriteLine();
+                        Console.WriteLine($"After effect of manipulation: {this}");
+                    }
+                }
+            }
+            // Because of the above process, all cells have a 0 value except for the diagonal.
+            // This means we have to loop once through all diagonal cells and multiply to get
+            // a 1 coefficient. and thus our final result.
+            for (int i = 0; i <= Degree; i++)
+            {
+                // Make the coefficients of the diagonal = 1.
+                scalar = 1 / (matrix[i, i]); // equivalent to a/a = 1
+                RowMultiple(i, scalar);
+            }
+            Console.WriteLine($"Solution to the system: {this}");
         }
     }
 }
