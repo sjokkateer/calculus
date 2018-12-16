@@ -25,15 +25,5 @@ namespace eXpressionParsing
         {
             return new RealNumber(0.0);
         }
-
-        //public override string ToString()
-        //{
-        //    return $"{Math.Round(Convert.ToDouble(Data), 2)}";
-        //}
-
-        //public override string NodeLabel()
-        //{
-        //    return $"\tnode{NodeNumber} [ label = \"{Math.Round(Convert.ToDouble(Data), 2)}\" ]\n";
-        //}
     }
 }
