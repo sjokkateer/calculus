@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SystemsOfEquations")]
+[assembly: AssemblyTitle("RandomNumberGenerators")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SystemsOfEquations")]
+[assembly: AssemblyProduct("RandomNumberGenerators")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f3f14432-5c5e-4a73-883d-bc9fff3482d1")]
+[assembly: Guid("1f4d0f53-f405-40cc-bc00-fabd28a5fe93")]
 
 // Version information for an assembly consists of the following four values:
 //

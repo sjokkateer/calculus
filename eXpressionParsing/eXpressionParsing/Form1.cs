@@ -589,7 +589,7 @@ namespace eXpressionParsing
                 polynomialCoordinatesList.Add(clickedCoordinate);
                 coordinatesListBox.Items.Add(clickedCoordinate);
 
-                expressionChart.Series["PlaceHolder"].Points.AddXY(x, y);
+                expressionChart.Series["coordinates"].Points.AddXY(x, y);
             }
         }
 
@@ -598,13 +598,23 @@ namespace eXpressionParsing
             // Refresh the list of coordinates.
             polynomialCoordinatesList = new List<Coordinate>();
             coordinatesListBox.Items.Clear();
-            expressionChart.Series["PlaceHolder"].Points.Clear();
 
-            //for (int i = 0; i < expressionChart.Series.Count; i++)
-            //{
-            //    expressionChart.Series[i].Points.Clear();
-            //}
-            
+            // Create a new series to preserve the invisible point.
+            string seriesName = "coordinates";
+            int seriesIndex = expressionChart.Series.IndexOf(seriesName);
+            if (seriesIndex >= 0)
+            {
+                // Series name already exists so just redo 
+                // calculation on an empty set of points
+                expressionChart.Series[seriesIndex].Points.Clear();
+            }
+            else
+            {
+                // Otherwise first time initialized, so series has to be created.
+                expressionChart.Series.Add(seriesName);
+                expressionChart.Series[seriesName].ChartType = SeriesChartType.Point;
+            }
+
             // Set flag to true, allowing clicked coordinates to be added to the list.
             polynomialCoordinates = true;
         }

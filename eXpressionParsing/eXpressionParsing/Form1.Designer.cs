@@ -65,11 +65,11 @@
             this.xMinLb = new System.Windows.Forms.Label();
             this.intergralGroupBox = new System.Windows.Forms.GroupBox();
             this.nPolynomialGroupBox = new System.Windows.Forms.GroupBox();
+            this.coordinatesListBox = new System.Windows.Forms.ListBox();
             this.coordinatesTbx = new System.Windows.Forms.TextBox();
             this.coordinatesLb = new System.Windows.Forms.Label();
             this.plotPolynomialBtn = new System.Windows.Forms.Button();
             this.coordinatesBtn = new System.Windows.Forms.Button();
-            this.coordinatesListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).BeginInit();
             this.textResultGrpBox.SuspendLayout();
@@ -82,11 +82,7 @@
             // expressionChart
             // 
             chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisX.Maximum = 10D;
-            chartArea1.AxisX.Minimum = -10D;
             chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisY.Maximum = 5D;
-            chartArea1.AxisY.Minimum = -5D;
             chartArea1.Name = "ChartArea1";
             this.expressionChart.ChartAreas.Add(chartArea1);
             this.expressionChart.Location = new System.Drawing.Point(416, 304);
@@ -457,6 +453,15 @@
             this.nPolynomialGroupBox.TabStop = false;
             this.nPolynomialGroupBox.Text = "Polynomial Construction";
             // 
+            // coordinatesListBox
+            // 
+            this.coordinatesListBox.FormattingEnabled = true;
+            this.coordinatesListBox.ItemHeight = 25;
+            this.coordinatesListBox.Location = new System.Drawing.Point(21, 220);
+            this.coordinatesListBox.Name = "coordinatesListBox";
+            this.coordinatesListBox.Size = new System.Drawing.Size(335, 254);
+            this.coordinatesListBox.TabIndex = 32;
+            // 
             // coordinatesTbx
             // 
             this.coordinatesTbx.Location = new System.Drawing.Point(164, 42);
@@ -496,15 +501,6 @@
             this.coordinatesBtn.Text = "Place Points";
             this.coordinatesBtn.UseVisualStyleBackColor = true;
             this.coordinatesBtn.Click += new System.EventHandler(this.coordinatesBtn_Click);
-            // 
-            // coordinatesListBox
-            // 
-            this.coordinatesListBox.FormattingEnabled = true;
-            this.coordinatesListBox.ItemHeight = 25;
-            this.coordinatesListBox.Location = new System.Drawing.Point(21, 220);
-            this.coordinatesListBox.Name = "coordinatesListBox";
-            this.coordinatesListBox.Size = new System.Drawing.Size(335, 254);
-            this.coordinatesListBox.TabIndex = 32;
             // 
             // Form1
             // 
