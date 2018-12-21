@@ -8,13 +8,25 @@ namespace RandomNumberGenerators
 {
     class Poisson : Distribution
     {
-        // Properties
-        public double T { get; }
+        /// <summary>
+        /// If someone gave in T for the interval, lambda gets multiplied by t
+        /// to represent the expected value / mean for a preiod of t given an 
+        /// expected value (lambda) over an original interval.
+        /// </summary>
+        /// <param name="t"></param>
+        public Poisson(double lambda, int numberOfEvents, double t = 1) : base(lambda * t, numberOfEvents)
+        { }
 
-        public Poisson(double lambda, int numberOfEvents, double t = 1) : base(lambda, numberOfEvents)
-        {
-            T = t;
-        }
+        /// <summary>
+        /// Constructor to be used for Poisson simulations.
+        /// As the simulation can make use of all methods that the distribution does except that
+        /// it comes with its own set of double values.
+        /// </summary>
+        /// <param name="lambda"></param>
+        /// <param name="numberOfEvents"></param>
+        /// <param name="distributionValues"></param>
+        public Poisson(double lambda, int numberOfEvents, List<double> distributionValues) : base(lambda, numberOfEvents, distributionValues)
+        { }
 
         /// <summary>
         /// Knuth's algorithm used for generating a random poisson value based on a given lambda.

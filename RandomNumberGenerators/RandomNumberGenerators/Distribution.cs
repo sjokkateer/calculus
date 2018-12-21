@@ -10,13 +10,28 @@ namespace RandomNumberGenerators
     {
         // Variabels
         protected Random rng;
+        private int multiple;
         private List<double> generatedValues;
         private SortedDictionary<int, int> frequencyDictionary;
 
         // Properties
         public double Lambda { get; }
         public int NumberOfEvents { get; }
-        
+        public int Multiple
+        {
+            get
+            {
+                return multiple;
+            }
+            set
+            {
+                multiple = value;
+                // Trigger an event to Create a new dictionary?
+                // Recreate the dictionary
+                frequencyDictionary = CreateFrequencyDictionary(generatedValues);
+            }
+        }
+
         /// <summary>
         /// Returns a copy of the list of integers generated for the distribution.
         /// </summary>
@@ -38,9 +53,13 @@ namespace RandomNumberGenerators
                 // Return a copy to the user.
                 return new SortedDictionary<int, int>(frequencyDictionary);
             }
+            protected set
+            {
+                frequencyDictionary = value;
+            }
         }
-        public double Mean { get; }
-        public double Variance { get; }
+        public double Mean { get; protected set; }
+        public double Variance { get; protected set; }
         /// <summary>
         /// Returns the square root of the variance.
         /// </summary>
@@ -60,7 +79,7 @@ namespace RandomNumberGenerators
         /// </summary>
         /// <param name="lambda">A double, the expected value/mean value.</param>
         /// <param name="numberOfEvents">A natural number, representing the number of trials or number of random numbers to be generated.</param>
-        public Distribution(double lambda, int numberOfEvents)
+        public Distribution(double lambda, int numberOfEvents, List<double> generatedDistributionValues = null)
         {
             // Initialization
             rng = new Random();
@@ -68,8 +87,17 @@ namespace RandomNumberGenerators
             NumberOfEvents = numberOfEvents;
 
             // Generation
-            generatedValues = GenerateDistribution();
-            frequencyDictionary = CreateFrequencyDictionary();
+            if (generatedDistributionValues == null)
+            {
+                generatedValues = GenerateDistribution();
+            }
+            else
+            {
+                generatedValues = generatedDistributionValues;
+            }
+
+            // Set the multiple which will also handle creation of the dictionary.
+            Multiple = 1;
 
             // Calculation
             Mean = CalculateMean();
@@ -100,13 +128,14 @@ namespace RandomNumberGenerators
         /// and the value will represent the count/frequency of occurence of the key in the list of integers.
         /// </summary>
         /// <returns>A sorted dictionary of int keys and int values, representing the frequency "table" of the distribution.</returns>
-        private SortedDictionary<int, int> CreateFrequencyDictionary(int multiple = 1)
+        protected SortedDictionary<int, int> CreateFrequencyDictionary(List<double> distributionValues)
         {
             SortedDictionary<int, int> resultFrequencyDictionary = new SortedDictionary<int, int>();
             int newValue;
-            foreach (double value in GeneratedDistributionValues)
+            foreach (double value in distributionValues)
             {
-                newValue = Convert.ToInt32(value * multiple);
+                newValue = Convert.ToInt32(Math.Truncate(value * Multiple));
+
                 if (resultFrequencyDictionary.ContainsKey(newValue))
                 {
                     resultFrequencyDictionary[newValue]++;

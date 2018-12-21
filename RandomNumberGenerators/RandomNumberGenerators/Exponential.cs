@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RandomNumberGenerators
 {
@@ -25,8 +26,34 @@ namespace RandomNumberGenerators
 
             // Inversion of the CDF according to stack overflow.
             x = Math.Log(1 - u) / -Lambda;
-            Console.Write($"{x}, ");
             return x;
+        }
+
+        public List<double> SimulatePoissonDistribution(int interval)
+        {
+            // Can generate a list of doubles for this simulation
+            List<double> results = new List<double>();
+            int count = 0;
+            double interArrivalSum = 0;
+            foreach (double value in GeneratedDistributionValues)
+            {
+                // Keep track of a count per number until the sum + number value is greater than the interval size.
+                // then reset the counter.
+                if (interArrivalSum + value < interval)
+                {
+                    count++;
+                    interArrivalSum += value;
+                }
+                else
+                {
+                    results.Add(count);
+                    interArrivalSum = 0;
+                    count = 0;
+                }
+            }
+            // Pass the list of doubles to our original dictionary generation method
+            // and return it.
+            return results;
         }
     }
 }
