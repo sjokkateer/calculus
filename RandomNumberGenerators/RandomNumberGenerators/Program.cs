@@ -10,14 +10,10 @@ namespace RandomNumberGenerators
     {
         static void Main(string[] args)
         {
-            Distribution poisson = new Distribution(100, 1000000);
+            //Poisson poisson1 = new Poisson(10, 100000);
+            Exponential exponential1 = new Exponential(1.5, 1000000);
 
-            foreach (KeyValuePair<int, int> pair in poisson.FrequencyDictionary)
-            {
-                Console.WriteLine($"Number: {pair.Key} || Frequency: {pair.Value} || P(X = {pair.Key}) = {pair.Value / Convert.ToDouble(poisson.NumberOfEvents)}");
-            }
-            Console.WriteLine($"E(X)/mean = {poisson.Mean}");
-            Console.WriteLine($"Variance = {poisson.Variance}");
+            Console.WriteLine(exponential1);
             Console.ReadKey();
         }
     }
