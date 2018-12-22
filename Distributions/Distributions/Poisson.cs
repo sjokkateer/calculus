@@ -63,5 +63,28 @@ namespace Distributions
         {
             return GeneratedDistributionValues.Average();
         }
+
+        /// <summary>
+        /// Will calculate and return the probability for a random variable
+        /// X taking on the value x.
+        /// 
+        /// Thus essentially calculating the probability that with given para-
+        /// meters, lambda (expected value) and T (interval), x will occur.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns>The probability that x will occur given lambda and T.</returns>
+        public override double CalculatePMF(double x)
+        {
+            // In my program Lambda already includes T (the interval unit multiple)
+            // Numerator would be e^-(lambda * T) * (Lambda * T)^x
+            double numerator = Math.Exp(-Lambda) * Math.Pow(Lambda, x);
+            // Denominator = x!
+            double denominator = 1;
+            for (int i = 1; i <= x; i++)
+            {
+                denominator *= i;
+            }
+            return numerator / denominator;
+        }
     }
 }

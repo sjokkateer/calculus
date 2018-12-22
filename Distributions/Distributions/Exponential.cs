@@ -19,6 +19,35 @@ namespace Distributions
             return Math.Pow(Lambda, -2);
         }
 
+        /// <summary>
+        /// For an exponential distribution we can calculate
+        /// the PMF value by taking the difference of the CDF
+        /// values.
+        /// 
+        /// EX. P(X <= 3) - P(X <= 2) = P(X = 3)
+        /// </summary>
+        /// <param name="x">An integer, the value of interest to calculate the PMF value for.</param>
+        /// <returns>A double, the probability of x occuring.</returns>
+        public override double CalculatePMF(double x)
+        {
+            // Offset by one to skip 0 = 0.
+            x += 1;
+            // Scale it back down as the keys (x) values passed
+            // to this method are scaled up by * Multiple.
+            x /= Convert.ToDouble(Multiple);
+            Console.WriteLine($"The current value of x = {x}");
+            if (x > 0)
+            {
+                return CalculateCDF(x) - CalculateCDF(x - 1 / Multiple);
+            }
+            return CalculateCDF(x);
+        }
+        public double CalculateCDF(double x)
+        {
+            // According to the wiki page: 1 - e^-(lambda * x)
+            return 1 - Math.Exp(-Lambda * x);
+        }
+
         protected override double GenerateRadomVariable()
         {
             double x;
@@ -29,7 +58,7 @@ namespace Distributions
             return x;
         }
 
-        public List<double> SimulatePoissonDistribution(int interval)
+        public List<double> SimulatePoissonDistribution(double interval)
         {
             // Can generate a list of doubles for this simulation
             List<double> results = new List<double>();

@@ -84,6 +84,7 @@ namespace Distributions
             // Initialization
             rng = new Random();
             Lambda = lambda;
+            
             NumberOfEvents = numberOfEvents;
 
             // Generation
@@ -161,6 +162,7 @@ namespace Distributions
         protected abstract double GenerateRadomVariable();
         protected abstract double CalculateVariance();
         protected abstract double CalculateMean();
+        public abstract double CalculatePMF(double x);
         /// <summary>
         /// Generates a string format of the frequency dictionary appended by the mean, variance and standard deviation
         /// for this specific distribution.

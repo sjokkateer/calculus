@@ -27,8 +27,8 @@ namespace Distributions
             double lambda = Convert.ToDouble(lambdaTbx.Text);
             int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
 
-            int interArrivalTime;
-            bool interValGiven = int.TryParse(interArrivalTbx.Text, out interArrivalTime);
+            double interArrivalTime;
+            bool interValGiven = double.TryParse(interArrivalTbx.Text, out interArrivalTime);
 
             if (!interValGiven)
             {
@@ -40,6 +40,7 @@ namespace Distributions
             selectedChart = poissonDistributionChart;
             selectedListBox = poissonToStringListBox;
             CreateHistogram();
+            CreatePMFPlot();
             PopulateSelectedListBox();
         }
 
@@ -76,10 +77,15 @@ namespace Distributions
 
         private void CreatePMFPlot()
         {
-            selectedChart.Series[0].Points.Clear();
+            double scaledPMF = 0;
+
+            selectedChart.Series[1].Points.Clear();
             foreach (KeyValuePair<int, int> pair in selectedDistribution.FrequencyDictionary)
             {
-                selectedChart.Series[0].Points.AddXY(pair.Key, pair.Value);
+                // Have to scale the PMF towards the number of events entered.
+                scaledPMF = selectedDistribution.CalculatePMF(pair.Key) * selectedDistribution.NumberOfEvents;
+                Console.WriteLine($"P(X = {pair.Key}) = {scaledPMF}");
+                selectedChart.Series[1].Points.AddXY(pair.Key, scaledPMF);
             }
         }
 
@@ -93,6 +99,7 @@ namespace Distributions
             selectedChart = exponentialDistributionChart;
             selectedListBox = exponentialToStringListBox;
             CreateHistogram();
+            CreatePMFPlot();
             PopulateSelectedListBox();
         }
 
@@ -101,8 +108,8 @@ namespace Distributions
             double lambda = Convert.ToDouble(lambdaTbx.Text);
             int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
 
-            int interArrivalTime;
-            bool interValGiven = int.TryParse(interArrivalTbx.Text, out interArrivalTime);
+            double interArrivalTime;
+            bool interValGiven = double.TryParse(interArrivalTbx.Text, out interArrivalTime);
 
             if (!interValGiven)
             {
@@ -121,7 +128,6 @@ namespace Distributions
             // The exponential distribution provides the basis for the simulation. 
             Exponential exponentialDistribution = new Exponential(lambda, numberOfTrials);
             // Incremented the number of bins to represent the exponential distribution a bit better.
-            exponentialDistribution.Multiple = 100;
             selectedDistribution = exponentialDistribution;
             selectedChart = exponentialDistributionChart;
             selectedListBox = exponentialToStringListBox;
