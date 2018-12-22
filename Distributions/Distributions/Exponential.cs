@@ -35,12 +35,8 @@ namespace Distributions
             // Scale it back down as the keys (x) values passed
             // to this method are scaled up by * Multiple.
             x /= Convert.ToDouble(Multiple);
-            Console.WriteLine($"The current value of x = {x}");
-            if (x > 0)
-            {
-                return CalculateCDF(x) - CalculateCDF(x - 1 / Multiple);
-            }
-            return CalculateCDF(x);
+            
+            return CalculateCDF(x) - CalculateCDF(x - 1 / Convert.ToDouble(Multiple));
         }
         public double CalculateCDF(double x)
         {

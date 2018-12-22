@@ -53,10 +53,13 @@ namespace Distributions
         /// </summary>
         private void PopulateSelectedListBox()
         {
+            double scaledKey;
+
             selectedListBox.Items.Clear();
             foreach (KeyValuePair<int, int> pair in selectedDistribution.FrequencyDictionary)
             {
-                selectedListBox.Items.Add($"Number: {pair.Key} || Frequency: {pair.Value} || P(X = {pair.Key}) = {pair.Value / Convert.ToDouble(selectedDistribution.NumberOfEvents)}");
+                scaledKey = pair.Key / Convert.ToDouble(selectedDistribution.Multiple);
+                selectedListBox.Items.Add($"Number: {scaledKey} || Frequency: {pair.Value} || P(X = {scaledKey}) = {pair.Value / Convert.ToDouble(selectedDistribution.NumberOfEvents)}");
             }
             selectedListBox.Items.Add("");
             selectedListBox.Items.Add($"Mean: {selectedDistribution.Mean}");
@@ -67,25 +70,27 @@ namespace Distributions
 
         private void CreateHistogram()
         {
-            Console.WriteLine($"{selectedChart}");
             selectedChart.Series[0].Points.Clear();
+            double scaledKey;
             foreach (KeyValuePair<int, int> pair in selectedDistribution.FrequencyDictionary)
             {
-                selectedChart.Series[0].Points.AddXY(pair.Key, pair.Value);
+                scaledKey = pair.Key / Convert.ToDouble(selectedDistribution.Multiple);
+                selectedChart.Series[0].Points.AddXY(scaledKey, pair.Value);
             }
         }
 
         private void CreatePMFPlot()
         {
             double scaledPMF = 0;
+            double scaledKey;
 
             selectedChart.Series[1].Points.Clear();
             foreach (KeyValuePair<int, int> pair in selectedDistribution.FrequencyDictionary)
             {
                 // Have to scale the PMF towards the number of events entered.
                 scaledPMF = selectedDistribution.CalculatePMF(pair.Key) * selectedDistribution.NumberOfEvents;
-                Console.WriteLine($"P(X = {pair.Key}) = {scaledPMF}");
-                selectedChart.Series[1].Points.AddXY(pair.Key, scaledPMF);
+                scaledKey = pair.Key / Convert.ToDouble(selectedDistribution.Multiple);
+                selectedChart.Series[1].Points.AddXY(scaledKey, scaledPMF);
             }
         }
 
@@ -95,6 +100,9 @@ namespace Distributions
             int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
 
             Exponential exponentialDistribution = new Exponential(lambda, numberOfTrials);
+
+            exponentialDistribution.Multiple = 10;
+
             selectedDistribution = exponentialDistribution;
             selectedChart = exponentialDistributionChart;
             selectedListBox = exponentialToStringListBox;
