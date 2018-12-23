@@ -38,14 +38,12 @@ namespace Distributions
             double u;
             double p = 1;
             double L = Math.Exp(-Lambda);
-
             do
             {
                 k++;
                 u = rng.NextDouble();
                 p *= u;
             } while (p > L);
-
             return k - 1;
         }
 
