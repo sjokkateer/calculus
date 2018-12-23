@@ -16,6 +16,7 @@ namespace Distributions
         Chart selectedChart;
         ListBox selectedListBox;
         Distribution selectedDistribution;
+        Exponential exponentialDistribution;
 
         public Form1()
         {
@@ -90,6 +91,7 @@ namespace Distributions
                 // Have to scale the PMF towards the number of events entered.
                 scaledPMF = selectedDistribution.CalculatePMF(pair.Key) * selectedDistribution.NumberOfEvents;
                 scaledKey = pair.Key / Convert.ToDouble(selectedDistribution.Multiple);
+                Console.WriteLine($"x: {scaledKey}, P(X = {scaledKey}) = {scaledPMF}");
                 selectedChart.Series[1].Points.AddXY(scaledKey, scaledPMF);
             }
         }
@@ -99,9 +101,9 @@ namespace Distributions
             double lambda = Convert.ToDouble(lambdaTbx.Text);
             int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
 
-            Exponential exponentialDistribution = new Exponential(lambda, numberOfTrials);
-
-            exponentialDistribution.Multiple = 10;
+            // the value will be at least 1 if the trackbar is not moved 10^(1 - 1) would result in multiple of 1 etc.
+            double binMultiple = Math.Pow(10, scalingTrackBar.Value - 1);
+            exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
 
             selectedDistribution = exponentialDistribution;
             selectedChart = exponentialDistributionChart;
@@ -134,7 +136,9 @@ namespace Distributions
             PopulateSelectedListBox();
 
             // The exponential distribution provides the basis for the simulation. 
-            Exponential exponentialDistribution = new Exponential(lambda, numberOfTrials);
+            // the value will be at least 1 if the trackbar is not moved 10^(1 - 1) would result in multiple of 1 etc.
+            double binMultiple = Math.Pow(10, scalingTrackBar.Value - 1);
+            exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
             // Incremented the number of bins to represent the exponential distribution a bit better.
             selectedDistribution = exponentialDistribution;
             selectedChart = exponentialDistributionChart;
@@ -155,7 +159,7 @@ namespace Distributions
             PopulateSelectedListBox();
         }
 
-        private void poissonToStringLb_Click(object sender, EventArgs e)
+        private void scalingTrackBar_MouseHover(object sender, EventArgs e)
         {
 
         }

@@ -10,27 +10,13 @@ namespace Distributions
     {
         // Variabels
         protected Random rng;
-        private int multiple;
         private List<double> generatedValues;
         private SortedDictionary<int, int> frequencyDictionary;
 
         // Properties
         public double Lambda { get; }
         public int NumberOfEvents { get; }
-        public int Multiple
-        {
-            get
-            {
-                return multiple;
-            }
-            set
-            {
-                multiple = value;
-                // Trigger an event to Create a new dictionary?
-                // Recreate the dictionary
-                frequencyDictionary = CreateFrequencyDictionary(generatedValues);
-            }
-        }
+        public int Multiple { get; }
 
         /// <summary>
         /// Returns a copy of the list of integers generated for the distribution.
@@ -79,13 +65,13 @@ namespace Distributions
         /// </summary>
         /// <param name="lambda">A double, the expected value/mean value.</param>
         /// <param name="numberOfEvents">A natural number, representing the number of trials or number of random numbers to be generated.</param>
-        public Distribution(double lambda, int numberOfEvents, List<double> generatedDistributionValues = null)
+        public Distribution(double lambda, int numberOfEvents, int multiple = 1, List<double> generatedDistributionValues = null)
         {
             // Initialization
             rng = new Random();
             Lambda = lambda;
-            
             NumberOfEvents = numberOfEvents;
+            Multiple = multiple;
 
             // Generation
             if (generatedDistributionValues == null)
@@ -96,9 +82,7 @@ namespace Distributions
             {
                 generatedValues = generatedDistributionValues;
             }
-
-            // Set the multiple which will also handle creation of the dictionary.
-            Multiple = 1;
+            frequencyDictionary = CreateFrequencyDictionary(generatedValues);
 
             // Calculation
             Mean = CalculateMean();

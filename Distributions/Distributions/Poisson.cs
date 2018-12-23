@@ -25,7 +25,7 @@ namespace Distributions
         /// <param name="lambda"></param>
         /// <param name="numberOfEvents"></param>
         /// <param name="distributionValues"></param>
-        public Poisson(double lambda, int numberOfEvents, List<double> distributionValues) : base(lambda, numberOfEvents, distributionValues)
+        public Poisson(double lambda, int numberOfEvents, List<double> distributionValues) : base(lambda, numberOfEvents, 1, distributionValues)
         { }
 
         /// <summary>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -57,10 +58,14 @@
             this.poissonDistributionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.exponentialToStringListBox = new System.Windows.Forms.ListBox();
             this.simulationToStringListBox = new System.Windows.Forms.ListBox();
+            this.scalingTrackBar = new System.Windows.Forms.TrackBar();
+            this.exponentialInfoLb = new System.Windows.Forms.Label();
+            this.binIncrementTooltip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.exponentialDistributionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.simulationChart)).BeginInit();
             this.distributionInputGrpbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.poissonDistributionChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scalingTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // lambdaLb
@@ -209,12 +214,10 @@
             // 
             // poissonToStringLb
             // 
-            this.poissonToStringLb.AutoSize = true;
-            this.poissonToStringLb.Location = new System.Drawing.Point(1810, 388);
+            this.poissonToStringLb.Location = new System.Drawing.Point(0, 0);
             this.poissonToStringLb.Name = "poissonToStringLb";
-            this.poissonToStringLb.Size = new System.Drawing.Size(0, 25);
-            this.poissonToStringLb.TabIndex = 6;
-            this.poissonToStringLb.Click += new System.EventHandler(this.poissonToStringLb_Click);
+            this.poissonToStringLb.Size = new System.Drawing.Size(100, 23);
+            this.poissonToStringLb.TabIndex = 20;
             // 
             // poissonDistributionChart
             // 
@@ -255,12 +258,35 @@
             this.simulationToStringListBox.Size = new System.Drawing.Size(543, 529);
             this.simulationToStringListBox.TabIndex = 19;
             // 
+            // scalingTrackBar
+            // 
+            this.scalingTrackBar.LargeChange = 10;
+            this.scalingTrackBar.Location = new System.Drawing.Point(904, 91);
+            this.scalingTrackBar.Maximum = 6;
+            this.scalingTrackBar.Minimum = 1;
+            this.scalingTrackBar.Name = "scalingTrackBar";
+            this.scalingTrackBar.Size = new System.Drawing.Size(436, 90);
+            this.scalingTrackBar.TabIndex = 21;
+            this.scalingTrackBar.Value = 1;
+            this.scalingTrackBar.MouseHover += new System.EventHandler(this.scalingTrackBar_MouseHover);
+            // 
+            // exponentialInfoLb
+            // 
+            this.exponentialInfoLb.AutoSize = true;
+            this.exponentialInfoLb.Location = new System.Drawing.Point(917, 31);
+            this.exponentialInfoLb.Name = "exponentialInfoLb";
+            this.exponentialInfoLb.Size = new System.Drawing.Size(279, 25);
+            this.exponentialInfoLb.TabIndex = 22;
+            this.exponentialInfoLb.Text = "Exponential bin incrementer";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(2807, 1959);
+            this.Controls.Add(this.exponentialInfoLb);
+            this.Controls.Add(this.scalingTrackBar);
             this.Controls.Add(this.simulationToStringListBox);
             this.Controls.Add(this.exponentialToStringListBox);
             this.Controls.Add(this.poissonToStringListBox);
@@ -279,6 +305,7 @@
             this.distributionInputGrpbox.ResumeLayout(false);
             this.distributionInputGrpbox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.poissonDistributionChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scalingTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,6 +330,9 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart poissonDistributionChart;
         private System.Windows.Forms.ListBox exponentialToStringListBox;
         private System.Windows.Forms.ListBox simulationToStringListBox;
+        private System.Windows.Forms.TrackBar scalingTrackBar;
+        private System.Windows.Forms.Label exponentialInfoLb;
+        private System.Windows.Forms.ToolTip binIncrementTooltip;
     }
 }
 

@@ -5,7 +5,7 @@ namespace Distributions
 {
     class Exponential : Distribution
     {
-        public Exponential(double lambda, int numberOfEvents) : base(lambda, numberOfEvents)
+        public Exponential(double lambda, int numberOfEvents, int multiple) : base(lambda, numberOfEvents, multiple)
         { }
         protected override double CalculateMean()
         {
