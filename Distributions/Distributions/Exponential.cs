@@ -73,19 +73,15 @@ namespace Distributions
             double sumNewlyGeneratedValues = 0;
             double newRandomNumber;
             // Loop as long as we did not fully fill up our final interval.
-            while (Math.Truncate((totalInterArrivalTime + sumNewlyGeneratedValues) / interval) < numberOfCurrentIntervals + 1)
+            do
             {
-                // Generate a new random exponential value
+                // Generate values until we overshoot the last interval by 1.
+                // Such that the next looping mechanism will be able to properly
+                // finish counting the number of events in the final interval.
                 newRandomNumber = GenerateRadomVariable();
-                // As long as the new result / interval value would be smaller than the wanted number of intervals we want to add the generated value to the list.
-                if (Math.Truncate((totalInterArrivalTime + sumNewlyGeneratedValues + newRandomNumber) / interval) < numberOfCurrentIntervals + 1)
-                {
-                    // This means we have not yet filled up our last interval, we can add it to the list of distribution values
-                    distributionValues.Add(newRandomNumber);
-                }
-                // Add the value to the sum so we also exit the loop on the next check if we have filled up our final interval exactly.
+                distributionValues.Add(newRandomNumber);
                 sumNewlyGeneratedValues += newRandomNumber;
-            }
+            } while (Math.Truncate((totalInterArrivalTime + sumNewlyGeneratedValues) / interval) < numberOfCurrentIntervals + 1);
 
             double newTotalArrivalTime = distributionValues.Sum();
             Console.WriteLine($"Total sum of arrival times: {newTotalArrivalTime}");

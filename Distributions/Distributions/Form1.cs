@@ -106,8 +106,8 @@ namespace Distributions
             double lambda = Convert.ToDouble(lambdaTbx.Text);
             int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
 
-            // the value will be at least 1 if the trackbar is not moved 10^(1 - 1) would result in multiple of 1 etc.
-            double binMultiple = Math.Pow(10, scalingTrackBar.Value - 1);
+            // the value will be at least 10 if the trackbar is not moved 10^(trackbar value) would result in multiple of 1 etc.
+            double binMultiple = Math.Pow(10, scalingTrackBar.Value);
             exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
 
             selectedDistribution = exponentialDistribution;
@@ -145,8 +145,8 @@ namespace Distributions
             PopulateSelectedListBox();
 
             // The exponential distribution provides the basis for the simulation. 
-            // the value will be at least 1 if the trackbar is not moved 10^(1 - 1) would result in multiple of 1 etc.
-            double binMultiple = Math.Pow(10, scalingTrackBar.Value - 1);
+            // the value will be at least 10 if the trackbar is not moved 10^(trackbar value) would result in multiple of 1 etc.
+            double binMultiple = Math.Pow(10, scalingTrackBar.Value);
             exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
             // Incremented the number of bins to represent the exponential distribution a bit better.
             selectedDistribution = exponentialDistribution;

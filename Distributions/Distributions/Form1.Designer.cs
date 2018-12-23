@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lambdaLb = new System.Windows.Forms.Label();
             this.numbTrialsLb = new System.Windows.Forms.Label();
             this.interArrivalLb = new System.Windows.Forms.Label();
@@ -61,7 +61,6 @@
             this.scalingTrackBar = new System.Windows.Forms.TrackBar();
             this.exponentialInfoLb = new System.Windows.Forms.Label();
             this.binIncrementTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.bin1Lb = new System.Windows.Forms.Label();
             this.bin10Lb = new System.Windows.Forms.Label();
             this.bin100Lb = new System.Windows.Forms.Label();
             this.bin1000Lb = new System.Windows.Forms.Label();
@@ -125,42 +124,42 @@
             // 
             // exponentialDistributionChart
             // 
-            chartArea4.Name = "ChartArea1";
-            this.exponentialDistributionChart.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.exponentialDistributionChart.Legends.Add(legend4);
+            chartArea7.Name = "ChartArea1";
+            this.exponentialDistributionChart.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.exponentialDistributionChart.Legends.Add(legend7);
             this.exponentialDistributionChart.Location = new System.Drawing.Point(12, 864);
             this.exponentialDistributionChart.Name = "exponentialDistributionChart";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Exponential Distribution";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Legend = "Legend1";
-            series8.Name = "Exponential PMF";
-            this.exponentialDistributionChart.Series.Add(series7);
-            this.exponentialDistributionChart.Series.Add(series8);
+            series13.ChartArea = "ChartArea1";
+            series13.Legend = "Legend1";
+            series13.Name = "Exponential Distribution";
+            series14.ChartArea = "ChartArea1";
+            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series14.Legend = "Legend1";
+            series14.Name = "Exponential PMF";
+            this.exponentialDistributionChart.Series.Add(series13);
+            this.exponentialDistributionChart.Series.Add(series14);
             this.exponentialDistributionChart.Size = new System.Drawing.Size(2220, 534);
             this.exponentialDistributionChart.TabIndex = 9;
             this.exponentialDistributionChart.Text = "chart2";
             // 
             // simulationChart
             // 
-            chartArea5.Name = "ChartArea1";
-            this.simulationChart.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.simulationChart.Legends.Add(legend5);
+            chartArea8.Name = "ChartArea1";
+            this.simulationChart.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.simulationChart.Legends.Add(legend8);
             this.simulationChart.Location = new System.Drawing.Point(12, 1413);
             this.simulationChart.Name = "simulationChart";
-            series9.ChartArea = "ChartArea1";
-            series9.Legend = "Legend1";
-            series9.Name = "Simulation";
-            series10.ChartArea = "ChartArea1";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series10.Legend = "Legend1";
-            series10.Name = "Simulation PMF";
-            this.simulationChart.Series.Add(series9);
-            this.simulationChart.Series.Add(series10);
+            series15.ChartArea = "ChartArea1";
+            series15.Legend = "Legend1";
+            series15.Name = "Simulation";
+            series16.ChartArea = "ChartArea1";
+            series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series16.Legend = "Legend1";
+            series16.Name = "Simulation PMF";
+            this.simulationChart.Series.Add(series15);
+            this.simulationChart.Series.Add(series16);
             this.simulationChart.Size = new System.Drawing.Size(2220, 534);
             this.simulationChart.TabIndex = 10;
             this.simulationChart.Text = "chart3";
@@ -228,21 +227,21 @@
             // 
             // poissonDistributionChart
             // 
-            chartArea6.Name = "ChartArea1";
-            this.poissonDistributionChart.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.poissonDistributionChart.Legends.Add(legend6);
+            chartArea9.Name = "ChartArea1";
+            this.poissonDistributionChart.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.poissonDistributionChart.Legends.Add(legend9);
             this.poissonDistributionChart.Location = new System.Drawing.Point(12, 314);
             this.poissonDistributionChart.Name = "poissonDistributionChart";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "Poisson distribution";
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series12.Legend = "Legend1";
-            series12.Name = "Poisson PMF";
-            this.poissonDistributionChart.Series.Add(series11);
-            this.poissonDistributionChart.Series.Add(series12);
+            series17.ChartArea = "ChartArea1";
+            series17.Legend = "Legend1";
+            series17.Name = "Poisson distribution";
+            series18.ChartArea = "ChartArea1";
+            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series18.Legend = "Legend1";
+            series18.Name = "Poisson PMF";
+            this.poissonDistributionChart.Series.Add(series17);
+            this.poissonDistributionChart.Series.Add(series18);
             this.poissonDistributionChart.Size = new System.Drawing.Size(2220, 534);
             this.poissonDistributionChart.TabIndex = 6;
             this.poissonDistributionChart.Text = "chart1";
@@ -269,7 +268,7 @@
             // 
             this.scalingTrackBar.LargeChange = 10;
             this.scalingTrackBar.Location = new System.Drawing.Point(904, 91);
-            this.scalingTrackBar.Maximum = 4;
+            this.scalingTrackBar.Maximum = 3;
             this.scalingTrackBar.Minimum = 1;
             this.scalingTrackBar.Name = "scalingTrackBar";
             this.scalingTrackBar.Size = new System.Drawing.Size(436, 90);
@@ -290,19 +289,10 @@
             this.binIncrementTooltip.BackColor = System.Drawing.Color.Transparent;
             this.binIncrementTooltip.ShowAlways = true;
             // 
-            // bin1Lb
-            // 
-            this.bin1Lb.AutoSize = true;
-            this.bin1Lb.Location = new System.Drawing.Point(917, 184);
-            this.bin1Lb.Name = "bin1Lb";
-            this.bin1Lb.Size = new System.Drawing.Size(24, 25);
-            this.bin1Lb.TabIndex = 23;
-            this.bin1Lb.Text = "1";
-            // 
             // bin10Lb
             // 
             this.bin10Lb.AutoSize = true;
-            this.bin10Lb.Location = new System.Drawing.Point(1039, 184);
+            this.bin10Lb.Location = new System.Drawing.Point(911, 188);
             this.bin10Lb.Name = "bin10Lb";
             this.bin10Lb.Size = new System.Drawing.Size(36, 25);
             this.bin10Lb.TabIndex = 24;
@@ -311,7 +301,7 @@
             // bin100Lb
             // 
             this.bin100Lb.AutoSize = true;
-            this.bin100Lb.Location = new System.Drawing.Point(1162, 184);
+            this.bin100Lb.Location = new System.Drawing.Point(1097, 188);
             this.bin100Lb.Name = "bin100Lb";
             this.bin100Lb.Size = new System.Drawing.Size(48, 25);
             this.bin100Lb.TabIndex = 25;
@@ -366,7 +356,6 @@
             this.Controls.Add(this.bin1000Lb);
             this.Controls.Add(this.bin100Lb);
             this.Controls.Add(this.bin10Lb);
-            this.Controls.Add(this.bin1Lb);
             this.Controls.Add(this.exponentialInfoLb);
             this.Controls.Add(this.scalingTrackBar);
             this.Controls.Add(this.simulationToStringListBox);
@@ -415,7 +404,6 @@
         private System.Windows.Forms.TrackBar scalingTrackBar;
         private System.Windows.Forms.Label exponentialInfoLb;
         private System.Windows.Forms.ToolTip binIncrementTooltip;
-        private System.Windows.Forms.Label bin1Lb;
         private System.Windows.Forms.Label bin10Lb;
         private System.Windows.Forms.Label bin100Lb;
         private System.Windows.Forms.Label bin1000Lb;
