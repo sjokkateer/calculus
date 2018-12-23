@@ -91,7 +91,6 @@ namespace Distributions
                 // Have to scale the PMF towards the number of events entered.
                 scaledPMF = selectedDistribution.CalculatePMF(pair.Key) * selectedDistribution.NumberOfEvents;
                 scaledKey = pair.Key / Convert.ToDouble(selectedDistribution.Multiple);
-                Console.WriteLine($"x: {scaledKey}, P(X = {scaledKey}) = {scaledPMF}");
                 selectedChart.Series[1].Points.AddXY(scaledKey, scaledPMF);
             }
         }
