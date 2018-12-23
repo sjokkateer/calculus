@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Distributions
@@ -58,15 +59,41 @@ namespace Distributions
         {
             // Can generate a list of doubles for this simulation
             List<double> results = new List<double>();
-            int count = 0;
-            double interArrivalSum = 0;
 
             // Can check the total arrival time, if the last interval
             // is broken, we can add numbers until this matches a new full
             // interval and then resume regular execution of the simmulation.
             List<double> distributionValues = GeneratedDistributionValues;
+            double totalInterArrivalTime = distributionValues.Sum();
+            double numberOfCurrentIntervals = Math.Truncate(totalInterArrivalTime / interval);
+            Console.WriteLine($"Total arrival time before adding new random values: {totalInterArrivalTime}");
+            Console.WriteLine($"Interval size: {interval}");
+            Console.WriteLine($"Number of proper intervals: {numberOfCurrentIntervals} || Number of total intervals after generation: {numberOfCurrentIntervals + 1}");
+            
+            double sumNewlyGeneratedValues = 0;
+            double newRandomNumber;
+            // Loop as long as we did not fully fill up our final interval.
+            while (Math.Truncate((totalInterArrivalTime + sumNewlyGeneratedValues) / interval) < numberOfCurrentIntervals + 1)
+            {
+                // Generate a new random exponential value
+                newRandomNumber = GenerateRadomVariable();
+                // As long as the new result / interval value would be smaller than the wanted number of intervals we want to add the generated value to the list.
+                if (Math.Truncate((totalInterArrivalTime + sumNewlyGeneratedValues + newRandomNumber) / interval) < numberOfCurrentIntervals + 1)
+                {
+                    // This means we have not yet filled up our last interval, we can add it to the list of distribution values
+                    distributionValues.Add(newRandomNumber);
+                }
+                // Add the value to the sum so we also exit the loop on the next check if we have filled up our final interval exactly.
+                sumNewlyGeneratedValues += newRandomNumber;
+            }
 
-            foreach (double value in GeneratedDistributionValues)
+            double newTotalArrivalTime = distributionValues.Sum();
+            Console.WriteLine($"Total sum of arrival times: {newTotalArrivalTime}");
+            Console.WriteLine($"After adding values, number of intervals: {newTotalArrivalTime / interval}");
+
+            int count = 0;
+            double interArrivalSum = 0;
+            foreach (double value in distributionValues)
             {
                 // Keep track of a count per number until the sum + number value is greater than the interval size.
                 // then reset the counter.
