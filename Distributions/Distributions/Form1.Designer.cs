@@ -61,6 +61,13 @@
             this.scalingTrackBar = new System.Windows.Forms.TrackBar();
             this.exponentialInfoLb = new System.Windows.Forms.Label();
             this.binIncrementTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.bin1Lb = new System.Windows.Forms.Label();
+            this.bin10Lb = new System.Windows.Forms.Label();
+            this.bin100Lb = new System.Windows.Forms.Label();
+            this.bin1000Lb = new System.Windows.Forms.Label();
+            this.poissonStatisticsLb = new System.Windows.Forms.Label();
+            this.exponentialStatisticsLb = new System.Windows.Forms.Label();
+            this.simulationStatisticsLb = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.exponentialDistributionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.simulationChart)).BeginInit();
             this.distributionInputGrpbox.SuspendLayout();
@@ -268,16 +275,84 @@
             this.scalingTrackBar.Size = new System.Drawing.Size(436, 90);
             this.scalingTrackBar.TabIndex = 21;
             this.scalingTrackBar.Value = 1;
-            this.scalingTrackBar.MouseHover += new System.EventHandler(this.scalingTrackBar_MouseHover);
             // 
             // exponentialInfoLb
             // 
             this.exponentialInfoLb.AutoSize = true;
-            this.exponentialInfoLb.Location = new System.Drawing.Point(917, 31);
+            this.exponentialInfoLb.Location = new System.Drawing.Point(983, 32);
             this.exponentialInfoLb.Name = "exponentialInfoLb";
             this.exponentialInfoLb.Size = new System.Drawing.Size(279, 25);
             this.exponentialInfoLb.TabIndex = 22;
             this.exponentialInfoLb.Text = "Exponential bin incrementer";
+            // 
+            // binIncrementTooltip
+            // 
+            this.binIncrementTooltip.BackColor = System.Drawing.Color.Transparent;
+            this.binIncrementTooltip.ShowAlways = true;
+            // 
+            // bin1Lb
+            // 
+            this.bin1Lb.AutoSize = true;
+            this.bin1Lb.Location = new System.Drawing.Point(917, 184);
+            this.bin1Lb.Name = "bin1Lb";
+            this.bin1Lb.Size = new System.Drawing.Size(24, 25);
+            this.bin1Lb.TabIndex = 23;
+            this.bin1Lb.Text = "1";
+            // 
+            // bin10Lb
+            // 
+            this.bin10Lb.AutoSize = true;
+            this.bin10Lb.Location = new System.Drawing.Point(1039, 184);
+            this.bin10Lb.Name = "bin10Lb";
+            this.bin10Lb.Size = new System.Drawing.Size(36, 25);
+            this.bin10Lb.TabIndex = 24;
+            this.bin10Lb.Text = "10";
+            // 
+            // bin100Lb
+            // 
+            this.bin100Lb.AutoSize = true;
+            this.bin100Lb.Location = new System.Drawing.Point(1162, 184);
+            this.bin100Lb.Name = "bin100Lb";
+            this.bin100Lb.Size = new System.Drawing.Size(48, 25);
+            this.bin100Lb.TabIndex = 25;
+            this.bin100Lb.Text = "100";
+            // 
+            // bin1000Lb
+            // 
+            this.bin1000Lb.AutoSize = true;
+            this.bin1000Lb.Location = new System.Drawing.Point(1291, 184);
+            this.bin1000Lb.Name = "bin1000Lb";
+            this.bin1000Lb.Size = new System.Drawing.Size(60, 25);
+            this.bin1000Lb.TabIndex = 26;
+            this.bin1000Lb.Text = "1000";
+            // 
+            // poissonStatisticsLb
+            // 
+            this.poissonStatisticsLb.AutoSize = true;
+            this.poissonStatisticsLb.BackColor = System.Drawing.Color.Transparent;
+            this.poissonStatisticsLb.Location = new System.Drawing.Point(1840, 420);
+            this.poissonStatisticsLb.Name = "poissonStatisticsLb";
+            this.poissonStatisticsLb.Size = new System.Drawing.Size(89, 25);
+            this.poissonStatisticsLb.TabIndex = 28;
+            this.poissonStatisticsLb.Text = "Poisson";
+            // 
+            // exponentialStatisticsLb
+            // 
+            this.exponentialStatisticsLb.AutoSize = true;
+            this.exponentialStatisticsLb.Location = new System.Drawing.Point(1840, 973);
+            this.exponentialStatisticsLb.Name = "exponentialStatisticsLb";
+            this.exponentialStatisticsLb.Size = new System.Drawing.Size(125, 25);
+            this.exponentialStatisticsLb.TabIndex = 29;
+            this.exponentialStatisticsLb.Text = "Exponential";
+            // 
+            // simulationStatisticsLb
+            // 
+            this.simulationStatisticsLb.AutoSize = true;
+            this.simulationStatisticsLb.Location = new System.Drawing.Point(1895, 1516);
+            this.simulationStatisticsLb.Name = "simulationStatisticsLb";
+            this.simulationStatisticsLb.Size = new System.Drawing.Size(112, 25);
+            this.simulationStatisticsLb.TabIndex = 30;
+            this.simulationStatisticsLb.Text = "Simulation";
             // 
             // Form1
             // 
@@ -285,6 +360,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(2807, 1959);
+            this.Controls.Add(this.simulationStatisticsLb);
+            this.Controls.Add(this.exponentialStatisticsLb);
+            this.Controls.Add(this.poissonStatisticsLb);
+            this.Controls.Add(this.bin1000Lb);
+            this.Controls.Add(this.bin100Lb);
+            this.Controls.Add(this.bin10Lb);
+            this.Controls.Add(this.bin1Lb);
             this.Controls.Add(this.exponentialInfoLb);
             this.Controls.Add(this.scalingTrackBar);
             this.Controls.Add(this.simulationToStringListBox);
@@ -333,6 +415,13 @@
         private System.Windows.Forms.TrackBar scalingTrackBar;
         private System.Windows.Forms.Label exponentialInfoLb;
         private System.Windows.Forms.ToolTip binIncrementTooltip;
+        private System.Windows.Forms.Label bin1Lb;
+        private System.Windows.Forms.Label bin10Lb;
+        private System.Windows.Forms.Label bin100Lb;
+        private System.Windows.Forms.Label bin1000Lb;
+        private System.Windows.Forms.Label poissonStatisticsLb;
+        private System.Windows.Forms.Label exponentialStatisticsLb;
+        private System.Windows.Forms.Label simulationStatisticsLb;
     }
 }
 

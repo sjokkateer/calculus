@@ -15,12 +15,14 @@ namespace Distributions
     {
         Chart selectedChart;
         ListBox selectedListBox;
+        Label selectedLabel;
         Distribution selectedDistribution;
         Exponential exponentialDistribution;
 
         public Form1()
         {
             InitializeComponent();
+            binIncrementTooltip.SetToolTip(scalingTrackBar, "Please take into account that increasing the number of bins with a small \nnumber of trials will decrease the accuracy at some point.");
         }
 
         private void poissonDistributionBtn_Click(object sender, EventArgs e)
@@ -40,8 +42,10 @@ namespace Distributions
             selectedDistribution = poissonDistribution;
             selectedChart = poissonDistributionChart;
             selectedListBox = poissonToStringListBox;
+            selectedLabel = poissonStatisticsLb;
             CreateHistogram();
             CreatePMFPlot();
+            ShowStatistics();
             PopulateSelectedListBox();
         }
 
@@ -60,14 +64,16 @@ namespace Distributions
             foreach (KeyValuePair<int, int> pair in selectedDistribution.FrequencyDictionary)
             {
                 scaledKey = pair.Key / Convert.ToDouble(selectedDistribution.Multiple);
-                selectedListBox.Items.Add($"Number: {scaledKey} || Frequency: {pair.Value} || P(X = {scaledKey}) = {pair.Value / Convert.ToDouble(selectedDistribution.NumberOfEvents)}");
+                selectedListBox.Items.Add($"Number: {scaledKey} || Frequency: {pair.Value} || P(X = {scaledKey}) = {Math.Round(pair.Value / Convert.ToDouble(selectedDistribution.NumberOfEvents), 3)}");
             }
-            selectedListBox.Items.Add("");
-            selectedListBox.Items.Add($"Mean: {selectedDistribution.Mean}");
-            selectedListBox.Items.Add($"Variance: {selectedDistribution.Variance}");
-            selectedListBox.Items.Add($"Standard Deviation: {selectedDistribution.StDev}");
         }
 
+        private void ShowStatistics()
+        {
+            selectedLabel.Text = $"Mean: {Math.Round(selectedDistribution.Mean, 3)}\n";
+            selectedLabel.Text += $"Variance: {Math.Round(selectedDistribution.Variance, 3)}\n";
+            selectedLabel.Text += $"Standard Deviation: {Math.Round(selectedDistribution.StDev, 3)}";
+        }
 
         private void CreateHistogram()
         {
@@ -107,8 +113,10 @@ namespace Distributions
             selectedDistribution = exponentialDistribution;
             selectedChart = exponentialDistributionChart;
             selectedListBox = exponentialToStringListBox;
+            selectedLabel = exponentialStatisticsLb;
             CreateHistogram();
             CreatePMFPlot();
+            ShowStatistics();
             PopulateSelectedListBox();
         }
 
@@ -130,8 +138,10 @@ namespace Distributions
             selectedDistribution = poissonDistribution;
             selectedChart = poissonDistributionChart;
             selectedListBox = poissonToStringListBox;
+            selectedLabel = poissonStatisticsLb;
             CreateHistogram();
             CreatePMFPlot();
+            ShowStatistics();
             PopulateSelectedListBox();
 
             // The exponential distribution provides the basis for the simulation. 
@@ -142,8 +152,10 @@ namespace Distributions
             selectedDistribution = exponentialDistribution;
             selectedChart = exponentialDistributionChart;
             selectedListBox = exponentialToStringListBox;
+            selectedLabel = exponentialStatisticsLb;
             CreateHistogram();
             CreatePMFPlot();
+            ShowStatistics();
             PopulateSelectedListBox();
 
             List<double> simulationResults = exponentialDistribution.SimulatePoissonDistribution(interArrivalTime);
@@ -153,14 +165,11 @@ namespace Distributions
             selectedChart = simulationChart;
             selectedDistribution = poissonSimulation;
             selectedListBox = simulationToStringListBox;
+            selectedLabel = simulationStatisticsLb;
             CreateHistogram();
             CreatePMFPlot();
+            ShowStatistics();
             PopulateSelectedListBox();
-        }
-
-        private void scalingTrackBar_MouseHover(object sender, EventArgs e)
-        {
-
         }
     }
 }

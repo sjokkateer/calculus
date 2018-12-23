@@ -60,6 +60,12 @@ namespace Distributions
             List<double> results = new List<double>();
             int count = 0;
             double interArrivalSum = 0;
+
+            // Can check the total arrival time, if the last interval
+            // is broken, we can add numbers until this matches a new full
+            // interval and then resume regular execution of the simmulation.
+            List<double> distributionValues = GeneratedDistributionValues;
+
             foreach (double value in GeneratedDistributionValues)
             {
                 // Keep track of a count per number until the sum + number value is greater than the interval size.
