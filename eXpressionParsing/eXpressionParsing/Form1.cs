@@ -371,8 +371,9 @@ namespace eXpressionParsing
                         float t;
                         float b;
 
-                        for (double i = lower; i <= upper; i += step)
+                        for (double i = lower; i < upper; i += step)
                         {
+                            // result is the function value (height of the bar) at the mid point.
                             result = calculator(i + (step / 2));
 
                             // If the sum is not already set to infinity.
@@ -382,25 +383,30 @@ namespace eXpressionParsing
                                 if (!double.IsInfinity(result))
                                 {
                                     // Positive areas.
+                                    // For the total surface area we have to multiply the 
+                                    // height by the differential (step) in this case.
                                     if (result > 0)
                                     {
-                                        sum += result;
+                                        sum += result * step;
                                     }
                                     else
                                     {
-                                        sum += -1 * result;
+                                        sum += -1 * result * step;
                                     }
                                 }
+                                // Unless the height of the bar at its mid point was infinity,
+                                // Then we can safely return infinity as differential * infinity = infinity.
                                 else if (double.IsInfinity(result))
                                 {
-                                    if (result < 0)
-                                    {
-                                        sum = double.NegativeInfinity;
-                                    }
-                                    else
-                                    {
-                                        sum = double.PositiveInfinity;
-                                    }
+                                    //if (result < 0)
+                                    //{
+                                    //    sum = double.NegativeInfinity;
+                                    //}
+                                    //else
+                                    //{
+                                    //    sum = double.PositiveInfinity;
+                                    //}
+                                    sum = double.PositiveInfinity;
                                 }
                             }
 
