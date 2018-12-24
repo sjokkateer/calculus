@@ -82,7 +82,15 @@
             // expressionChart
             // 
             chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisX.Interval = 1D;
+            chartArea1.AxisX.LineColor = System.Drawing.Color.Transparent;
+            chartArea1.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet;
+            chartArea1.AxisX.Maximum = 10D;
+            chartArea1.AxisX.Minimum = -10D;
             chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisY.Interval = 2D;
+            chartArea1.AxisY.Maximum = 10D;
+            chartArea1.AxisY.Minimum = -10D;
             chartArea1.Name = "ChartArea1";
             this.expressionChart.ChartAreas.Add(chartArea1);
             this.expressionChart.Location = new System.Drawing.Point(416, 304);
@@ -524,7 +532,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).EndInit();
             this.textResultGrpBox.ResumeLayout(false);

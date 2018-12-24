@@ -567,15 +567,6 @@ namespace eXpressionParsing
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            expressionChart.ChartAreas[0].AxisX.Maximum = xMax;
-            expressionChart.ChartAreas[0].AxisX.Minimum = xMin;
-
-            expressionChart.ChartAreas[0].AxisY.Maximum = yMax;
-            expressionChart.ChartAreas[0].AxisY.Minimum = yMin;
-        }
-
         private void expressionChart_MouseClick(object sender, MouseEventArgs e)
         {
             if (polynomialCoordinates)
