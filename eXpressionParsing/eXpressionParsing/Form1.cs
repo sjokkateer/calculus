@@ -89,12 +89,6 @@ namespace eXpressionParsing
 
         private void CreateChart(string seriesName)
         {
-            expressionChart.ChartAreas[0].AxisX.Minimum = xMin;
-            expressionChart.ChartAreas[0].AxisX.Maximum = xMax;
-
-            expressionChart.ChartAreas[0].AxisY.Minimum = yMin;
-            expressionChart.ChartAreas[0].AxisY.Maximum = yMax;
-
             CreateSeries(xMin, xMax, yMin, yMax, seriesName);
         }
 
@@ -185,6 +179,12 @@ namespace eXpressionParsing
             {
                 double.TryParse(maxY, out yMax);
             }
+
+            expressionChart.ChartAreas[0].AxisX.Minimum = xMin;
+            expressionChart.ChartAreas[0].AxisX.Maximum = xMax;
+
+            expressionChart.ChartAreas[0].AxisY.Minimum = yMin;
+            expressionChart.ChartAreas[0].AxisY.Maximum = yMax;
         }
 
         private void ParseAndPlotExpressions(string errorMessage)
@@ -231,10 +231,6 @@ namespace eXpressionParsing
                     calculator = new CalculateForXHandler(derivativeExpressionRoot.Calculate);
                     CreateChart("Analytical Derivative");
 
-                    // Plot Newton's difference quotient as well.
-                    calculator = new CalculateForXHandler(DifferenceQuotient);
-                    CreateChart("Difference Quotient");
-
                     CreateGraphOfExpression(derivativeExpressionRoot, "derivative");
                 }
                 else if (integralRbtn.Checked)
@@ -247,7 +243,7 @@ namespace eXpressionParsing
                         throw new InvalidArgumentTypeException("Please enter valid numbers for the range from a through b");
                     }
                     calculator = new CalculateForXHandler(expressionRoot.Calculate);
-                    expressionChart.Refresh(); // Ensure that the pain event is triggrred.
+                    expressionChart.Refresh(); // Ensure that the paint event is triggrred.
                     areaLb.Text += $"{Math.Round(sum, 2)} square units.";
                 }
             }
@@ -303,6 +299,30 @@ namespace eXpressionParsing
             {
                 intergralGroupBox.Visible = false;
             }
+
+            if (differentiateRbtn.Checked)
+            {
+                processBtn.Text = "Analytically";
+                processBtn.Width /= 2;
+                processBtn.Width -= 1;
+
+                // The process button starts at pixel 224 and extendts to (224 + 359)
+                // 2 pixels get added for a little padding between the buttons.
+                differenceQuotientBtn.Location = new Point(processBtn.Location.X + 2 + processBtn.Width, processBtn.Location.Y);
+                differenceQuotientBtn.Visible = true;
+            }
+            else
+            {
+                ResetButtons();
+            }
+        }
+
+        private void ResetButtons()
+        {
+            differenceQuotientBtn.Visible = false;
+            processBtn.Text = "Process Expression";
+            processBtn.Width += 1;
+            processBtn.Width *= 2;
         }
 
         // Only allow digits, . and backspace characters as input for the interval for
@@ -545,14 +565,14 @@ namespace eXpressionParsing
         private void plotPolynomialBtn_Click(object sender, EventArgs e)
         {
             polynomialCoordinatesPanel.Visible = false;
-            if (polynomialCoordinatesList != null)
+            if (polynomialCoordinatesList != null && polynomialCoordinatesList.Count > 0)
             {// Create a new solver based on the obtained coordinates.
                 SystemSolver s = new SystemSolver(polynomialCoordinatesList);
                 // Get the expression representation of the system.
                 // And simplify it where possible.
                 Operand poly = s.GetPolynomial().Simplify();
                 // Put the expression string in the respective label.
-                expressionLb.Text = poly.ToString();
+                expressionLb.Text = $"Expression: {poly.ToString()}";
                 // Create a graph of the polynomial.
                 CreateGraphOfExpression(poly, "n-polynomial");
                 // Plot the polynomial.
@@ -567,6 +587,12 @@ namespace eXpressionParsing
             }
         }
 
+        /// <summary>
+        /// Event responsible for obtaining the coordinates of a mouse click that
+        /// happened on the chart area (between the min and max boundaries for the x and y axis).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void expressionChart_MouseClick(object sender, MouseEventArgs e)
         {
             if (polynomialCoordinates)
@@ -590,6 +616,13 @@ namespace eXpressionParsing
             }
         }
 
+        /// <summary>
+        /// Button click event responsible for making all controls visible that 
+        /// together are responsible for creating coordinates and the eventual plotting
+        /// of an interpolated polynomial of order n - 1 points.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void coordinatesBtn_Click(object sender, EventArgs e)
         {
             if (polynomialInputPanel.Visible)
@@ -667,6 +700,12 @@ namespace eXpressionParsing
             }
         }
 
+        /// <summary>
+        /// Event responsible for displaying the x and y coordinates from within the charting area
+        /// limited to the min and max boundaries of x and y.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void expressionChart_MouseMove(object sender, MouseEventArgs e)
         {
             try
@@ -685,6 +724,31 @@ namespace eXpressionParsing
             }
             catch (Exception)
             { }
+        }
+
+        private void clearNRescaleAxis_Click(object sender, EventArgs e)
+        {
+            ObtainAxisBoundaries();
+            expressionChart.Refresh();
+        }
+
+        private void differenceQuotientBtn_Click(object sender, EventArgs e)
+        {
+            ParseAndPlotExpressions("Please enter an expression to parse.");
+
+            // Calculate the derivative and simplify all the excessive x^1, x*0 x+0, etc.
+            // before creating a chart and graph of it.
+            derivativeExpressionRoot = expressionRoot.Differentiate();
+            derivativeExpressionRoot = derivativeExpressionRoot.Simplify();
+
+            // Display the derivative in text.
+            derivativeLb.Text = $"Derivative: {derivativeExpressionRoot.ToString()}";
+
+            // Plot Newton's difference quotient as well.
+            calculator = new CalculateForXHandler(DifferenceQuotient);
+            CreateChart("Difference Quotient");
+
+            CreateGraphOfExpression(derivativeExpressionRoot, "derivative");
         }
     }
 }

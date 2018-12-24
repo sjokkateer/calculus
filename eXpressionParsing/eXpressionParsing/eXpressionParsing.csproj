@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addition.cs" />
+    <Compile Include="Axis.cs" />
     <Compile Include="BinaryOperator.cs" />
     <Compile Include="Chart.cs" />
     <Compile Include="Coordinate.cs" />
