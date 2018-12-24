@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
             this.expressionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphPictureBox = new System.Windows.Forms.PictureBox();
             this.parseRbtn = new System.Windows.Forms.RadioButton();
@@ -66,10 +66,18 @@
             this.intergralGroupBox = new System.Windows.Forms.GroupBox();
             this.nPolynomialGroupBox = new System.Windows.Forms.GroupBox();
             this.coordinatesListBox = new System.Windows.Forms.ListBox();
-            this.coordinatesTbx = new System.Windows.Forms.TextBox();
-            this.coordinatesLb = new System.Windows.Forms.Label();
-            this.plotPolynomialBtn = new System.Windows.Forms.Button();
             this.coordinatesBtn = new System.Windows.Forms.Button();
+            this.rescaleAxisBtn = new System.Windows.Forms.Button();
+            this.polynomialInputPanel = new System.Windows.Forms.Panel();
+            this.polynomialCoordinatesPanel = new System.Windows.Forms.Panel();
+            this.coordinatesXTbx = new System.Windows.Forms.TextBox();
+            this.coordinatesYLb = new System.Windows.Forms.Label();
+            this.coordinatesYTbx = new System.Windows.Forms.TextBox();
+            this.coordinatesXLb = new System.Windows.Forms.Label();
+            this.addCoordinateBtn = new System.Windows.Forms.Button();
+            this.plotPolynomialBtn = new System.Windows.Forms.Button();
+            this.cursorXLb = new System.Windows.Forms.Label();
+            this.cursorYLb = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.expressionChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphPictureBox)).BeginInit();
             this.textResultGrpBox.SuspendLayout();
@@ -77,36 +85,39 @@
             this.intervalGrpBox.SuspendLayout();
             this.intergralGroupBox.SuspendLayout();
             this.nPolynomialGroupBox.SuspendLayout();
+            this.polynomialInputPanel.SuspendLayout();
+            this.polynomialCoordinatesPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // expressionChart
             // 
-            chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisX.Interval = 1D;
-            chartArea1.AxisX.LineColor = System.Drawing.Color.Transparent;
-            chartArea1.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet;
-            chartArea1.AxisX.Maximum = 10D;
-            chartArea1.AxisX.Minimum = -10D;
-            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisY.Interval = 2D;
-            chartArea1.AxisY.Maximum = 10D;
-            chartArea1.AxisY.Minimum = -10D;
-            chartArea1.Name = "ChartArea1";
-            this.expressionChart.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea3.AxisX.Interval = 1D;
+            chartArea3.AxisX.LineColor = System.Drawing.Color.Transparent;
+            chartArea3.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet;
+            chartArea3.AxisX.Maximum = 10D;
+            chartArea3.AxisX.Minimum = -10D;
+            chartArea3.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea3.AxisY.Interval = 2D;
+            chartArea3.AxisY.Maximum = 10D;
+            chartArea3.AxisY.Minimum = -10D;
+            chartArea3.Name = "ChartArea1";
+            this.expressionChart.ChartAreas.Add(chartArea3);
             this.expressionChart.Location = new System.Drawing.Point(416, 304);
             this.expressionChart.Margin = new System.Windows.Forms.Padding(4);
             this.expressionChart.Name = "expressionChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Name = "PlaceHolder";
-            dataPoint1.IsEmpty = true;
-            series1.Points.Add(dataPoint1);
-            this.expressionChart.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.Name = "PlaceHolder";
+            dataPoint3.IsEmpty = true;
+            series3.Points.Add(dataPoint3);
+            this.expressionChart.Series.Add(series3);
             this.expressionChart.Size = new System.Drawing.Size(1268, 908);
             this.expressionChart.TabIndex = 4;
             this.expressionChart.Text = "Expression Chart";
             this.expressionChart.Paint += new System.Windows.Forms.PaintEventHandler(this.expressionChart_Paint);
             this.expressionChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.expressionChart_MouseClick);
+            this.expressionChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.expressionChart_MouseMove);
             // 
             // graphPictureBox
             // 
@@ -338,6 +349,7 @@
             // 
             // intervalGrpBox
             // 
+            this.intervalGrpBox.Controls.Add(this.rescaleAxisBtn);
             this.intervalGrpBox.Controls.Add(this.yMaxTbx);
             this.intervalGrpBox.Controls.Add(this.yMinTbx);
             this.intervalGrpBox.Controls.Add(this.xMaxTbx);
@@ -357,7 +369,7 @@
             // 
             // yMaxTbx
             // 
-            this.yMaxTbx.Location = new System.Drawing.Point(98, 258);
+            this.yMaxTbx.Location = new System.Drawing.Point(98, 194);
             this.yMaxTbx.Margin = new System.Windows.Forms.Padding(4);
             this.yMaxTbx.Name = "yMaxTbx";
             this.yMaxTbx.Size = new System.Drawing.Size(258, 31);
@@ -365,7 +377,7 @@
             // 
             // yMinTbx
             // 
-            this.yMinTbx.Location = new System.Drawing.Point(98, 208);
+            this.yMinTbx.Location = new System.Drawing.Point(98, 144);
             this.yMinTbx.Margin = new System.Windows.Forms.Padding(4);
             this.yMinTbx.Name = "yMinTbx";
             this.yMinTbx.Size = new System.Drawing.Size(258, 31);
@@ -390,7 +402,7 @@
             // yMaxLb
             // 
             this.yMaxLb.AutoSize = true;
-            this.yMaxLb.Location = new System.Drawing.Point(24, 262);
+            this.yMaxLb.Location = new System.Drawing.Point(24, 198);
             this.yMaxLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.yMaxLb.Name = "yMaxLb";
             this.yMaxLb.Size = new System.Drawing.Size(75, 25);
@@ -400,7 +412,7 @@
             // yMinLb
             // 
             this.yMinLb.AutoSize = true;
-            this.yMinLb.Location = new System.Drawing.Point(24, 212);
+            this.yMinLb.Location = new System.Drawing.Point(24, 148);
             this.yMinLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.yMinLb.Name = "yMinLb";
             this.yMinLb.Size = new System.Drawing.Size(69, 25);
@@ -447,16 +459,13 @@
             // 
             // nPolynomialGroupBox
             // 
-            this.nPolynomialGroupBox.Controls.Add(this.coordinatesListBox);
-            this.nPolynomialGroupBox.Controls.Add(this.coordinatesTbx);
-            this.nPolynomialGroupBox.Controls.Add(this.coordinatesLb);
-            this.nPolynomialGroupBox.Controls.Add(this.plotPolynomialBtn);
+            this.nPolynomialGroupBox.Controls.Add(this.polynomialInputPanel);
             this.nPolynomialGroupBox.Controls.Add(this.coordinatesBtn);
             this.nPolynomialGroupBox.Location = new System.Drawing.Point(26, 715);
             this.nPolynomialGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.nPolynomialGroupBox.Name = "nPolynomialGroupBox";
             this.nPolynomialGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.nPolynomialGroupBox.Size = new System.Drawing.Size(374, 497);
+            this.nPolynomialGroupBox.Size = new System.Drawing.Size(374, 813);
             this.nPolynomialGroupBox.TabIndex = 23;
             this.nPolynomialGroupBox.TabStop = false;
             this.nPolynomialGroupBox.Text = "Polynomial Construction";
@@ -465,32 +474,107 @@
             // 
             this.coordinatesListBox.FormattingEnabled = true;
             this.coordinatesListBox.ItemHeight = 25;
-            this.coordinatesListBox.Location = new System.Drawing.Point(21, 220);
+            this.coordinatesListBox.Location = new System.Drawing.Point(14, 305);
             this.coordinatesListBox.Name = "coordinatesListBox";
-            this.coordinatesListBox.Size = new System.Drawing.Size(335, 254);
+            this.coordinatesListBox.Size = new System.Drawing.Size(335, 379);
             this.coordinatesListBox.TabIndex = 32;
             // 
-            // coordinatesTbx
+            // coordinatesBtn
             // 
-            this.coordinatesTbx.Location = new System.Drawing.Point(164, 42);
-            this.coordinatesTbx.Margin = new System.Windows.Forms.Padding(4);
-            this.coordinatesTbx.Name = "coordinatesTbx";
-            this.coordinatesTbx.Size = new System.Drawing.Size(192, 31);
-            this.coordinatesTbx.TabIndex = 31;
+            this.coordinatesBtn.Location = new System.Drawing.Point(29, 43);
+            this.coordinatesBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.coordinatesBtn.Name = "coordinatesBtn";
+            this.coordinatesBtn.Size = new System.Drawing.Size(318, 48);
+            this.coordinatesBtn.TabIndex = 19;
+            this.coordinatesBtn.Text = "Place Points";
+            this.coordinatesBtn.UseVisualStyleBackColor = true;
+            this.coordinatesBtn.Click += new System.EventHandler(this.coordinatesBtn_Click);
             // 
-            // coordinatesLb
+            // rescaleAxisBtn
             // 
-            this.coordinatesLb.AutoSize = true;
-            this.coordinatesLb.Location = new System.Drawing.Point(16, 46);
-            this.coordinatesLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.coordinatesLb.Name = "coordinatesLb";
-            this.coordinatesLb.Size = new System.Drawing.Size(140, 25);
-            this.coordinatesLb.TabIndex = 30;
-            this.coordinatesLb.Text = "Coordinates: ";
+            this.rescaleAxisBtn.Location = new System.Drawing.Point(29, 245);
+            this.rescaleAxisBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.rescaleAxisBtn.Name = "rescaleAxisBtn";
+            this.rescaleAxisBtn.Size = new System.Drawing.Size(318, 48);
+            this.rescaleAxisBtn.TabIndex = 33;
+            this.rescaleAxisBtn.Text = "Rescale Axis";
+            this.rescaleAxisBtn.UseVisualStyleBackColor = true;
+            // 
+            // polynomialInputPanel
+            // 
+            this.polynomialInputPanel.Controls.Add(this.polynomialCoordinatesPanel);
+            this.polynomialInputPanel.Controls.Add(this.coordinatesListBox);
+            this.polynomialInputPanel.Location = new System.Drawing.Point(7, 98);
+            this.polynomialInputPanel.Name = "polynomialInputPanel";
+            this.polynomialInputPanel.Size = new System.Drawing.Size(360, 697);
+            this.polynomialInputPanel.TabIndex = 0;
+            this.polynomialInputPanel.Visible = false;
+            // 
+            // polynomialCoordinatesPanel
+            // 
+            this.polynomialCoordinatesPanel.Controls.Add(this.cursorYLb);
+            this.polynomialCoordinatesPanel.Controls.Add(this.cursorXLb);
+            this.polynomialCoordinatesPanel.Controls.Add(this.coordinatesXTbx);
+            this.polynomialCoordinatesPanel.Controls.Add(this.plotPolynomialBtn);
+            this.polynomialCoordinatesPanel.Controls.Add(this.coordinatesYLb);
+            this.polynomialCoordinatesPanel.Controls.Add(this.coordinatesYTbx);
+            this.polynomialCoordinatesPanel.Controls.Add(this.coordinatesXLb);
+            this.polynomialCoordinatesPanel.Controls.Add(this.addCoordinateBtn);
+            this.polynomialCoordinatesPanel.Location = new System.Drawing.Point(0, 0);
+            this.polynomialCoordinatesPanel.Name = "polynomialCoordinatesPanel";
+            this.polynomialCoordinatesPanel.Size = new System.Drawing.Size(360, 299);
+            this.polynomialCoordinatesPanel.TabIndex = 33;
+            // 
+            // coordinatesXTbx
+            // 
+            this.coordinatesXTbx.Location = new System.Drawing.Point(98, 13);
+            this.coordinatesXTbx.Margin = new System.Windows.Forms.Padding(4);
+            this.coordinatesXTbx.Name = "coordinatesXTbx";
+            this.coordinatesXTbx.Size = new System.Drawing.Size(192, 31);
+            this.coordinatesXTbx.TabIndex = 37;
+            // 
+            // coordinatesYLb
+            // 
+            this.coordinatesYLb.AutoSize = true;
+            this.coordinatesYLb.Location = new System.Drawing.Point(61, 62);
+            this.coordinatesYLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.coordinatesYLb.Name = "coordinatesYLb";
+            this.coordinatesYLb.Size = new System.Drawing.Size(29, 25);
+            this.coordinatesYLb.TabIndex = 40;
+            this.coordinatesYLb.Text = "y:";
+            // 
+            // coordinatesYTbx
+            // 
+            this.coordinatesYTbx.Location = new System.Drawing.Point(98, 62);
+            this.coordinatesYTbx.Margin = new System.Windows.Forms.Padding(4);
+            this.coordinatesYTbx.Name = "coordinatesYTbx";
+            this.coordinatesYTbx.Size = new System.Drawing.Size(192, 31);
+            this.coordinatesYTbx.TabIndex = 39;
+            // 
+            // coordinatesXLb
+            // 
+            this.coordinatesXLb.AutoSize = true;
+            this.coordinatesXLb.Location = new System.Drawing.Point(61, 13);
+            this.coordinatesXLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.coordinatesXLb.Name = "coordinatesXLb";
+            this.coordinatesXLb.Size = new System.Drawing.Size(29, 25);
+            this.coordinatesXLb.TabIndex = 36;
+            this.coordinatesXLb.Text = "x:";
+            // 
+            // addCoordinateBtn
+            // 
+            this.addCoordinateBtn.Location = new System.Drawing.Point(66, 101);
+            this.addCoordinateBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.addCoordinateBtn.Name = "addCoordinateBtn";
+            this.addCoordinateBtn.Size = new System.Drawing.Size(228, 48);
+            this.addCoordinateBtn.TabIndex = 38;
+            this.addCoordinateBtn.Text = "Add Coordinate";
+            this.addCoordinateBtn.UseVisualStyleBackColor = true;
+            this.addCoordinateBtn.Click += new System.EventHandler(this.addCoordinateBtn_Click);
             // 
             // plotPolynomialBtn
             // 
-            this.plotPolynomialBtn.Location = new System.Drawing.Point(28, 156);
+            this.plotPolynomialBtn.Location = new System.Drawing.Point(22, 235);
             this.plotPolynomialBtn.Margin = new System.Windows.Forms.Padding(4);
             this.plotPolynomialBtn.Name = "plotPolynomialBtn";
             this.plotPolynomialBtn.Size = new System.Drawing.Size(318, 48);
@@ -499,16 +583,25 @@
             this.plotPolynomialBtn.UseVisualStyleBackColor = true;
             this.plotPolynomialBtn.Click += new System.EventHandler(this.plotPolynomialBtn_Click);
             // 
-            // coordinatesBtn
+            // cursorXLb
             // 
-            this.coordinatesBtn.Location = new System.Drawing.Point(28, 90);
-            this.coordinatesBtn.Margin = new System.Windows.Forms.Padding(4);
-            this.coordinatesBtn.Name = "coordinatesBtn";
-            this.coordinatesBtn.Size = new System.Drawing.Size(318, 48);
-            this.coordinatesBtn.TabIndex = 19;
-            this.coordinatesBtn.Text = "Place Points";
-            this.coordinatesBtn.UseVisualStyleBackColor = true;
-            this.coordinatesBtn.Click += new System.EventHandler(this.coordinatesBtn_Click);
+            this.cursorXLb.AutoSize = true;
+            this.cursorXLb.Location = new System.Drawing.Point(27, 156);
+            this.cursorXLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cursorXLb.Name = "cursorXLb";
+            this.cursorXLb.Size = new System.Drawing.Size(29, 25);
+            this.cursorXLb.TabIndex = 41;
+            this.cursorXLb.Text = "x:";
+            // 
+            // cursorYLb
+            // 
+            this.cursorYLb.AutoSize = true;
+            this.cursorYLb.Location = new System.Drawing.Point(27, 198);
+            this.cursorYLb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cursorYLb.Name = "cursorYLb";
+            this.cursorYLb.Size = new System.Drawing.Size(29, 25);
+            this.cursorYLb.TabIndex = 42;
+            this.cursorYLb.Text = "y:";
             // 
             // Form1
             // 
@@ -543,7 +636,9 @@
             this.intergralGroupBox.ResumeLayout(false);
             this.intergralGroupBox.PerformLayout();
             this.nPolynomialGroupBox.ResumeLayout(false);
-            this.nPolynomialGroupBox.PerformLayout();
+            this.polynomialInputPanel.ResumeLayout(false);
+            this.polynomialCoordinatesPanel.ResumeLayout(false);
+            this.polynomialCoordinatesPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -584,11 +679,19 @@
         private System.Windows.Forms.Label xMinLb;
         private System.Windows.Forms.GroupBox intergralGroupBox;
         private System.Windows.Forms.GroupBox nPolynomialGroupBox;
-        private System.Windows.Forms.TextBox coordinatesTbx;
-        private System.Windows.Forms.Label coordinatesLb;
-        private System.Windows.Forms.Button plotPolynomialBtn;
         private System.Windows.Forms.Button coordinatesBtn;
         private System.Windows.Forms.ListBox coordinatesListBox;
+        private System.Windows.Forms.Button rescaleAxisBtn;
+        private System.Windows.Forms.Panel polynomialInputPanel;
+        private System.Windows.Forms.Panel polynomialCoordinatesPanel;
+        private System.Windows.Forms.TextBox coordinatesXTbx;
+        private System.Windows.Forms.Label coordinatesYLb;
+        private System.Windows.Forms.TextBox coordinatesYTbx;
+        private System.Windows.Forms.Label coordinatesXLb;
+        private System.Windows.Forms.Button addCoordinateBtn;
+        private System.Windows.Forms.Button plotPolynomialBtn;
+        private System.Windows.Forms.Label cursorYLb;
+        private System.Windows.Forms.Label cursorXLb;
     }
 }
 

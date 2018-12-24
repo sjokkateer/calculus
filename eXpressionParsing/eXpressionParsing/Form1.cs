@@ -44,10 +44,10 @@ namespace eXpressionParsing
             Text = "Complex Calculus And Much More. Application";
             WindowState = FormWindowState.Maximized;
 
-            xMin = -10;
-            xMax = 10;
-            yMin = -5;
-            yMax = 5;
+            xMin = expressionChart.ChartAreas[0].AxisX.Minimum;
+            xMax = expressionChart.ChartAreas[0].AxisX.Maximum;
+            yMin = expressionChart.ChartAreas[0].AxisY.Minimum;
+            yMax = expressionChart.ChartAreas[0].AxisY.Maximum;
 
             polynomialCoordinates = false;
         }
@@ -544,10 +544,10 @@ namespace eXpressionParsing
 
         private void plotPolynomialBtn_Click(object sender, EventArgs e)
         {
+            polynomialCoordinatesPanel.Visible = false;
             if (polynomialCoordinatesList != null)
             {// Create a new solver based on the obtained coordinates.
                 SystemSolver s = new SystemSolver(polynomialCoordinatesList);
-                Console.WriteLine(s);
                 // Get the expression representation of the system.
                 // And simplify it where possible.
                 Operand poly = s.GetPolynomial().Simplify();
@@ -575,17 +575,32 @@ namespace eXpressionParsing
                 double x = expressionChart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
                 double y = expressionChart.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
 
-                // Create a coordinate and add it to the list for the polynomial.
-                Coordinate clickedCoordinate = new Coordinate(x, y);
-                polynomialCoordinatesList.Add(clickedCoordinate);
-                coordinatesListBox.Items.Add(clickedCoordinate);
+                if (x >= xMin && x <= xMax)
+                {
+                    if (y >= yMin && y <= yMax)
+                    {
+                        // Create a coordinate and add it to the list for the polynomial.
+                        Coordinate clickedCoordinate = new Coordinate(x, y);
+                        polynomialCoordinatesList.Add(clickedCoordinate);
+                        coordinatesListBox.Items.Add(clickedCoordinate);
 
-                expressionChart.Series["coordinates"].Points.AddXY(x, y);
+                        expressionChart.Series["coordinates"].Points.AddXY(x, y);
+                    }
+                }
             }
         }
 
         private void coordinatesBtn_Click(object sender, EventArgs e)
         {
+            if (polynomialInputPanel.Visible)
+            {
+                polynomialCoordinatesPanel.Visible = true;
+            }
+            else
+            {
+                polynomialInputPanel.Visible = true;
+            }
+
             // Refresh the list of coordinates.
             polynomialCoordinatesList = new List<Coordinate>();
             coordinatesListBox.Items.Clear();
@@ -608,6 +623,68 @@ namespace eXpressionParsing
 
             // Set flag to true, allowing clicked coordinates to be added to the list.
             polynomialCoordinates = true;
+        }
+
+        private void addCoordinateBtn_Click(object sender, EventArgs e)
+        {
+            double xCoordinate;
+            double yCoordinate;
+
+            bool isValidXCoordinate = double.TryParse(coordinatesXTbx.Text, out xCoordinate);
+            bool isValidYCoordinate = double.TryParse(coordinatesYTbx.Text, out yCoordinate);
+
+            if (isValidXCoordinate)
+            {
+                if (isValidYCoordinate)
+                {
+                    if (polynomialCoordinatesList != null)
+                    {
+                        Coordinate enteredCoordinate = new Coordinate(xCoordinate, yCoordinate);
+
+                        polynomialCoordinatesList.Add(enteredCoordinate);
+                        coordinatesListBox.Items.Add(enteredCoordinate);
+
+                        expressionChart.Series["coordinates"].Points.AddXY(xCoordinate, yCoordinate);
+
+                        coordinatesXTbx.Clear();
+                        coordinatesYTbx.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Please press the {coordinatesBtn.Text} button first.");
+                    }
+                }
+                else
+                {
+                    // invalid y coordinate.
+                    MessageBox.Show("Pleas enter a valid y value.");
+                }
+            }
+            else
+            {
+                // at least an invalid coordinate for x.
+                MessageBox.Show("Pleas enter a valid x and/or y value.");
+            }
+        }
+
+        private void expressionChart_MouseMove(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                double x = expressionChart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                double y = expressionChart.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
+
+                if (x >= xMin && x <= xMax)
+                {
+                    if (y >= yMin && y <= yMax)
+                    {
+                        cursorXLb.Text = $"x: {Math.Round(x, 2)}";
+                        cursorYLb.Text = $"y: {Math.Round(y, 2)}";
+                    }
+                }
+            }
+            catch (Exception)
+            { }
         }
     }
 }
