@@ -145,9 +145,13 @@ namespace eXpressionParsing
         private void ResetAll()
         {
             // Reset all series from the chart as well.
-            expressionChart.Series.Clear();
+            int counter = expressionChart.Series.Count - 1;
+            while (counter > 0)
+            {
+                expressionChart.Series.RemoveAt(counter);
+                counter--;
+            }
 
-            expressionChart.Invalidate();
             expressionLb.Text = "Expression: ";
             derivativeLb.Text = $"Derivative: ";
             areaLb.Text = "Estimated area: ";
@@ -640,19 +644,9 @@ namespace eXpressionParsing
 
             // Create a new series to preserve the invisible point.
             string seriesName = "coordinates";
-            int seriesIndex = expressionChart.Series.IndexOf(seriesName);
-            if (seriesIndex >= 0)
-            {
-                Console.WriteLine($"Number of plotted series: {expressionChart.Series.Count}");
-                // Series name already exists so just redo 
-                // calculation on an empty set of points
-                int counter = expressionChart.Series.Count - 1;
-                while (counter > 0)
-                {
-                    expressionChart.Series.RemoveAt(counter);
-                    counter--;
-                }
-            }
+
+            ResetAll();
+
             // Otherwise first time initialized, so series has to be created.
             expressionChart.Series.Add(seriesName);
             expressionChart.Series[seriesName].ChartType = SeriesChartType.Point;
