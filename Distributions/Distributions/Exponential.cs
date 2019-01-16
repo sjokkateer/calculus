@@ -8,6 +8,7 @@ namespace Distributions
     {
         public Exponential(double lambda, int numberOfEvents, int multiple) : base(lambda, numberOfEvents, multiple)
         { }
+
         protected override double CalculateMean()
         {
             // Beta = Lambda^-1 (see wiki page)

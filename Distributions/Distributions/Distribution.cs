@@ -22,13 +22,13 @@ namespace Distributions
             get { return lambda; }
             set
             {
-                if (value >= 0)
+                if (value > 0)
                 {
                     lambda = value;
                 }
                 else
                 {
-                    throw new InvalidLambdaException("Please enter a value >= 0 for lambda.");
+                    throw new InvalidLambdaException("Please enter a value > 0 for lambda.\n Please also check your value set for interval (T) as lambda * T should be > 0 as well.");
                 }
             }
         }
@@ -47,18 +47,26 @@ namespace Distributions
                 }
             }
         }
+        /// <summary>
+        /// This actually only applies to the exponential distribution,
+        /// allowing the exponential distribution to change the width of
+        /// the bins (increasing the number of bins).
+        /// 
+        /// For the poisson distribution the default value 1 will be applied
+        /// upon construction.
+        /// </summary>
         public int Multiple
         {
             get { return multiple; }
             private set
             {
-                if (value > 0)
+                if (value >= 1)
                 {
                     multiple = value;
                 }
                 else
                 {
-                    throw new InvalidInterArrivalValueException("Please enter a value > 0 for the interval (T).");
+                    throw new InvalidInterArrivalValueException("Please enter a value >= 1 for the interval (T).");
                 }
             }
         }

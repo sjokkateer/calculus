@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series25 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series26 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series27 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series28 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series29 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series30 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lambdaLb = new System.Windows.Forms.Label();
             this.numbTrialsLb = new System.Windows.Forms.Label();
             this.interArrivalLb = new System.Windows.Forms.Label();
@@ -77,98 +77,110 @@
             // lambdaLb
             // 
             this.lambdaLb.AutoSize = true;
-            this.lambdaLb.Location = new System.Drawing.Point(25, 68);
+            this.lambdaLb.Location = new System.Drawing.Point(12, 35);
+            this.lambdaLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lambdaLb.Name = "lambdaLb";
-            this.lambdaLb.Size = new System.Drawing.Size(95, 25);
+            this.lambdaLb.Size = new System.Drawing.Size(48, 13);
             this.lambdaLb.TabIndex = 0;
             this.lambdaLb.Text = "Lambda:";
             // 
             // numbTrialsLb
             // 
             this.numbTrialsLb.AutoSize = true;
-            this.numbTrialsLb.Location = new System.Drawing.Point(25, 120);
+            this.numbTrialsLb.Location = new System.Drawing.Point(12, 62);
+            this.numbTrialsLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.numbTrialsLb.Name = "numbTrialsLb";
-            this.numbTrialsLb.Size = new System.Drawing.Size(180, 25);
+            this.numbTrialsLb.Size = new System.Drawing.Size(89, 13);
             this.numbTrialsLb.TabIndex = 1;
             this.numbTrialsLb.Text = "Number Of Trials:";
             // 
             // interArrivalLb
             // 
             this.interArrivalLb.AutoSize = true;
-            this.interArrivalLb.Location = new System.Drawing.Point(25, 182);
+            this.interArrivalLb.Location = new System.Drawing.Point(12, 95);
+            this.interArrivalLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.interArrivalLb.Name = "interArrivalLb";
-            this.interArrivalLb.Size = new System.Drawing.Size(121, 25);
+            this.interArrivalLb.Size = new System.Drawing.Size(61, 13);
             this.interArrivalLb.TabIndex = 2;
             this.interArrivalLb.Text = "Interval (T):";
             // 
             // lambdaTbx
             // 
-            this.lambdaTbx.Location = new System.Drawing.Point(231, 58);
+            this.lambdaTbx.Location = new System.Drawing.Point(116, 30);
+            this.lambdaTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lambdaTbx.Name = "lambdaTbx";
-            this.lambdaTbx.Size = new System.Drawing.Size(223, 31);
+            this.lambdaTbx.Size = new System.Drawing.Size(114, 20);
             this.lambdaTbx.TabIndex = 3;
+            this.lambdaTbx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lambdaTbx_KeyPress);
             // 
             // numbOfTrialsTbx
             // 
-            this.numbOfTrialsTbx.Location = new System.Drawing.Point(231, 114);
+            this.numbOfTrialsTbx.Location = new System.Drawing.Point(116, 59);
+            this.numbOfTrialsTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numbOfTrialsTbx.Name = "numbOfTrialsTbx";
-            this.numbOfTrialsTbx.Size = new System.Drawing.Size(223, 31);
+            this.numbOfTrialsTbx.Size = new System.Drawing.Size(114, 20);
             this.numbOfTrialsTbx.TabIndex = 4;
+            this.numbOfTrialsTbx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbOfTrialsTbx_KeyPress);
             // 
             // interArrivalTbx
             // 
-            this.interArrivalTbx.Location = new System.Drawing.Point(231, 176);
+            this.interArrivalTbx.Location = new System.Drawing.Point(116, 92);
+            this.interArrivalTbx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.interArrivalTbx.Name = "interArrivalTbx";
-            this.interArrivalTbx.Size = new System.Drawing.Size(223, 31);
+            this.interArrivalTbx.Size = new System.Drawing.Size(114, 20);
             this.interArrivalTbx.TabIndex = 5;
+            this.interArrivalTbx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.interArrivalTbx_KeyPress);
             // 
             // exponentialDistributionChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.exponentialDistributionChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.exponentialDistributionChart.Legends.Add(legend1);
-            this.exponentialDistributionChart.Location = new System.Drawing.Point(12, 828);
+            chartArea13.Name = "ChartArea1";
+            this.exponentialDistributionChart.ChartAreas.Add(chartArea13);
+            legend13.Name = "Legend1";
+            this.exponentialDistributionChart.Legends.Add(legend13);
+            this.exponentialDistributionChart.Location = new System.Drawing.Point(6, 431);
+            this.exponentialDistributionChart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.exponentialDistributionChart.Name = "exponentialDistributionChart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Exponential Distribution";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Exponential PMF";
-            this.exponentialDistributionChart.Series.Add(series1);
-            this.exponentialDistributionChart.Series.Add(series2);
-            this.exponentialDistributionChart.Size = new System.Drawing.Size(2220, 534);
+            series25.ChartArea = "ChartArea1";
+            series25.Legend = "Legend1";
+            series25.Name = "Exponential Distribution";
+            series26.ChartArea = "ChartArea1";
+            series26.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series26.Legend = "Legend1";
+            series26.Name = "Exponential PMF";
+            this.exponentialDistributionChart.Series.Add(series25);
+            this.exponentialDistributionChart.Series.Add(series26);
+            this.exponentialDistributionChart.Size = new System.Drawing.Size(1110, 278);
             this.exponentialDistributionChart.TabIndex = 9;
             this.exponentialDistributionChart.Text = "chart2";
             // 
             // simulationChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.simulationChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.simulationChart.Legends.Add(legend2);
-            this.simulationChart.Location = new System.Drawing.Point(12, 1377);
+            chartArea14.Name = "ChartArea1";
+            this.simulationChart.ChartAreas.Add(chartArea14);
+            legend14.Name = "Legend1";
+            this.simulationChart.Legends.Add(legend14);
+            this.simulationChart.Location = new System.Drawing.Point(6, 716);
+            this.simulationChart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.simulationChart.Name = "simulationChart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Simulation";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Simulation PMF";
-            this.simulationChart.Series.Add(series3);
-            this.simulationChart.Series.Add(series4);
-            this.simulationChart.Size = new System.Drawing.Size(2220, 534);
+            series27.ChartArea = "ChartArea1";
+            series27.Legend = "Legend1";
+            series27.Name = "Simulation";
+            series28.ChartArea = "ChartArea1";
+            series28.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series28.Legend = "Legend1";
+            series28.Name = "Simulation PMF";
+            this.simulationChart.Series.Add(series27);
+            this.simulationChart.Series.Add(series28);
+            this.simulationChart.Size = new System.Drawing.Size(1110, 278);
             this.simulationChart.TabIndex = 10;
             this.simulationChart.Text = "chart3";
             // 
             // poissonDistributionBtn
             // 
-            this.poissonDistributionBtn.Location = new System.Drawing.Point(28, 52);
+            this.poissonDistributionBtn.Location = new System.Drawing.Point(14, 27);
+            this.poissonDistributionBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.poissonDistributionBtn.Name = "poissonDistributionBtn";
-            this.poissonDistributionBtn.Size = new System.Drawing.Size(311, 49);
+            this.poissonDistributionBtn.Size = new System.Drawing.Size(156, 25);
             this.poissonDistributionBtn.TabIndex = 11;
             this.poissonDistributionBtn.Text = "Poisson";
             this.poissonDistributionBtn.UseVisualStyleBackColor = true;
@@ -176,9 +188,10 @@
             // 
             // exponentialDistributionBtn
             // 
-            this.exponentialDistributionBtn.Location = new System.Drawing.Point(28, 119);
+            this.exponentialDistributionBtn.Location = new System.Drawing.Point(14, 62);
+            this.exponentialDistributionBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.exponentialDistributionBtn.Name = "exponentialDistributionBtn";
-            this.exponentialDistributionBtn.Size = new System.Drawing.Size(311, 49);
+            this.exponentialDistributionBtn.Size = new System.Drawing.Size(156, 25);
             this.exponentialDistributionBtn.TabIndex = 12;
             this.exponentialDistributionBtn.Text = "Exponential";
             this.exponentialDistributionBtn.UseVisualStyleBackColor = true;
@@ -186,9 +199,10 @@
             // 
             // simulationBtn
             // 
-            this.simulationBtn.Location = new System.Drawing.Point(28, 188);
+            this.simulationBtn.Location = new System.Drawing.Point(14, 98);
+            this.simulationBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.simulationBtn.Name = "simulationBtn";
-            this.simulationBtn.Size = new System.Drawing.Size(311, 49);
+            this.simulationBtn.Size = new System.Drawing.Size(156, 25);
             this.simulationBtn.TabIndex = 13;
             this.simulationBtn.Text = "Simulation";
             this.simulationBtn.UseVisualStyleBackColor = true;
@@ -202,9 +216,11 @@
             this.distributionInputGrpbox.Controls.Add(this.interArrivalLb);
             this.distributionInputGrpbox.Controls.Add(this.lambdaTbx);
             this.distributionInputGrpbox.Controls.Add(this.interArrivalTbx);
-            this.distributionInputGrpbox.Location = new System.Drawing.Point(370, 12);
+            this.distributionInputGrpbox.Location = new System.Drawing.Point(185, 6);
+            this.distributionInputGrpbox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.distributionInputGrpbox.Name = "distributionInputGrpbox";
-            this.distributionInputGrpbox.Size = new System.Drawing.Size(497, 250);
+            this.distributionInputGrpbox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.distributionInputGrpbox.Size = new System.Drawing.Size(248, 130);
             this.distributionInputGrpbox.TabIndex = 14;
             this.distributionInputGrpbox.TabStop = false;
             this.distributionInputGrpbox.Text = "Distribution Input";
@@ -212,75 +228,79 @@
             // poissonToStringListBox
             // 
             this.poissonToStringListBox.FormattingEnabled = true;
-            this.poissonToStringListBox.ItemHeight = 25;
-            this.poissonToStringListBox.Location = new System.Drawing.Point(2252, 278);
+            this.poissonToStringListBox.Location = new System.Drawing.Point(1126, 145);
+            this.poissonToStringListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.poissonToStringListBox.Name = "poissonToStringListBox";
-            this.poissonToStringListBox.Size = new System.Drawing.Size(543, 529);
+            this.poissonToStringListBox.Size = new System.Drawing.Size(274, 277);
             this.poissonToStringListBox.TabIndex = 17;
             // 
             // poissonToStringLb
             // 
             this.poissonToStringLb.Location = new System.Drawing.Point(0, 0);
+            this.poissonToStringLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.poissonToStringLb.Name = "poissonToStringLb";
-            this.poissonToStringLb.Size = new System.Drawing.Size(100, 23);
+            this.poissonToStringLb.Size = new System.Drawing.Size(50, 12);
             this.poissonToStringLb.TabIndex = 20;
             // 
             // poissonDistributionChart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.poissonDistributionChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.poissonDistributionChart.Legends.Add(legend3);
-            this.poissonDistributionChart.Location = new System.Drawing.Point(12, 278);
+            chartArea15.Name = "ChartArea1";
+            this.poissonDistributionChart.ChartAreas.Add(chartArea15);
+            legend15.Name = "Legend1";
+            this.poissonDistributionChart.Legends.Add(legend15);
+            this.poissonDistributionChart.Location = new System.Drawing.Point(6, 145);
+            this.poissonDistributionChart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.poissonDistributionChart.Name = "poissonDistributionChart";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Poisson distribution";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "Poisson PMF";
-            this.poissonDistributionChart.Series.Add(series5);
-            this.poissonDistributionChart.Series.Add(series6);
-            this.poissonDistributionChart.Size = new System.Drawing.Size(2220, 534);
+            series29.ChartArea = "ChartArea1";
+            series29.Legend = "Legend1";
+            series29.Name = "Poisson distribution";
+            series30.ChartArea = "ChartArea1";
+            series30.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series30.Legend = "Legend1";
+            series30.Name = "Poisson PMF";
+            this.poissonDistributionChart.Series.Add(series29);
+            this.poissonDistributionChart.Series.Add(series30);
+            this.poissonDistributionChart.Size = new System.Drawing.Size(1110, 278);
             this.poissonDistributionChart.TabIndex = 6;
             this.poissonDistributionChart.Text = "chart1";
             // 
             // exponentialToStringListBox
             // 
             this.exponentialToStringListBox.FormattingEnabled = true;
-            this.exponentialToStringListBox.ItemHeight = 25;
-            this.exponentialToStringListBox.Location = new System.Drawing.Point(2252, 833);
+            this.exponentialToStringListBox.Location = new System.Drawing.Point(1126, 433);
+            this.exponentialToStringListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.exponentialToStringListBox.Name = "exponentialToStringListBox";
-            this.exponentialToStringListBox.Size = new System.Drawing.Size(543, 529);
+            this.exponentialToStringListBox.Size = new System.Drawing.Size(274, 277);
             this.exponentialToStringListBox.TabIndex = 18;
             // 
             // simulationToStringListBox
             // 
             this.simulationToStringListBox.FormattingEnabled = true;
-            this.simulationToStringListBox.ItemHeight = 25;
-            this.simulationToStringListBox.Location = new System.Drawing.Point(2252, 1382);
+            this.simulationToStringListBox.Location = new System.Drawing.Point(1126, 719);
+            this.simulationToStringListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.simulationToStringListBox.Name = "simulationToStringListBox";
-            this.simulationToStringListBox.Size = new System.Drawing.Size(543, 529);
+            this.simulationToStringListBox.Size = new System.Drawing.Size(274, 277);
             this.simulationToStringListBox.TabIndex = 19;
             // 
             // scalingTrackBar
             // 
             this.scalingTrackBar.LargeChange = 10;
-            this.scalingTrackBar.Location = new System.Drawing.Point(904, 91);
+            this.scalingTrackBar.Location = new System.Drawing.Point(452, 47);
+            this.scalingTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.scalingTrackBar.Maximum = 3;
             this.scalingTrackBar.Minimum = 1;
             this.scalingTrackBar.Name = "scalingTrackBar";
-            this.scalingTrackBar.Size = new System.Drawing.Size(436, 90);
+            this.scalingTrackBar.Size = new System.Drawing.Size(218, 45);
             this.scalingTrackBar.TabIndex = 21;
             this.scalingTrackBar.Value = 1;
             // 
             // exponentialInfoLb
             // 
             this.exponentialInfoLb.AutoSize = true;
-            this.exponentialInfoLb.Location = new System.Drawing.Point(983, 32);
+            this.exponentialInfoLb.Location = new System.Drawing.Point(492, 17);
+            this.exponentialInfoLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.exponentialInfoLb.Name = "exponentialInfoLb";
-            this.exponentialInfoLb.Size = new System.Drawing.Size(253, 25);
+            this.exponentialInfoLb.Size = new System.Drawing.Size(126, 13);
             this.exponentialInfoLb.TabIndex = 22;
             this.exponentialInfoLb.Text = "Exponential bin accuracy";
             // 
@@ -292,27 +312,30 @@
             // bin10Lb
             // 
             this.bin10Lb.AutoSize = true;
-            this.bin10Lb.Location = new System.Drawing.Point(911, 188);
+            this.bin10Lb.Location = new System.Drawing.Point(456, 98);
+            this.bin10Lb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.bin10Lb.Name = "bin10Lb";
-            this.bin10Lb.Size = new System.Drawing.Size(36, 25);
+            this.bin10Lb.Size = new System.Drawing.Size(19, 13);
             this.bin10Lb.TabIndex = 24;
             this.bin10Lb.Text = "10";
             // 
             // bin100Lb
             // 
             this.bin100Lb.AutoSize = true;
-            this.bin100Lb.Location = new System.Drawing.Point(1097, 188);
+            this.bin100Lb.Location = new System.Drawing.Point(548, 98);
+            this.bin100Lb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.bin100Lb.Name = "bin100Lb";
-            this.bin100Lb.Size = new System.Drawing.Size(48, 25);
+            this.bin100Lb.Size = new System.Drawing.Size(25, 13);
             this.bin100Lb.TabIndex = 25;
             this.bin100Lb.Text = "100";
             // 
             // bin1000Lb
             // 
             this.bin1000Lb.AutoSize = true;
-            this.bin1000Lb.Location = new System.Drawing.Point(1291, 184);
+            this.bin1000Lb.Location = new System.Drawing.Point(646, 96);
+            this.bin1000Lb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.bin1000Lb.Name = "bin1000Lb";
-            this.bin1000Lb.Size = new System.Drawing.Size(60, 25);
+            this.bin1000Lb.Size = new System.Drawing.Size(31, 13);
             this.bin1000Lb.TabIndex = 26;
             this.bin1000Lb.Text = "1000";
             // 
@@ -320,36 +343,39 @@
             // 
             this.poissonStatisticsLb.AutoSize = true;
             this.poissonStatisticsLb.BackColor = System.Drawing.Color.Transparent;
-            this.poissonStatisticsLb.Location = new System.Drawing.Point(1840, 420);
+            this.poissonStatisticsLb.Location = new System.Drawing.Point(920, 218);
+            this.poissonStatisticsLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.poissonStatisticsLb.Name = "poissonStatisticsLb";
-            this.poissonStatisticsLb.Size = new System.Drawing.Size(89, 25);
+            this.poissonStatisticsLb.Size = new System.Drawing.Size(44, 13);
             this.poissonStatisticsLb.TabIndex = 28;
             this.poissonStatisticsLb.Text = "Poisson";
             // 
             // exponentialStatisticsLb
             // 
             this.exponentialStatisticsLb.AutoSize = true;
-            this.exponentialStatisticsLb.Location = new System.Drawing.Point(1840, 973);
+            this.exponentialStatisticsLb.Location = new System.Drawing.Point(920, 506);
+            this.exponentialStatisticsLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.exponentialStatisticsLb.Name = "exponentialStatisticsLb";
-            this.exponentialStatisticsLb.Size = new System.Drawing.Size(125, 25);
+            this.exponentialStatisticsLb.Size = new System.Drawing.Size(62, 13);
             this.exponentialStatisticsLb.TabIndex = 29;
             this.exponentialStatisticsLb.Text = "Exponential";
             // 
             // simulationStatisticsLb
             // 
             this.simulationStatisticsLb.AutoSize = true;
-            this.simulationStatisticsLb.Location = new System.Drawing.Point(1895, 1516);
+            this.simulationStatisticsLb.Location = new System.Drawing.Point(948, 788);
+            this.simulationStatisticsLb.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.simulationStatisticsLb.Name = "simulationStatisticsLb";
-            this.simulationStatisticsLb.Size = new System.Drawing.Size(112, 25);
+            this.simulationStatisticsLb.Size = new System.Drawing.Size(55, 13);
             this.simulationStatisticsLb.TabIndex = 30;
             this.simulationStatisticsLb.Text = "Simulation";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(2807, 1959);
+            this.ClientSize = new System.Drawing.Size(1404, 989);
             this.Controls.Add(this.simulationStatisticsLb);
             this.Controls.Add(this.exponentialStatisticsLb);
             this.Controls.Add(this.poissonStatisticsLb);
@@ -369,6 +395,7 @@
             this.Controls.Add(this.simulationChart);
             this.Controls.Add(this.exponentialDistributionChart);
             this.Controls.Add(this.poissonDistributionChart);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Complex Statistical Distribution\'s Application";
             ((System.ComponentModel.ISupportInitialize)(this.exponentialDistributionChart)).EndInit();

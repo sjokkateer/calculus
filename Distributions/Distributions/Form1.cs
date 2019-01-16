@@ -222,7 +222,7 @@ namespace Distributions
                         ShowStatistics();
                         PopulateSelectedListBox();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
                     }
@@ -236,6 +236,69 @@ namespace Distributions
             {
                 MessageBox.Show("Please enter a value for lambda.");
             }
+        }
+
+        /// <summary>
+        /// Handles validation for the input of the lambda textbox
+        /// to be a digit, backspace or 1 single decimal point.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lambdaTbx_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // If either character input is a digit or backspace, allow the
+            // input, and also allow single decimal point input for lamda's
+            // textbox.
+            bool isNotDigitOrBackSpace = isNotNumericOrBackspace(e);
+            if (isNotDigitOrBackSpace)
+            {
+                // If it is neither of aforementioned, check if it's the first and
+                // only decimal point being input.
+
+                // If the actual character input is a decimal point, convert the event sender
+                // to a textbox object and locate if there is already a . inside the text property
+                // if not, allow the . to be entered, otherwise we don't handle the character.
+                if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') < 0))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                e.Handled = isNotDigitOrBackSpace;
+            }
+        }
+
+        /// <summary>
+        /// Helper method that generalizes character valdidation for digits
+        /// and backspaces.
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns>
+        /// a true or false value indicating if the character should be
+        /// marked handled or not.
+        /// </returns>
+        private bool isNotNumericOrBackspace(KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)8)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void numbOfTrialsTbx_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           e.Handled = isNotNumericOrBackspace(e);
+        }
+
+        private void interArrivalTbx_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = isNotNumericOrBackspace(e);
         }
     }
 }
