@@ -12,11 +12,56 @@ namespace Distributions
         protected Random rng;
         private List<double> generatedValues;
         private SortedDictionary<int, int> frequencyDictionary;
+        private double lambda;
+        private int numberOfEvents;
+        private int multiple;
 
         // Properties
-        public double Lambda { get; }
-        public int NumberOfEvents { get; }
-        public int Multiple { get; }
+        public double Lambda
+        {
+            get { return lambda; }
+            set
+            {
+                if (value >= 0)
+                {
+                    lambda = value;
+                }
+                else
+                {
+                    throw new InvalidLambdaException("Please enter a value >= 0 for lambda.");
+                }
+            }
+        }
+        public int NumberOfEvents
+        {
+            get { return numberOfEvents; }
+            private set
+            {
+                if (value > 0 )
+                {
+                    numberOfEvents = value;
+                }
+                else
+                {
+                    throw new InvalidNumberOfTrialsException("Please enter a value > 0 for the number of trials for the distribution.");
+                }
+            }
+        }
+        public int Multiple
+        {
+            get { return multiple; }
+            private set
+            {
+                if (value > 0)
+                {
+                    multiple = value;
+                }
+                else
+                {
+                    throw new InvalidInterArrivalValueException("Please enter a value > 0 for the interval (T).");
+                }
+            }
+        }
 
         /// <summary>
         /// Returns a copy of the list of integers generated for the distribution.

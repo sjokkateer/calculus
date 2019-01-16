@@ -27,26 +27,44 @@ namespace Distributions
 
         private void poissonDistributionBtn_Click(object sender, EventArgs e)
         {
-            double lambda = Convert.ToDouble(lambdaTbx.Text);
-            int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
-
-            double interArrivalTime;
-            bool interValGiven = double.TryParse(interArrivalTbx.Text, out interArrivalTime);
-
-            if (!interValGiven)
+            try
             {
-                interArrivalTime = 1;
-            }
+                double lambda;
+                bool isLambdaGiven = double.TryParse(lambdaTbx.Text, out lambda);
 
-            Poisson poissonDistribution = new Poisson(lambda, numberOfTrials, interArrivalTime);
-            selectedDistribution = poissonDistribution;
-            selectedChart = poissonDistributionChart;
-            selectedListBox = poissonToStringListBox;
-            selectedLabel = poissonStatisticsLb;
-            CreateHistogram();
-            CreatePMFPlot();
-            ShowStatistics();
-            PopulateSelectedListBox();
+                int numberOfTrials;
+                bool isNumberOfTrialsGiven = int.TryParse(numbOfTrialsTbx.Text, out numberOfTrials);
+
+                double interArrivalTime;
+                bool interValGiven = double.TryParse(interArrivalTbx.Text, out interArrivalTime);
+
+                if (!interValGiven)
+                {
+                    interArrivalTime = 1;
+                }
+
+                Poisson poissonDistribution = new Poisson(lambda, numberOfTrials, interArrivalTime);
+                selectedDistribution = poissonDistribution;
+                selectedChart = poissonDistributionChart;
+                selectedListBox = poissonToStringListBox;
+                selectedLabel = poissonStatisticsLb;
+                CreateHistogram();
+                CreatePMFPlot();
+                ShowStatistics();
+                PopulateSelectedListBox();
+            }
+            catch (InvalidLambdaException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidNumberOfTrialsException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidInterArrivalValueException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>
@@ -68,6 +86,11 @@ namespace Distributions
             }
         }
 
+        /// <summary>
+        /// Updates the selected distribution's corresponding labels
+        /// within the chart area and displays the mean, variance, and
+        /// standard deviation of the distribution.
+        /// </summary>
         private void ShowStatistics()
         {
             selectedLabel.Text = $"Mean: {Math.Round(selectedDistribution.Mean, 3)}\n";
@@ -103,27 +126,49 @@ namespace Distributions
 
         private void exponentialDistributionBtn_Click(object sender, EventArgs e)
         {
-            double lambda = Convert.ToDouble(lambdaTbx.Text);
-            int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
 
-            // the value will be at least 10 if the trackbar is not moved 10^(trackbar value) would result in multiple of 1 etc.
-            double binMultiple = Math.Pow(10, scalingTrackBar.Value);
-            exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
+            try
+            {
+                double lambda;
+                bool isLambdaGiven = double.TryParse(lambdaTbx.Text, out lambda);
 
-            selectedDistribution = exponentialDistribution;
-            selectedChart = exponentialDistributionChart;
-            selectedListBox = exponentialToStringListBox;
-            selectedLabel = exponentialStatisticsLb;
-            CreateHistogram();
-            CreatePMFPlot();
-            ShowStatistics();
-            PopulateSelectedListBox();
+                int numberOfTrials;
+                bool isNumberOfTrialsGiven = int.TryParse(numbOfTrialsTbx.Text, out numberOfTrials);
+
+                // the value will be at least 10 if the trackbar is not moved 10^(trackbar value) would result in multiple of 1 etc.
+                double binMultiple = Math.Pow(10, scalingTrackBar.Value);
+                exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
+
+                selectedDistribution = exponentialDistribution;
+                selectedChart = exponentialDistributionChart;
+                selectedListBox = exponentialToStringListBox;
+                selectedLabel = exponentialStatisticsLb;
+                CreateHistogram();
+                CreatePMFPlot();
+                ShowStatistics();
+                PopulateSelectedListBox();
+            }
+            catch (InvalidLambdaException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidNumberOfTrialsException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (InvalidInterArrivalValueException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void simulationBtn_Click(object sender, EventArgs e)
         {
-            double lambda = Convert.ToDouble(lambdaTbx.Text);
-            int numberOfTrials = Convert.ToInt32(numbOfTrialsTbx.Text);
+            double lambda;
+            bool isLambdaGiven = double.TryParse(lambdaTbx.Text, out lambda);
+
+            int numberOfTrials;
+            bool isNumberOfTrialsGiven = int.TryParse(numbOfTrialsTbx.Text, out numberOfTrials);
 
             double interArrivalTime;
             bool interValGiven = double.TryParse(interArrivalTbx.Text, out interArrivalTime);
@@ -133,43 +178,64 @@ namespace Distributions
                 interArrivalTime = 1;
             }
 
-            // The poisson resembles how the distribution should be.
-            Poisson poissonDistribution = new Poisson(lambda, numberOfTrials, interArrivalTime);
-            selectedDistribution = poissonDistribution;
-            selectedChart = poissonDistributionChart;
-            selectedListBox = poissonToStringListBox;
-            selectedLabel = poissonStatisticsLb;
-            CreateHistogram();
-            CreatePMFPlot();
-            ShowStatistics();
-            PopulateSelectedListBox();
+            if (isLambdaGiven)
+            {
+                if (isNumberOfTrialsGiven)
+                {
+                    try
+                    {
+                        // The poisson resembles how the distribution should be.
+                        Poisson poissonDistribution = new Poisson(lambda, numberOfTrials, interArrivalTime);
+                        selectedDistribution = poissonDistribution;
+                        selectedChart = poissonDistributionChart;
+                        selectedListBox = poissonToStringListBox;
+                        selectedLabel = poissonStatisticsLb;
+                        CreateHistogram();
+                        CreatePMFPlot();
+                        ShowStatistics();
+                        PopulateSelectedListBox();
 
-            // The exponential distribution provides the basis for the simulation. 
-            // the value will be at least 10 if the trackbar is not moved 10^(trackbar value) would result in multiple of 1 etc.
-            double binMultiple = Math.Pow(10, scalingTrackBar.Value);
-            exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
-            // Incremented the number of bins to represent the exponential distribution a bit better.
-            selectedDistribution = exponentialDistribution;
-            selectedChart = exponentialDistributionChart;
-            selectedListBox = exponentialToStringListBox;
-            selectedLabel = exponentialStatisticsLb;
-            CreateHistogram();
-            CreatePMFPlot();
-            ShowStatistics();
-            PopulateSelectedListBox();
+                        // The exponential distribution provides the basis for the simulation. 
+                        // the value will be at least 10 if the trackbar is not moved 10^(trackbar value) would result in multiple of 1 etc.
+                        double binMultiple = Math.Pow(10, scalingTrackBar.Value);
+                        exponentialDistribution = new Exponential(lambda, numberOfTrials, Convert.ToInt32(binMultiple));
+                        // Incremented the number of bins to represent the exponential distribution a bit better.
+                        selectedDistribution = exponentialDistribution;
+                        selectedChart = exponentialDistributionChart;
+                        selectedListBox = exponentialToStringListBox;
+                        selectedLabel = exponentialStatisticsLb;
+                        CreateHistogram();
+                        CreatePMFPlot();
+                        ShowStatistics();
+                        PopulateSelectedListBox();
 
-            List<double> simulationResults = exponentialDistribution.SimulatePoissonDistribution(interArrivalTime);
-            
-            // Create Poisson object out of the simulation's results to re-use methods, just the number of experiments
-            Poisson poissonSimulation = new Poisson(lambda * interArrivalTime, simulationResults.Count, simulationResults);
-            selectedChart = simulationChart;
-            selectedDistribution = poissonSimulation;
-            selectedListBox = simulationToStringListBox;
-            selectedLabel = simulationStatisticsLb;
-            CreateHistogram();
-            CreatePMFPlot();
-            ShowStatistics();
-            PopulateSelectedListBox();
+                        List<double> simulationResults = exponentialDistribution.SimulatePoissonDistribution(interArrivalTime);
+
+                        // Create Poisson object out of the simulation's results to re-use methods, just the number of experiments
+                        Poisson poissonSimulation = new Poisson(lambda * interArrivalTime, simulationResults.Count, simulationResults);
+                        selectedChart = simulationChart;
+                        selectedDistribution = poissonSimulation;
+                        selectedListBox = simulationToStringListBox;
+                        selectedLabel = simulationStatisticsLb;
+                        CreateHistogram();
+                        CreatePMFPlot();
+                        ShowStatistics();
+                        PopulateSelectedListBox();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please enter the number of trials.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a value for lambda.");
+            }
         }
     }
 }

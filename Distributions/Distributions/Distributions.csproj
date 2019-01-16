@@ -55,6 +55,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="InvalidInterArrivalValueException.cs" />
+    <Compile Include="InvalidLambdaException.cs" />
+    <Compile Include="InvalidNumberOfTrialsException.cs" />
     <Compile Include="Poisson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series25 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series26 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series27 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series28 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series29 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series30 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lambdaLb = new System.Windows.Forms.Label();
             this.numbTrialsLb = new System.Windows.Forms.Label();
             this.interArrivalLb = new System.Windows.Forms.Label();
@@ -124,42 +124,42 @@
             // 
             // exponentialDistributionChart
             // 
-            chartArea13.Name = "ChartArea1";
-            this.exponentialDistributionChart.ChartAreas.Add(chartArea13);
-            legend13.Name = "Legend1";
-            this.exponentialDistributionChart.Legends.Add(legend13);
-            this.exponentialDistributionChart.Location = new System.Drawing.Point(12, 864);
+            chartArea1.Name = "ChartArea1";
+            this.exponentialDistributionChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.exponentialDistributionChart.Legends.Add(legend1);
+            this.exponentialDistributionChart.Location = new System.Drawing.Point(12, 828);
             this.exponentialDistributionChart.Name = "exponentialDistributionChart";
-            series25.ChartArea = "ChartArea1";
-            series25.Legend = "Legend1";
-            series25.Name = "Exponential Distribution";
-            series26.ChartArea = "ChartArea1";
-            series26.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series26.Legend = "Legend1";
-            series26.Name = "Exponential PMF";
-            this.exponentialDistributionChart.Series.Add(series25);
-            this.exponentialDistributionChart.Series.Add(series26);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Exponential Distribution";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Exponential PMF";
+            this.exponentialDistributionChart.Series.Add(series1);
+            this.exponentialDistributionChart.Series.Add(series2);
             this.exponentialDistributionChart.Size = new System.Drawing.Size(2220, 534);
             this.exponentialDistributionChart.TabIndex = 9;
             this.exponentialDistributionChart.Text = "chart2";
             // 
             // simulationChart
             // 
-            chartArea14.Name = "ChartArea1";
-            this.simulationChart.ChartAreas.Add(chartArea14);
-            legend14.Name = "Legend1";
-            this.simulationChart.Legends.Add(legend14);
-            this.simulationChart.Location = new System.Drawing.Point(12, 1413);
+            chartArea2.Name = "ChartArea1";
+            this.simulationChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.simulationChart.Legends.Add(legend2);
+            this.simulationChart.Location = new System.Drawing.Point(12, 1377);
             this.simulationChart.Name = "simulationChart";
-            series27.ChartArea = "ChartArea1";
-            series27.Legend = "Legend1";
-            series27.Name = "Simulation";
-            series28.ChartArea = "ChartArea1";
-            series28.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series28.Legend = "Legend1";
-            series28.Name = "Simulation PMF";
-            this.simulationChart.Series.Add(series27);
-            this.simulationChart.Series.Add(series28);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Simulation";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Simulation PMF";
+            this.simulationChart.Series.Add(series3);
+            this.simulationChart.Series.Add(series4);
             this.simulationChart.Size = new System.Drawing.Size(2220, 534);
             this.simulationChart.TabIndex = 10;
             this.simulationChart.Text = "chart3";
@@ -213,7 +213,7 @@
             // 
             this.poissonToStringListBox.FormattingEnabled = true;
             this.poissonToStringListBox.ItemHeight = 25;
-            this.poissonToStringListBox.Location = new System.Drawing.Point(2252, 314);
+            this.poissonToStringListBox.Location = new System.Drawing.Point(2252, 278);
             this.poissonToStringListBox.Name = "poissonToStringListBox";
             this.poissonToStringListBox.Size = new System.Drawing.Size(543, 529);
             this.poissonToStringListBox.TabIndex = 17;
@@ -227,21 +227,21 @@
             // 
             // poissonDistributionChart
             // 
-            chartArea15.Name = "ChartArea1";
-            this.poissonDistributionChart.ChartAreas.Add(chartArea15);
-            legend15.Name = "Legend1";
-            this.poissonDistributionChart.Legends.Add(legend15);
-            this.poissonDistributionChart.Location = new System.Drawing.Point(12, 314);
+            chartArea3.Name = "ChartArea1";
+            this.poissonDistributionChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.poissonDistributionChart.Legends.Add(legend3);
+            this.poissonDistributionChart.Location = new System.Drawing.Point(12, 278);
             this.poissonDistributionChart.Name = "poissonDistributionChart";
-            series29.ChartArea = "ChartArea1";
-            series29.Legend = "Legend1";
-            series29.Name = "Poisson distribution";
-            series30.ChartArea = "ChartArea1";
-            series30.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series30.Legend = "Legend1";
-            series30.Name = "Poisson PMF";
-            this.poissonDistributionChart.Series.Add(series29);
-            this.poissonDistributionChart.Series.Add(series30);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Poisson distribution";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "Poisson PMF";
+            this.poissonDistributionChart.Series.Add(series5);
+            this.poissonDistributionChart.Series.Add(series6);
             this.poissonDistributionChart.Size = new System.Drawing.Size(2220, 534);
             this.poissonDistributionChart.TabIndex = 6;
             this.poissonDistributionChart.Text = "chart1";
@@ -250,7 +250,7 @@
             // 
             this.exponentialToStringListBox.FormattingEnabled = true;
             this.exponentialToStringListBox.ItemHeight = 25;
-            this.exponentialToStringListBox.Location = new System.Drawing.Point(2252, 869);
+            this.exponentialToStringListBox.Location = new System.Drawing.Point(2252, 833);
             this.exponentialToStringListBox.Name = "exponentialToStringListBox";
             this.exponentialToStringListBox.Size = new System.Drawing.Size(543, 529);
             this.exponentialToStringListBox.TabIndex = 18;
@@ -259,7 +259,7 @@
             // 
             this.simulationToStringListBox.FormattingEnabled = true;
             this.simulationToStringListBox.ItemHeight = 25;
-            this.simulationToStringListBox.Location = new System.Drawing.Point(2252, 1418);
+            this.simulationToStringListBox.Location = new System.Drawing.Point(2252, 1382);
             this.simulationToStringListBox.Name = "simulationToStringListBox";
             this.simulationToStringListBox.Size = new System.Drawing.Size(543, 529);
             this.simulationToStringListBox.TabIndex = 19;
